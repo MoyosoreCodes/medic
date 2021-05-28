@@ -1,26 +1,21 @@
 const {IamAuthenticator} = require('ibm-watson/auth');
 const AssistantV2 = require('ibm-watson/assistant/v2');
 
-
-const authenticator = new IamAuthenticator({
-    apikey: 'YdnzDVJOa01daDhHHSe3ADH4HTTz3gkYuhsPW8ok5tAO'
-});
-
 const assistant = new AssistantV2({
-    version: "2020-09-24",
-    authenticator: authenticator,
+    version: process.env.VERSION,
+    authenticator: new IamAuthenticator({
+        apikey: process.env.ASSISTANT_APIKEY
+    }),
     //serviceUrl: process.env.ASSISTANT_SERVICEURL,
-    url: process.env.ASSISTANT_SERVICEURL,
-    headers: {
-        'X-Watson-Learning-Opt-Out': 'true'
-    },
+    serviceUrl: process.env.ASSISTANT_SERVICEURL,
+    disableSslVerification: true
 });
 
 module.exports = {
     createSession: async () => {
         try {
             const session = await assistant.createSession({
-                assistantId: `${process.env.ASSISTANT_ID}`
+                assistantId: process.env.ASSISTANT_ID
             });
 
             console.log(session);
