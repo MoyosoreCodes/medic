@@ -18,8 +18,6 @@ module.exports = {
                 assistantId: process.env.ASSISTANT_ID
             });
 
-            console.log(session);
-
             return {
                 status: session.status,
                 result: session.result
@@ -30,11 +28,26 @@ module.exports = {
         }
     },
 
-    sendMessage: async (message) => {
+    sendMessage: async (sessionId, msg) => {
         try {
+            const payload = {
+                assistantId: process.env.ASSISTANT_ID,
+                sessionId,
+                input: {
+                    message_type: 'text',
+                    text: msg
+                }
+            }
             
+            const message = await assistant.message(payload);
+
+            return {
+                status: message.status,
+                result: message.result
+            }
         } catch (error) {
-            
+            console.log(error);
+            return error
         }
     }
 }

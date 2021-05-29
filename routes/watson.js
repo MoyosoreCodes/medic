@@ -6,10 +6,24 @@ const watsonController = require('../controller/watsonController');
 router.get('/sessions', async (req, res) => {
     try {
         const session = await watsonController.createSession();
-        res.json(session);
+        return res.json(session);
     } catch (error) {
-        console.log(error);
-        res.json(error)
+        //console.log(error);
+        return res.json(error)
+    }
+})
+
+router.post('/message', async (req ,res) => {
+    try {
+        const msg = req.body.input;
+        const sessionId = req.headers.session_id;
+
+        const message = await watsonController.sendMessage(sessionId, msg);
+
+        return res.json(message)
+    } catch (error) {
+        //console.log(error);
+        return res.json(error)
     }
 })
 
