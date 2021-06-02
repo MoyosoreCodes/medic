@@ -44,7 +44,7 @@ patientObject.user_type.default = user_types.PATIENT
 const patientSchema = new Schema(patientObject, {timestamps: true});
 
 const customuserObject = GenericUserObject;
-customuserObject.user_type.default = user_types.DOCTOR
+customuserObject.user_type.default = user_types.CLIENT
 const customUserSchema = new Schema(customUserObject, {timestamps: true});
 
 const nurseObject = GenericUserObject;
@@ -55,7 +55,7 @@ const doctorObject = GenericUserObject;
 doctorObject.user_type.default = user_types.ADMIN
 const doctorSchema = new Schema(doctorObject, {timestamps: true});
 
-const Doctor =  mongoose.model('Admin', doctorSchema, 'users');
+const Doctor =  mongoose.model('Doctor', doctorSchema, 'users');
 const Patient =  mongoose.model('Patient', patientSchema, 'users');
 const CustomUser =  mongoose.model('CustomUser', customUserSchema, 'users');
 const Nurse =  mongoose.model('Nurse', nurseSchema, 'users');
