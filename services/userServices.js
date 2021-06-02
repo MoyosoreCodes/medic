@@ -1,4 +1,4 @@
-const {Admin, Patient, Doctor, Nurse} = require('../model/userModel');
+const {CustomUser, Patient, Doctor, Nurse} = require('../model/userModel');
 
 module.exports = {
     createDoctor: async (data) => {
@@ -12,6 +12,6 @@ module.exports = {
         //const createdNurse =  await Nurse.create(data);
     },
     removeDoctor: async (data) => {
-         await Doctor.remove(data);
+         ///await Doctor.remove(data);
     },
 }
