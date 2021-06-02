@@ -3,10 +3,14 @@ const Schema = mongoose.Schema
 
 const user_types = {
     DOCTOR: 'DOCTOR',
-    ADMIN: 'ADMIN',
+    CLIENT: 'CLIENT',
     NURSE: 'NURSE',
     PATIENT: 'PATIENT'
 };
+
+const GenericAddress = {
+    full_address: {type: String,trim: true}
+}
 
 const GenericUserObject = {
     firstname: {
@@ -15,44 +19,47 @@ const GenericUserObject = {
     },
     lastname: {
         type: String,
+        trim: true
     },
     email: {
         type: String, 
         required: true,
         unique: true,
-        lowercase: true,
     },
     password: {
         type: String,
         required: true,
     },
+    phoneNumber: Number,
+    qualification: String,
     user_type: {
         type: String,
-        //default: user_types.PATIENT
-    }
+        default: user_types.PATIENT
+    },
+    address: GenericAddress
 };
 
 const patientObject = GenericUserObject;
 patientObject.user_type.default = user_types.PATIENT
 const patientSchema = new Schema(patientObject, {timestamps: true});
 
-const doctorObject = GenericUserObject;
-doctorObject.user_type.default = user_types.DOCTOR
-const doctorSchema = new Schema(doctorObject, {timestamps: true});
+const customuserObject = GenericUserObject;
+customuserObject.user_type.default = user_types.DOCTOR
+const customUserSchema = new Schema(customUserObject, {timestamps: true});
 
 const nurseObject = GenericUserObject;
 nurseObject.user_type.default = user_types.NURSE
 const nurseSchema = new Schema(nurseObject, {timestamps: true});
 
-const adminObject = GenericUserObject;
-adminObject.user_type.default = user_types.ADMIN
-const adminSchema = new Schema(adminObject, {timestamps: true});
+const doctorObject = GenericUserObject;
+doctorObject.user_type.default = user_types.ADMIN
+const doctorSchema = new Schema(doctorObject, {timestamps: true});
 
-const Admin =  mongoose.model('Admin', adminSchema, 'users');
+const Doctor =  mongoose.model('Admin', doctorSchema, 'users');
 const Patient =  mongoose.model('Patient', patientSchema, 'users');
-const Doctor =  mongoose.model('Doctor', doctorSchema, 'users');
+const CustomUser =  mongoose.model('CustomUser', customUserSchema, 'users');
 const Nurse =  mongoose.model('Nurse', nurseSchema, 'users');
 
 module.exports ={
-    Admin, Patient, Doctor, Nurse
+    Doctor, Patient, CustomUser, Nurse
 }
