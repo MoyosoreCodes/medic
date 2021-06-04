@@ -51,13 +51,17 @@ var validatePassword = function(password){
 
 const patientObject = GenericUserObject;
 patientObject.user_type.default = user_types.PATIENT
+
 const patientSchema = new Schema(patientObject, {timestamps: true});
+
 patientSchema.methods.setHealthCardNumber = setHealthCardNumber;
 patientSchema.methods.setPassword = setPassword;
 
 const customuserObject = GenericUserObject;
 customuserObject.user_type.default = user_types.CLIENT
+
 const customUserSchema = new Schema(customUserObject, {timestamps: true});
+
 customUserSchema.methods.setPassword = setPassword;
 customUserSchema.methods.getUserById = getUserById;
 customUserSchema.methods.getUsers = getUsers;
@@ -65,12 +69,16 @@ customUserSchema.methods.getUserByEmail = getUserByEmail;
 
 const nurseObject = GenericUserObject;
 nurseObject.user_type.default = user_types.NURSE
+
 const nurseSchema = new Schema(nurseObject, {timestamps: true});
+
 nurseSchema.methods.setPassword = setPassword;
 
 const doctorObject = GenericUserObject;
 doctorObject.user_type.default = user_types.DOCTOR
+
 const doctorSchema = new Schema(doctorObject, {timestamps: true});
+
 doctorSchema.methods.setPassword = setPassword;
 
 Doctor =  mongoose.model('Doctor', doctorSchema, 'users');

@@ -1,6 +1,8 @@
+const mongoose = require("mongoose");
+
 const user_types = {
     DOCTOR: 'DOCTOR',
-    //CLIENT: 'CLIENT',
+    CLIENT: 'CLIENT',
     NURSE: 'NURSE',
     PATIENT: 'PATIENT'
 };
@@ -25,11 +27,26 @@ const GenericUserObject = {
     password: {type:String, required:[true,'please provide password'], select : false},
     phoneNumber: Number,
     cardNumber: {type:String},
-   // qualification: String,
+    qualification: String,
+    specialities: [{
+        type: String
+    }],
     user_type: {type: String,default: user_types.PATIENT},
     address: GenericAddress,
     last_login: {type: Date, default: Date.now()},
-    payment_details: GenericPaymentDetails
+    payment_details: GenericPaymentDetails,
+    gender:String,
+    appointments: [{
+        type: mongoose.Types.ObjectId,
+        ref: 'appointments',
+        autopopulate: true
+    }],
+    vitals: {
+        type: mongoose.Types.ObjectId,
+        ref:'records',
+        autopopulate: true
+    },
+    image: { type: Object, trim: true},
 };
 
 module.exports={
