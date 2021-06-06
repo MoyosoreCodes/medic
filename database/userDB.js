@@ -31,7 +31,7 @@ var getUserByEmail = function (username, cb)  {
 };
 
 //function for setting password
-var setPassword = function(password){
+var setPassword = async function(password){
     const hashedpassword = await bcrypt.hash(password, 8);
     if(!hashedpassword){
         console.log('error hashing password');   
@@ -47,52 +47,11 @@ var validatePassword = function(password){
    // const match = bcrypt.compare(password);
 };
 
-
-
-const patientObject = GenericUserObject;
-patientObject.user_type.default = user_types.PATIENT
-
-const patientSchema = new Schema(patientObject, {timestamps: true});
-
-patientSchema.methods.setHealthCardNumber = setHealthCardNumber;
-patientSchema.methods.setPassword = setPassword;
-
-const customuserObject = GenericUserObject;
-customuserObject.user_type.default = user_types.CLIENT
-
-const customUserSchema = new Schema(customUserObject, {timestamps: true});
-
-customUserSchema.methods.setPassword = setPassword;
-customUserSchema.methods.getUserById = getUserById;
-customUserSchema.methods.getUsers = getUsers;
-customUserSchema.methods.getUserByEmail = getUserByEmail;
-
-const nurseObject = GenericUserObject;
-nurseObject.user_type.default = user_types.NURSE
-
-const nurseSchema = new Schema(nurseObject, {timestamps: true});
-
-nurseSchema.methods.setPassword = setPassword;
-
-const doctorObject = GenericUserObject;
-doctorObject.user_type.default = user_types.DOCTOR
-
-const doctorSchema = new Schema(doctorObject, {timestamps: true});
-
-doctorSchema.methods.setPassword = setPassword;
-
-Doctor =  mongoose.model('Doctor', doctorSchema, 'users');
-Patient =  mongoose.model('Patient', patientSchema, 'users');
-CustomUser =  mongoose.model('CustomUser', customUserSchema, 'users');
-Nurse =  mongoose.model('Nurse', nurseSchema, 'users');
-
-module.exports ={
-    Doctor, Patient, Nurse, CustomUser
-}
-
-/*
 const userObject = GenericUserObject;
 const userSchema = new Schema(userObject, {timestamps: true});
-const User = mongoose.model('User', userSchema, 'users')
-
-*/
+userSchema.methods.setHealthCardNumber = setHealthCardNumber;
+userSchema.methods.setPassword = setPassword;
+const User = mongoose.model('User', userSchema, 'users');
+module.exports ={
+    User
+}

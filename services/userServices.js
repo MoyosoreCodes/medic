@@ -5,7 +5,8 @@ module.exports = {
     addUser: async function(data){
       //dictionary access to user depending on the type of user passed in the request body
        let user_type = userModels.user_types[data.user_type]
-       let newUser = userDB[user_type](data);
+       //let newUser = userDB[user_type](data);
+       let newUser = userDB.User(data)
 
         //set health cared number if user is a patient
        if(user_type.toLowerCase() === userModels.user_types.PATIENT.toLowerCase()){      
@@ -16,7 +17,7 @@ module.exports = {
             console.log('error setting user password');
        }    
        
-       let existingUser = await userDB.CustomUser.findOne({"email": data.email})
+       let existingUser = await userDB.User.findOne({"email": data.email})
 
        if(existingUser){
         console.log("extra check to stop users from registering")
@@ -42,7 +43,7 @@ module.exports = {
             const _id = data._id;
         
         
-            let dbUser = userDB.CustomUser;
+            let dbUser = userDB.User;
             let query;
             if (data.email) {
                 query = {email};
@@ -60,9 +61,9 @@ module.exports = {
         } 
     },
 
-    deleteUser: async function (id) {
-        let dbUser = userDB.CustomUser;
-        await dbUser.deleteOne({_id : id},function (err) {
+    deleteUser: async function (_id) {
+        let dbUser = userDB.User;
+        await dbUser.deleteOne({_id},function (err) {
             if(err){return err}
         });
         return true
@@ -70,8 +71,7 @@ module.exports = {
     
     updateUser: async function(data) {
         try {
-            let user = userDB.CustomUser;
-            // update user by id
+            let user = userDB.User;
             return await user.updateOne({_id: data._id},
                 data);
         }catch (e) {

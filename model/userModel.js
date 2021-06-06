@@ -9,7 +9,8 @@ const user_types = {
 
 const GenericAddress = {
     full_address: {type: String,trim: true}
-},
+};
+
 const GenericPaymentDetails ={
     card_type:String,
     last4: String,
@@ -21,8 +22,8 @@ const GenericPaymentDetails ={
 }
 
 const GenericUserObject = {
-    first_name: {type: String,trim: true, required: [true,'please provide first name']},
-    last_name: {type: String,trim: true, required: [true,'please provide last name']},
+    first_name: {type: String,trim: true, required: [true,'please provide first name'], index:true},
+    last_name: {type: String,trim: true, required: [true,'please provide last name'], index:true},
     email: {type: String,trim: true, lowercase: true, required: [true,'please provide email address'], match: [/\S+@\S+\.\S+/, 'is invalid'], index:  {unique: true, dropDups: true}},
     password: {type:String, required:[true,'please provide password'], select : false},
     phoneNumber: Number,
