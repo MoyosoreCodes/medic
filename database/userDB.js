@@ -16,7 +16,7 @@ var setHealthCardNumber = function() {
     this.cardNumber = result;
     return true
 };
-
+/*
 var getUserById = function (id, cb)  {
     this.findById(id, cb);
 };
@@ -25,11 +25,11 @@ var getUsers =  (cb) => {
     this.find(cb)
 };
 
-var getUserByEmail = function (username, cb)  {
-    const query = { username: username }
+var getUserByEmail = function (email, cb)  {
+    const query = { email }
     this.findOne(query, cb);
 };
-
+*/
 //function for setting password
 var setPassword = async function(password){
     const hashedpassword = await bcrypt.hash(password, 8);
@@ -42,7 +42,16 @@ var setPassword = async function(password){
 };
 
 //function for validating password
-var validatePassword = function(password){
+var validatePassword = function(email, password){
+    const user = await this.findOne({email});
+    const match = await bcrypt.compare(password, user.password);
+
+    if(!match) {
+        console.log('password does not match');
+        return false
+    }
+
+    return true
     //should it contain user email??
    // const match = bcrypt.compare(password);
 };
@@ -51,7 +60,10 @@ const userObject = GenericUserObject;
 const userSchema = new Schema(userObject, {timestamps: true});
 userSchema.methods.setHealthCardNumber = setHealthCardNumber;
 userSchema.methods.setPassword = setPassword;
+userSchema.methods.validatePassword = validatePassword;
+userSchema.plugin(require('mongoose-autopopulate'));
 const User = mongoose.model('User', userSchema, 'users');
+
 module.exports ={
-    User
+    User, getUserByEmail,  getUserById, getUsers 
 }

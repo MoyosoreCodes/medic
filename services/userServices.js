@@ -4,7 +4,7 @@ const userDB = require('../database/userDB');
 module.exports = {
     addUser: async function(data){
       //dictionary access to user depending on the type of user passed in the request body
-       let user_type = userModels.user_types[data.user_type]
+       let user_type = data.user_type
        //let newUser = userDB[user_type](data);
        let newUser = userDB.User(data)
 

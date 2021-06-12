@@ -13,6 +13,7 @@ router.get('/sessions', async (req, res) => {
     }
 })
 
+//send message route
 router.post('/message', async (req ,res) => {
     try {
         const msg = req.body.input;

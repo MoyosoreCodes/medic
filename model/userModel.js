@@ -28,6 +28,7 @@ const GenericUserObject = {
     password: {type:String, required:[true,'please provide password'], select : false},
     phoneNumber: Number,
     cardNumber: {type:String},
+    //doctors only
     qualification: String,
     specialities: [{
         type: String
@@ -37,17 +38,24 @@ const GenericUserObject = {
     last_login: {type: Date, default: Date.now()},
     payment_details: GenericPaymentDetails,
     gender:String,
-    appointments: [{
+   /* appointments: [{
         type: mongoose.Types.ObjectId,
         ref: 'appointments',
         autopopulate: true
-    }],
+    }],*/
+    department: {
+        type: mongoose.Types.ObjectId,
+        ref: 'departments',
+        autopopulate:true
+    },
     vitals: {
         type: mongoose.Types.ObjectId,
         ref:'records',
         autopopulate: true
     },
     image: { type: Object, trim: true},
+    //for doctors only
+    isAvailable: {type: Boolean, default: true}
 };
 
 module.exports={

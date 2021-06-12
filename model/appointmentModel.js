@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema
 
 const appointment_types = {
     FOLLOW_UP: 'FOLLOW_UP' ,
@@ -9,7 +10,7 @@ const appointment_types = {
 const appointmentObject = {
     type: {
         type: String,
-        enum: ['ONLINE', 'CLINC'],
+        enum: ['ONLINE', 'CLINIC'],
         trim: true
     },
     appointment_type: {
@@ -22,17 +23,24 @@ const appointmentObject = {
         ref: 'users',
         autopopulate:{select: '-password first_name last_name email phoneNumber'}
     },
-    appointmentDate: {type: Date,default: Date.now()},
-    appointmentTime:String,
-    comments:String,
+    appointmentDate: Date,
+    appointmentTime: String,
+    comments: String,
     prefferred_personnel: {
         type: mongoose.Types.ObjectId,
         ref: 'users',
-        autopopulate:{select: '-password first_name last_name email phoneNumber'}
+        autopopulate:{select: '-password first_name last_name email phoneNumber'},
+        required: true
     },
-    department: {
+    /*department: {
         type: mongoose.Types.ObjectId,
         ref: 'departments',
         autopopulate:true
-    }
+    }*/
 };
+
+const appointmentSchema = Schema(appointmentObject, {timestamps: true});
+appointmentSchema.plugin(require('mongoose-autopopulate'));
+const Appointment = mongoose.model('Appointment', appointmentSchema);
+
+module.exports = Appointment
