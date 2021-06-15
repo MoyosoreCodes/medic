@@ -8,22 +8,21 @@ module.exports = {
     //maybe some kind of logic to find all doctors in a department  that are available
     findAvailableDoctor: async () => {
         try {
-            const availableDoctor = await userModel.findOne({
-                $match: {
-                    'isAvailable' : true,
-                    'user_type': 'DOCTOR'
-                }
-            }) 
+            let query = {
+                'isAvailable' : true, 
+                'user_type': 'DOCTOR'
+            }
+            const availableDoctor = await userModel.findOne(query) 
             if(!availableDoctor) {
                 return {
                     status: 404,
-                    message: 'no available doctors',
+                    message: 'Error finding doctor',
                     data: null
                 }
             }
             return {
                 status: 201,
-                message: 'no available doctors',
+                message: 'available doctor found',
                 data: availableDoctor._id
             }
         } catch (error) {

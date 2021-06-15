@@ -32,28 +32,28 @@ var getUserByEmail = function (email, cb)  {
 */
 //function for setting password
 var setPassword = async function(password){
-    const hashedpassword = await bcrypt.hash(password, 8);
-    if(!hashedpassword){
-        console.log('error hashing password');   
-        return false
-    }
+    try { 
+        const hashedpassword = await bcrypt.hash(password, 8);
+        //if process fails
+        if(!hashedpassword || hashedpassword == undefined || hashedpassword == null){
+            throw('Error hashing the password');
+        }
+        //if process is complete
         this.password = hashedpassword;
         return true
+    } catch (err) {
+        return err
+    }
 };
 
 //function for validating password
-var validatePassword = function(email, password){
-    const user = await this.findOne({email});
-    const match = await bcrypt.compare(password, user.password);
-
-    if(!match) {
-        console.log('password does not match');
-        return false
+var validatePassword = async function(password){
+    try {  
+        const match = await bcrypt.compare(password, this.password);
+        return this.password === match;
+    } catch (err) {
+        return err
     }
-
-    return true
-    //should it contain user email??
-   // const match = bcrypt.compare(password);
 };
 
 const userObject = GenericUserObject;

@@ -8,35 +8,25 @@ const appointment_types = {
 };
 
 const appointmentObject = {
-    type: {
-        type: String,
-        enum: ['ONLINE', 'CLINIC'],
-        trim: true
-    },
     appointment_type: {
         type: String,
         default: appointment_types.NEW_CASE,
         trim: true
     },
-    patient: {
+    patient: [{
         type: mongoose.Types.ObjectId,
         ref: 'users',
         autopopulate:{select: '-password first_name last_name email phoneNumber'}
-    },
+    }],
     appointmentDate: Date,
     appointmentTime: String,
     comments: String,
-    prefferred_personnel: {
+    doctor:[{
         type: mongoose.Types.ObjectId,
         ref: 'users',
         autopopulate:{select: '-password first_name last_name email phoneNumber'},
         required: true
-    },
-    /*department: {
-        type: mongoose.Types.ObjectId,
-        ref: 'departments',
-        autopopulate:true
-    }*/
+    }],
 };
 
 const appointmentSchema = Schema(appointmentObject, {timestamps: true});

@@ -3,42 +3,64 @@ const userDB = require('../database/userDB').User;
 const appointmentService = require('../services/appointmentService');
 
 module.exports ={
+//who can create appointments?? 
+//if it's  patients then the creation process should check for available doctors
     create: async (data) => {
         try {
-            const body = data.body
-            const email = data.user.email
-            console.log('user email:', email);
-            console.log('body:', body);
-            //add this to route to check user id
-            //passing req.user into the route then validating the user, don't think it's necessary it's just to be sure
-            const patient = await userDB.findOne({email})
-            if(!patient) {
-                return {
-                    status: 404,
-                    message: 'User does not exist/Unauthorized',
-                    data: null
-                }
-            }
-            console.log(patient);
-            body.patient = patient._id    
-            const availableDoctor = await appointmentService.findAvailableDoctor()
-            body.prefferred_personnel = availableDoctor.data
+            //initialize variables
+            const body = data.body;
+            const _id = data.user._id
+            const user_type = data.user.user_type
+            const availableDoctor
 
-            //creating new appointment
-            if(body.prefferred_personnel !== null && body.prefferred_personnel !== undefined){
-                const newAppointments = await appointmentModel.create(body);
-                if(!newAppointments) {
-                    console.log('error is at making new appointment');
+            //first check for user type
+            if(user_type == 'PATIENT') {
+                doctor
+                //then check for available doctors
+                availableDoctor = await appointmentService.findAvailableDoctor()
+                body.doctor = availableDoctor.data
+                //if there is an available doctor 
+                if(body.doctor !== null || body.doctor !== undefined || body.doctor == ''){
+                    //then create appointment for patient
+                    body.patient = _id;
+                    const newAppointment = await appointmentModel.create(body);
+                    if(!newAppointment) {
+                        console.log('error is at making new appointment');
+                        return {
+                            status: 500,
+                            message: 'Appointment creation failed',
+                            data: null
+                        }
+                    }
                     return {
-                        status: 500,
-                        message: 'Error making appointments',
-                        data: error
+                        status: 200,
+                        message: 'appointments created by' + user_type,
+                        data: newAppointment
                     }
                 }
-                return {
-                    status: 200,
-                    message: 'appointments created',
-                    data: newAppointments
+            }
+            //if not patient then either doctor is creating the appointment
+            //so there is no need to check for available doctors
+            else {
+                //const _id = data.user._id
+                //availableDoctor =  await userDB.findById({_id});
+                body.doctor = _id
+                if(body.doctor !== null || body.doctor !== undefined || body.doctor == ''){
+                    //then create appointment for patient
+                    const newAppointment = await appointmentModel.create(body);
+                    if(!newAppointment) {
+                        console.log('error is at making new appointment');
+                        return {
+                            status: 500,
+                            message: 'Appointment creation failed',
+                            data: null
+                        }
+                    }
+                    return {
+                        status: 200,
+                        message: 'appointments created by'+ user_type,
+                        data: newAppointment
+                    }
                 }
             }
         } catch (error) {
@@ -50,28 +72,41 @@ module.exports ={
             }
         }   
     },
-    
-    list: async (query) => {
-        //to be used by doctors and or receptionist
+
+    //need to work on this
+    //to list all appointments for a paticular patient or doctor depending on who logs in
+    list: async (data) => {
+        //to be used by everyone
+        //may need to perform lookup
         try {
-            const appointments = await appointmentModel.find(query)//.populate('patient')
-            if(!appointments) {
+            const _id = data.user._id;
+            const user_type = data.user.user_type;
+            let pipeline = 
+                [
+                        {'$match': {_id}},
+                        {
+                            '$lookup': {
+                            'from': 'appointments',
+                            'localField': 'appointments',
+                            'foreignField': `${user_type.toLowerCase()}`,
+                            'as': 'appointments'
+                        }
+                    }
+                ]
+            const userAppointment = await userDB.aggregate(pipeline);
+            if(!userAppointment){
+                console.log('error is at getting user appointments');
                 return {
                     status: 500,
-                    message: 'Error making appointments',
+                    message: 'Appointment retrieval failed',
                     data: null
                 }
             }
- 
-            return {
-                status: 200,
-                message: 'appointments created',
-                data: appointments
-            }
+            
         } catch (error) {
             return {
                 status: 500,
-                message: 'Error making appointments',
+                message: 'Error getting appointment',
                 data: error
             }
         }

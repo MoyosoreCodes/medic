@@ -6,10 +6,9 @@ const user_types = {
     NURSE: 'NURSE',
     PATIENT: 'PATIENT'
 };
-
-const GenericAddress = {
-    full_address: {type: String,trim: true}
-};
+const userRecords = {
+    //find data for here
+}
 
 const GenericPaymentDetails ={
     card_type:String,
@@ -27,32 +26,26 @@ const GenericUserObject = {
     email: {type: String,trim: true, lowercase: true, required: [true,'please provide email address'], match: [/\S+@\S+\.\S+/, 'is invalid'], index:  {unique: true, dropDups: true}},
     password: {type:String, required:[true,'please provide password'], select : false},
     phoneNumber: Number,
-    cardNumber: {type:String},
+    cardNumber:String,
     //doctors only
     qualification: String,
-    specialities: [{
-        type: String
-    }],
+    specialities: [String],
     user_type: {type: String,default: user_types.PATIENT},
-    address: GenericAddress,
+    address: {full_address:String},
     last_login: {type: Date, default: Date.now()},
     payment_details: GenericPaymentDetails,
     gender:String,
-   /* appointments: [{
+    appointments: [{
         type: mongoose.Types.ObjectId,
         ref: 'appointments',
         autopopulate: true
-    }],*/
+    }],
     department: {
         type: mongoose.Types.ObjectId,
         ref: 'departments',
         autopopulate:true
     },
-    vitals: {
-        type: mongoose.Types.ObjectId,
-        ref:'records',
-        autopopulate: true
-    },
+    vitals: userRecords,
     image: { type: Object, trim: true},
     //for doctors only
     isAvailable: {type: Boolean, default: true}
