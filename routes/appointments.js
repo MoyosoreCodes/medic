@@ -1,11 +1,11 @@
 const express = require('express')
 const router = express.Router()
-const appointmentService = require('../services/appointmentService');
 const appointmentController = require('../controller/appointmentController');
+const userController = require('../controller/userController');
 
 //get appointment
 router.get('/', async (req, res) => {
-    const result = await appointmentController.list(req);
+    const result = await userController.list(req);
     //console.log(result.message);
     return res.status(result.status).json(result);
 });

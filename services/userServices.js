@@ -3,38 +3,39 @@ const userDB = require('../database/userDB');
 
 module.exports = {
     addUser: async function(data){
-      //dictionary access to user depending on the type of user passed in the request body
-       let user_type = data.user_type
-       //let newUser = userDB[user_type](data);
-       let newUser = userDB.User(data)
+        try {       
+            let user_type = data.user_type
+            let dbUser = userDB.User
+            let email = data.email
 
-        //set health cared number if user is a patient
-       if(user_type.toLowerCase() === userModels.user_types.PATIENT.toLowerCase()){      
-            newUser.setHealthCardNumber();
-       }
-       // set password
-       if(!newUser.setPassword(data.password)){
-            console.log('error setting user password');
-       }    
-       
-       let existingUser = await userDB.User.findOne({"email": data.email})
-
-       if(existingUser){
-        console.log("extra check to stop users from registering")
-        return {
-            'code':11000
-        }
-       }
-
-        return await newUser.save().then(function (result,err) {
-            if (result) {
-                return result
-            } else {
-                return err
+            let existingUser = await userDB.User.findOne({email})
+        
+            if(existingUser){
+                console.log("extra check to stop users from registering")
+                return {
+                    'code':11000
+                }
             }
-        }).catch(function (err) {
-                return err
-        })
+            let newUser = await dbUser.create(data);
+     
+             //set health cared number if user is a patient
+            if(user_type.toLowerCase() === userModels.user_types.PATIENT.toLowerCase()){      
+                 newUser.setHealthCardNumber()
+            }
+            // set password
+            if(!newUser.setPassword(data.password)){
+                console.log('error setting user password');
+                throw('error setting user password')
+            }    
+
+            return await newUser.save().then((user, err) => {
+                if(err) return err
+                return user
+            });
+
+        } catch (error) {
+            return error
+        }
     },
 
     getUserById: async function (data, cb) {   
@@ -61,7 +62,7 @@ module.exports = {
         } 
     },
 
-    deleteUser: async function (_id) {
+    deleteUser: async (_id) => {
         let dbUser = userDB.User;
         await dbUser.deleteOne({_id},function (err) {
             if(err){return err}
@@ -69,7 +70,7 @@ module.exports = {
         return true
     },
     
-    updateUser: async function(data) {
+    updateUser: async (data) => {
         try {
             let user = userDB.User;
             return await user.updateOne({_id: data._id},

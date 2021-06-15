@@ -16,7 +16,7 @@ module.exports = {
             if(!availableDoctor) {
                 return {
                     status: 404,
-                    message: 'Error finding doctor',
+                    message: 'no available doctors',
                     data: null
                 }
             }

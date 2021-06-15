@@ -1,5 +1,4 @@
 const appointmentModel = require('../model/appointmentModel');
-const userDB = require('../database/userDB').User;
 const appointmentService = require('../services/appointmentService');
 
 module.exports ={
@@ -14,8 +13,7 @@ module.exports ={
             const availableDoctor
 
             //first check for user type
-            if(user_type == 'PATIENT') {
-                doctor
+            if(user_type.toUpperCase() == 'PATIENT') {
                 //then check for available doctors
                 availableDoctor = await appointmentService.findAvailableDoctor()
                 body.doctor = availableDoctor.data
@@ -72,44 +70,4 @@ module.exports ={
             }
         }   
     },
-
-    //need to work on this
-    //to list all appointments for a paticular patient or doctor depending on who logs in
-    list: async (data) => {
-        //to be used by everyone
-        //may need to perform lookup
-        try {
-            const _id = data.user._id;
-            const user_type = data.user.user_type;
-            let pipeline = 
-                [
-                        {'$match': {_id}},
-                        {
-                            '$lookup': {
-                            'from': 'appointments',
-                            'localField': 'appointments',
-                            'foreignField': `${user_type.toLowerCase()}`,
-                            'as': 'appointments'
-                        }
-                    }
-                ]
-            const userAppointment = await userDB.aggregate(pipeline);
-            if(!userAppointment){
-                console.log('error is at getting user appointments');
-                return {
-                    status: 500,
-                    message: 'Appointment retrieval failed',
-                    data: null
-                }
-            }
-            
-        } catch (error) {
-            return {
-                status: 500,
-                message: 'Error getting appointment',
-                data: error
-            }
-        }
-        
-    }
 }

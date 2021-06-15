@@ -16,20 +16,7 @@ var setHealthCardNumber = function() {
     this.cardNumber = result;
     return true
 };
-/*
-var getUserById = function (id, cb)  {
-    this.findById(id, cb);
-};
 
-var getUsers =  (cb) => {
-    this.find(cb)
-};
-
-var getUserByEmail = function (email, cb)  {
-    const query = { email }
-    this.findOne(query, cb);
-};
-*/
 //function for setting password
 var setPassword = async function(password){
     try { 

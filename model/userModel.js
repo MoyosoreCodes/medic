@@ -2,12 +2,14 @@ const mongoose = require("mongoose");
 
 const user_types = {
     DOCTOR: 'DOCTOR',
-    CLIENT: 'CLIENT',
     NURSE: 'NURSE',
     PATIENT: 'PATIENT'
 };
 const userRecords = {
     //find data for here
+    //blood_type
+    //allergies
+    //
 }
 
 const GenericPaymentDetails ={
