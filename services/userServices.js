@@ -8,12 +8,13 @@ module.exports = {
             let dbUser = userDB.User
             let email = data.email
 
-            let existingUser = await userDB.User.findOne({email})
+            let existingUser = await dbUser.findOne({email})
         
             if(existingUser){
                 console.log("extra check to stop users from registering")
                 return {
-                    'code':11000
+                    'code':11000,
+                    'message': "User already exists"
                 }
             }
             let newUser = await dbUser.create(data);
@@ -46,7 +47,7 @@ module.exports = {
         
             let dbUser = userDB.User;
             let query;
-            if (data.email) {
+            if (email) {
                 query = {email};
             } else {
                 query = {_id};

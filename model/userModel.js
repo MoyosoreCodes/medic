@@ -5,11 +5,21 @@ const user_types = {
     NURSE: 'NURSE',
     PATIENT: 'PATIENT'
 };
-const userRecords = {
-    //find data for here
-    //blood_type
-    //allergies
-    //
+
+const userRecords = { 
+    //find data for records you can use them for medication
+    observations: {type: String, default: 'PENDING'},
+    blood_type: {type: String, default: 'N/A'},
+    blood_pressure: {type: String, default: 'N/A'},
+    allergies: {type: String, default: 'N/A'},
+    genotype: {type: String, default: 'N/A'},
+    temperature: {type: String, default: 'N/A'},
+    weight: {type: String, default: 'N/A'},
+    medications: {type: String, default: 'N/A'},
+    pulse_reate: {type: String, default: 'N/A'},
+    patient: String,
+    doctor: String,
+    consultion_date: {type: String, default: Date.now()}
 }
 
 const GenericPaymentDetails ={
@@ -47,8 +57,8 @@ const GenericUserObject = {
         ref: 'departments',
         autopopulate:true
     },
-    vitals: userRecords,
-    image: { type: Object, trim: true},
+    records: userRecords,
+    //image: { type: Object, trim: true},
     //for doctors only
     isAvailable: {type: Boolean, default: true}
 };

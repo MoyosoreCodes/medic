@@ -3,10 +3,10 @@ const userDB = require('../database/userDB').User;
 module.exports = {
     //need to work on this
     //to list all appointments for a paticular patient or doctor depending on who logs in
-    //appointments
     list: async (data) => {
         //to be used by everyone
         //may need to perform lookup
+        //think this function will produce all user data
         try {
             const _id = data.user._id;
             const user_type = data.user.user_type;
@@ -23,7 +23,7 @@ module.exports = {
                     }
                 ]);
             if(!userAppointment){
-                console.log('error is at getting user appointments');
+                console.log('error is at getting user data');
                 return {
                     status: 500,
                     message: 'Appointment retrieval failed',
@@ -39,9 +39,12 @@ module.exports = {
             }
         }
         
+    },
+
+    //view medications
+
+    //create/update records 
+    createRecord: async () => {
+
     }
-
-    //medications
-
-    // records
 }

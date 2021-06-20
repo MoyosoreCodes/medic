@@ -34,10 +34,16 @@ var setPassword = async function(password){
 };
 
 //function for validating password
-var validatePassword = async function(password){
+var validatePassword = async function(password, savedpassword){
     try {  
-        const match = await bcrypt.compare(password, this.password);
-        return this.password === match;
+
+        const match = await bcrypt.compare(password, savedpassword);
+        if(!match) {
+            throw('password does not match')
+        }
+
+        return match;
+
     } catch (err) {
         return err
     }
@@ -52,5 +58,5 @@ userSchema.plugin(require('mongoose-autopopulate'));
 const User = mongoose.model('User', userSchema, 'users');
 
 module.exports ={
-    User, getUserByEmail,  getUserById, getUsers 
+    User
 }

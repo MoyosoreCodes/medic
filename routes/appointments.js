@@ -19,3 +19,5 @@ router.post('/', async (req, res) => {
 
 //what happens when i want to create a follow_up appointment
 //maybe create it with a 'follow_up' type
+
+module.exports = router

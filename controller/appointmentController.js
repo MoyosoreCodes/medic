@@ -10,7 +10,7 @@ module.exports ={
             const body = data.body;
             const _id = data.user._id
             const user_type = data.user.user_type
-            const availableDoctor
+            var availableDoctor
 
             //first check for user type
             if(user_type.toUpperCase() == 'PATIENT') {
