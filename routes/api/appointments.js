@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
-const appointmentController = require('../controller/appointmentController');
-const userController = require('../controller/userController');
+const appointmentController = require('../../controller/appointmentController');
+const userController = require('../../controller/userController');
 
 //get appointment
 router.get('/', async (req, res) => {

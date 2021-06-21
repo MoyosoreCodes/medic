@@ -1,6 +1,6 @@
 const express = require('express');
 const  router = express.Router();
-const watsonController = require('../controller/watsonController');
+const watsonController = require('../../controller/watsonController');
 
 //session creation
 router.get('/sessions', async (req, res) => {
