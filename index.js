@@ -3,10 +3,13 @@ const dotenv = require('dotenv');
 const path = require('path')
 const app = express();
 const mongoose = require('mongoose');
+const flash = require('connect-flash');
+
 dotenv.config();
 
 app.use(express.json());
-app.use(express.urlencoded({extended: false}));
+app.use(flash());
+app.use(express.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname, 'public')));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -27,14 +30,6 @@ mongoose.connect(dbUri, { useNewUrlParser: true, useUnifiedTopology: true })
 
 
 //rendering frontend
-app.get('/', function(req, res) {
-    res.render('landing', {title: "Home"});
-});
-
-app.get('/login', function(req, res) {
-    res.render('login', {title: "Login"});
-});
-
-
-app.use('/watson', require('./routes/watson'));
-app.use('/appointments', require('./routes/appointments'));
+app.use('/', require('./routes/client/login'))
+app.use('/watson', require('./routes/api/watson'));
+app.use('/appointments', require('./routes/api/appointments'));
