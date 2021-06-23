@@ -3,8 +3,17 @@ const router = express.Router();
 const passport = require('../../config/passport-config');
 const {body, validationResult} = require('express-validator');
 const userServices = require('../../services/userServices');
-const { User } = require('../../database/userDB');
+const { user_types } = require('../../model/userModel');
 
+
+const authUser = (req, res, next) => {
+    if(req.isAuthenticated()){
+        next()
+    }
+    else {
+        return res.status(401).redirect('/login')
+    }
+}
 //middleware
 /*
 const validations = [       
@@ -41,11 +50,8 @@ router.get('/login', function(req, res) {
 });
 
 router.post('/login', passport.authenticate('local', 
-        {failureRedirect: '/login', failureFlash: true}
-    ),
-    (req, res) => {
-        return res.redirect('/landing')
-    }
+        {failureRedirect: '/login', failureFlash: true, successRedirect:'/dashboard'}
+    )
 );
 
 router.post('/register',  async (req, res) => {
@@ -66,8 +72,12 @@ router.post('/register',  async (req, res) => {
         
 })
 
-router.get('/landing', (req, res) => {
-    console.log(req.session);
-    return res.json(req.user)
+router.get('/dashboard', authUser, (req, res) => {
+    if(req.user.user_type.toLowerCase() === user_types.PATIENT.toLowerCase()){
+        return res.render('profile', {title:`${req.user.first_name}`, user: req.user})
+    }
+    else {
+        return res.json({message: "You are now in the doctor dashboard"})
+    }
 })
 module.exports = router 

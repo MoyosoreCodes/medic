@@ -5,8 +5,9 @@ const app = express();
 const mongoose = require('mongoose');
 const flash = require('connect-flash');
 const passport = require('./config/passport-config');
-const cookieSession = require('cookie-session');
+//const cookieSession = require('cookie-session');
 const morgan = require('morgan')
+const session = require('express-session')
 
 dotenv.config();
 
@@ -29,11 +30,12 @@ app.set('view engine', 'ejs');
 
 // middleware
 app.use(morgan('tiny'));
-app.use(cookieSession({
-    maxAge: 24 * 60 * 60 * 1000, 
-    keys: 'medicuser', 
-    secret: 'noonewouldknow'
-}));
+app.use(session({
+    secret: 'somawndabwdjwb',
+    resave: true, 
+    saveUninitialized:false,
+    cookie: {maxAge: 3*24*60*60*1000}
+}))
 app.use(flash());
 
 app.use(function(req, res, next){
@@ -47,6 +49,6 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname, 'public')));
 
 //rendering views
-app.use('/', require('./routes/client/login'))
+app.use('/', require('./routes/client/login'));
 app.use('/watson', require('./routes/api/watson'));
 app.use('/appointments', require('./routes/api/appointments'));

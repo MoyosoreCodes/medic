@@ -3,16 +3,6 @@ const passport = require('passport');
 const userDb = require('../database/userDB');
 const bcrypt = require('bcrypt');
 
-passport.serializeUser((user, done) => {
-    console.log('Serialized: ',user );
-    done(null, user)
-})
-
-passport.deserializeUser((user, done) => {
-    console.log('De-Serialized');
-    done(null, user)
-})
-
 passport.use(new LocalStrategy({
             usernameField: 'email',
             passwordField: 'password',
@@ -35,5 +25,14 @@ passport.use(new LocalStrategy({
     )
 )
 
+passport.serializeUser((user, done) => {
+    console.log('Serialized: ',user );
+    done(null, user)
+})
+
+passport.deserializeUser((user, done) => {
+    console.log('De-Serialized');
+    done(null, user)
+})
 
 module.exports = passport
