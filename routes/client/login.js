@@ -2,47 +2,72 @@ const express = require('express')
 const router = express.Router();
 const passport = require('../../config/passport-config');
 const {body, validationResult} = require('express-validator');
+const userServices = require('../../services/userServices');
+const { User } = require('../../database/userDB');
 
+//middleware
+/*
+const validations = [       
+    body('firstname')
+        .isLength({min:1})
+        .withMessage('Firstname is required'),
+    body('lastname')
+        .isLength({min:1})
+        .withMessage('Lastname is required'), 
+    body('password')
+        .isLength({min: 6})
+        .withMessage('Password length is 6 characters long'),
+    body('email')
+        .isEmail()
+        .custom( async (email) => {
+            const user = await Users.findOne({email});
+            if (user){
+                throw new Error('Email has been registered');
+            }
+        })
+        .withMessage('invalid email')
+];
+*/
 router.get('/', function(req, res) {
     const title = "Home"
     res.render('landing', {title});
 });
 
 router.get('/login', function(req, res) {
-    const login_errors = req.flash('login_error');
-    const register_errors = req.flash('register_error');
+    const errors = req.flash('error') || [];
+    //console.log(errors);
     const title = "Login"
-    console.log(login_errors);
-    console.log(register_errors);
-    return res.render('login', {title, login_errors, register_errors});
+    return res.render('login', {title, errors});
 });
 
-router.post('/login', passport.authenticate('local', {
-    failureRedirect: '/login'
-}), (req, res) => {
-    return res.redirect('/dashboard')
-})
-
-router.post('/register', body('password').isLength({ min: 5 }),  async (req, res) => {
-    try {
-        const errors = validationResult(req);
-
-        if(!errors.isEmpty()) {
-            console.log(errors);
-            const errorMessage = []
-            errors.array().map(err => errorMessage.push({[err.param]: err.msg}))
-            console.log(errorMessage);
-            req.flash('register_error', errorMessage)
-            return res.redirect('/login'); 
-
-        }
-
-        console.log(req.body);
-    } catch (err) {
-        console.log(err);
-        return err
+router.post('/login', passport.authenticate('local', 
+        {failureRedirect: '/login', failureFlash: true}
+    ),
+    (req, res) => {
+        return res.redirect('/landing')
     }
-    
+);
+
+router.post('/register',  async (req, res) => {
+    try {
+        //console.log(req.body);
+        const user_type = { 'user_type' : 'PATIENT'}
+        Object.assign(req.body, user_type)
+        //console.log(req.body);
+        const newUser = await userServices.addUser(req.body)
+        if(!newUser){
+            return res.json({'error': " errror creating user", })
+        }
+        //console.log(newUser);
+        return res.redirect('/login')
+    } catch (error) {
+        return error
+    }
+        
 })
 
+router.get('/landing', (req, res) => {
+    console.log(req.session);
+    return res.json(req.user)
+})
 module.exports = router 

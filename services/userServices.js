@@ -17,22 +17,29 @@ module.exports = {
                     'message': "User already exists"
                 }
             }
-            let newUser = await dbUser.create(data);
+            let newUser = new dbUser(data);
      
              //set health cared number if user is a patient
             if(user_type.toLowerCase() === userModels.user_types.PATIENT.toLowerCase()){      
                  newUser.setHealthCardNumber()
             }
             // set password
-            if(!newUser.setPassword(data.password)){
-                console.log('error setting user password');
-                throw('error setting user password')
-            }    
+            const hashedpassword = await newUser.setPassword(data.password)
+            if(hashedpassword) {
+                newUser.password = hashedpassword
+                console.log('password hashed successfully');
+            }
+            else{ console.log('could not hash password');}
 
-            return await newUser.save().then((user, err) => {
-                if(err) return err
-                return user
-            });
+            return await newUser.save().then(function (result,err) {
+                if (result) {
+                    return result
+                } else {
+                    return err
+                }
+            }).catch(function (err) {
+                    return err
+            })
 
         } catch (error) {
             return error

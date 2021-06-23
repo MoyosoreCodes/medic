@@ -24,8 +24,7 @@ const appointmentObject = {
     doctor:[{
         type: mongoose.Types.ObjectId,
         ref: 'users',
-        autopopulate:{select: '-password first_name last_name email phoneNumber'},
-        required: true
+        autopopulate:{select: '-password first_name last_name email phoneNumber'}
     }],
 };
 

@@ -9,6 +9,9 @@
   </head>
   <body>
       <div class="container">
+        <% for (let i=0; i<errors.length; i++) { %>
+          <div class="alert alert-danger"><p><%= errors[i] %></p></div>
+        <% } %>
         <div class="forms-container">
           <div class="signin-signup">
             <form action="/login" method="POST" class="sign-in-form">
@@ -27,19 +30,19 @@
               <h2 class="title">Sign up</h2>
               <div class="input-field">
                 <i class="fas fa-user"></i>
-                <input type="text" placeholder="Firstname" />
+                <input type="text" name="first_name" placeholder="Firstname" />
               </div>
               <div class="input-field">
                 <i class="fas fa-user"></i>
-                <input type="text" placeholder="Lastname" />
+                <input type="text" name="last_name" placeholder="Lastname" />
               </div>
               <div class="input-field">
                 <i class="fas fa-envelope"></i>
-                <input type="email" placeholder="Email" />
+                <input type="email" name="email" placeholder="Email" />
               </div>
               <div class="input-field">
                 <i class="fas fa-lock"></i>
-                <input type="password" placeholder="Password" />
+                <input type="password" name="password" placeholder="Password" />
               </div>
               <input type="submit" class="btn" value="Sign up" />
             </form>

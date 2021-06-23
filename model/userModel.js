@@ -16,7 +16,7 @@ const userRecords = {
     temperature: {type: String, default: 'N/A'},
     weight: {type: String, default: 'N/A'},
     medications: {type: String, default: 'N/A'},
-    pulse_reate: {type: String, default: 'N/A'},
+    pulse_rate: {type: String, default: 'N/A'},
     patient: String,
     doctor: String,
     consultion_date: {type: String, default: Date.now()}
@@ -35,8 +35,8 @@ const GenericPaymentDetails ={
 const GenericUserObject = {
     first_name: {type: String,trim: true, required: [true,'please provide first name'], index:true},
     last_name: {type: String,trim: true, required: [true,'please provide last name'], index:true},
-    email: {type: String,trim: true, lowercase: true, required: [true,'please provide email address'], match: [/\S+@\S+\.\S+/, 'is invalid'], index:  {unique: true, dropDups: true}},
-    password: {type:String, required:[true,'please provide password'], select : false},
+    email: {type: String,trim: true, required: [true,'please provide email address'], match: [/\S+@\S+\.\S+/, 'is invalid'], index:  {unique: true, dropDups: true}},
+    password: {type:String, required:[true,'please provide password']},
     phoneNumber: Number,
     cardNumber:String,
     //doctors only
@@ -60,7 +60,7 @@ const GenericUserObject = {
     records: userRecords,
     //image: { type: Object, trim: true},
     //for doctors only
-    isAvailable: {type: Boolean, default: true}
+    isAvailable: {type: Boolean}
 };
 
 module.exports={
