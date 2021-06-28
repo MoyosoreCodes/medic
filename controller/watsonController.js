@@ -2,12 +2,12 @@ const {IamAuthenticator} = require('ibm-watson/auth');
 const AssistantV2 = require('ibm-watson/assistant/v2');
 
 const assistant = new AssistantV2({
-    version: process.env.VERSION,
+    version: "2020-09-24",
     authenticator: new IamAuthenticator({
-        apikey: process.env.ASSISTANT_APIKEY
+        apikey: "YdnzDVJOa01daDhHHSe3ADH4HTTz3gkYuhsPW8ok5tAO"
     }),
     //serviceUrl: process.env.ASSISTANT_SERVICEURL,
-    serviceUrl: process.env.ASSISTANT_SERVICEURL,
+    serviceUrl: "https://api.eu-gb.assistant.watson.cloud.ibm.com",
     disableSslVerification: true
 });
 
@@ -16,7 +16,7 @@ module.exports = {
     createSession: async () => {
         try {
             const session = await assistant.createSession({
-                assistantId: process.env.ASSISTANT_ID
+                assistantId: "6c439c4b-12ba-483f-9250-328de620975f"
             });
 
             return {
