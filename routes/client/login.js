@@ -76,6 +76,7 @@ router.post('/register',  async (req, res) => {
 
 router.get('/dashboard', authUser, async (req, res) => {
     const userdata = await userDB.User.findOne({_id: req.user})
+    return res.send(userdata)
     return res.render('profile', {title: userdata.first_name, user:userdata})
 })
 module.exports = router 
