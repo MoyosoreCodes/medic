@@ -32,7 +32,7 @@ module.exports = {
     sendMessage: async (sessionId, msg) => {
         try {
             const payload = {
-                assistantId: process.env.ASSISTANT_ID,
+                assistantId: "6c439c4b-12ba-483f-9250-328de620975f",
                 sessionId,
                 input: {
                     message_type: 'text',
