@@ -19,7 +19,7 @@ const userRecords = {
     pulse_rate: {type: String, default: 'N/A'},
     patient: String,
     doctor: String,
-    consultion_date: {type: String, default: Date.now()}
+    consultion_date:String
 }
 
 const GenericPaymentDetails ={

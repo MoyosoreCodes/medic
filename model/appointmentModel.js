@@ -20,7 +20,7 @@ const appointmentObject = {
     }],
     appointmentDate: Date,
     appointmentTime: String,
-    comments: String,
+    complaints: String,
     doctor:[{
         type: mongoose.Types.ObjectId,
         ref: 'users',

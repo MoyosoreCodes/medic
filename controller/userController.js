@@ -8,8 +8,11 @@ module.exports = {
         //may need to perform lookup
         //think this function will produce all user data
         try {
-            const _id = data.user._id;
-            const user_type = data.user.user_type;
+            const _id = data.user.toString();
+            const user = await userDB.findOne({_id});
+            
+            //const _id = data.user._id;
+            //const user_type = data.user.user_type;
 
             const userAppointment = await userDB.aggregate([
                     {$match: {_id}}, 
@@ -17,7 +20,7 @@ module.exports = {
                         $lookup: {
                             from: 'appointments',
                             localField: 'appointments',
-                            foreignField: `${user_type.toLowerCase()}`,
+                            foreignField: `${user.user_type.toLowerCase()}`,
                             as: 'appointments' 
                         }
                     }
@@ -30,7 +33,7 @@ module.exports = {
                     data: null
                 }
             }
-            
+
         } catch (error) {
             return {
                 status: 500,

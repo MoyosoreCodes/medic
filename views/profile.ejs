@@ -20,6 +20,9 @@
                     <p class="state">Lagos,</p>
                     <span class="country">Nigeria.</span>
                 </div>
+                <div class="address">
+                    <p class="state"></p>
+                </div>
             </div>
             <div class="profile-option">
                 <div class="notification">
@@ -33,18 +36,32 @@
                 <div class="profile-side">
                     <p class="mobile-no">
                         <i class="fa fa-phone"></i>
+                        <%=user.cardNumber%>
                         <%= user.phoneNumber%>
                     </p>
                     <p class="user-mail">
                         <i class="fa fa-envelope"></i>
                         <%=user.email%>
                     </p>
+                    <br />
+                    <br />
+                    <% if(user.user_type == 'PATIENT') { %>
+                        <div class="user-bio">
+                            <h3>Records</h3>
+                            <p class="bio">
+                                <%= user.records %>
+                            </p>
+                        </div>
+                    <% } else { %>
                     <div class="user-bio">
                         <h3>Bio</h3>
-                        <p class="bio">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa assumenda laborum quas quibusdam accusantium, aperiam illo debitis in facere deleniti consequatur itaque possimus! Ad deleniti minus iure illo ab harum!
+                        <p class="bio">Appointments
+                            <%= user.specialities %>
                         </p>
                     </div>
+                    <% } %>
+                    <br />
+                    <br />
                     <div class="profile-btn">
                         <button class="chatbtn">
                             <i class="fa fa-comments"></i>
@@ -52,9 +69,10 @@
                         </button>
                         <button class="createbtn">
                             <i class="fa fa-plus"></i>
-                            Make an Appointment
+                            <a href="/appointments">Make an Appointment</a>
                         </button>
                     </div>
+                    <!--
                     <div class="user-rating">
                         <h3 class="rating">4.5</h3>
                         <div class="rate">
@@ -68,24 +86,45 @@
                             <span class="no-patiant"><span>123</span>&nbsp; &nbsp; reviews</span>
                         </div>
                     </div>
+                    -->
                 </div>
             </div>
             <div class="right-side">
-                <div class="nav">
-                    <ul>
-                        <li onclick="tabs(0)" class="user-appointment active"> Appointment</li>
-                        <li onclick="tabs(1)" class="user-review">Medication</li>
-                        <li onclick="tabs(2)" class="user-setting">Settings</li>
-                    </ul>
-                </div>
-                
-                <div class="profile-post tab">
-                    <div class="profile-appointment tab">
+                <div class="nav mytabs">
+                    <input type="radio" id="Appointment" name="mytabs" checked="checked">
+                    <label for='Appointment'>Appointment</label>
+                    <div class="tab ">
                         <h1>Your Appointment</h1>
                         <p>
                             Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto numquam repellendus modi eaque rem? Vero ad eaque, itaque optio quis nihil, quos earum, quisquam a cumque eligendi fugiat quidem dolores?
                         </p>
                     </div>
+                    <input type="radio" id="Medications" name="mytabs">
+                    <label for='Medications'>Medications</label>
+                    <div class="tab">
+                        <h1>Your Medications</h1>
+                        <p>
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto numquam repellendus modi eaque rem? Vero ad eaque, itaque optio quis nihil, quos earum, quisquam a cumque eligendi fugiat quidem dolores?
+                        </p>
+                    </div>
+                    <input type="radio" id="Settings" name="mytabs">
+                    <label for='Settings'>Settings</label>
+                    <div class="tab">
+                        <h1>Your Settings</h1>
+                        <p>
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto numquam repellendus modi eaque rem? Vero ad eaque, itaque optio quis nihil, quos earum, quisquam a cumque eligendi fugiat quidem dolores?
+                        </p>
+                    </div>
+                </div>
+                <!--
+                <div class="profile-post tab">
+                    <div class="tab">
+                        <h1>Your Appointment</h1>
+                        <p>
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto numquam repellendus modi eaque rem? Vero ad eaque, itaque optio quis nihil, quos earum, quisquam a cumque eligendi fugiat quidem dolores?
+                        </p>
+                    </div>
+                    -->
                     <!--
                     <div class="profile-review tab">
                         <h1>Your Medications</h1>
@@ -103,8 +142,19 @@
             </div>
         </div>
     </div>
-    
-    <script src="/JS/Profile.js"></script>
+    <script>
+        window.watsonAssistantChatOptions = {
+            integrationID: "95abd8e1-6346-4b43-807b-900a49609177", // The ID of this integration.
+            region: "eu-gb", // The region your integration is hosted in.
+            serviceInstanceID: "0678dbbf-f1f8-4d95-9c28-a3b1450df66f", // The ID of your service instance.
+            onLoad: function(instance) { instance.render(); }
+          };
+        setTimeout(function(){
+          const t=document.createElement('script');
+          t.src="https://web-chat.global.assistant.watson.appdomain.cloud/loadWatsonAssistantChat.js";
+          document.head.appendChild(t);
+        });
+    </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </body>
 </html>

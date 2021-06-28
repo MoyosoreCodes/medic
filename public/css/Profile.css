@@ -18,6 +18,37 @@ body {
     margin: 0px 100px;
 }
 
+.mytabs {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 800px;
+    
+    padding:2px;
+}
+
+.mytabs input[type="radio"] {
+    display: none;
+}
+
+.mytabs label {
+    padding: 15px;
+    background-color: inherit;
+    font-weight:bold;
+}
+
+.mytabs .tab {
+    padding: 20px;
+    width: auto;
+    height: 400px;
+    text-align: center;
+    display: none;
+    order: 1;
+    background-color:#fff;
+}
+
+.mytabs input[type="radio"]:checked + label + .tab{
+    display: block;
+}
 .profile-header {
     background: #fff;
     width: 100%;

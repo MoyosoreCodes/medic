@@ -3,7 +3,9 @@ const router = express.Router();
 const passport = require('../../config/passport-config');
 const {body, validationResult} = require('express-validator');
 const userServices = require('../../services/userServices');
+const userDB = require('../../database/userDB')
 const { user_types } = require('../../model/userModel');
+const userController = require('../../controller/userController');
 
 
 const authUser = (req, res, next) => {
@@ -72,12 +74,8 @@ router.post('/register',  async (req, res) => {
         
 })
 
-router.get('/dashboard', authUser, (req, res) => {
-    if(req.user.user_type.toLowerCase() === user_types.PATIENT.toLowerCase()){
-        return res.render('profile', {title:`${req.user.first_name}`, user: req.user})
-    }
-    else {
-        return res.json({message: "You are now in the doctor dashboard"})
-    }
+router.get('/dashboard', authUser, async (req, res) => {
+    const userdata = await userDB.User.findOne({_id: req.user})
+    return res.render('profile', {title: userdata.first_name, user:userdata})
 })
 module.exports = router 
