@@ -10,12 +10,12 @@ module.exports ={
             const body = data.body;
             const _id = data.user._id;
 
-            if(body) {
+            if(data.params) {
                 return {
                     message: {
-                        date : body.date,
-                        time: body.time,
-                        symptoms: body.symptoms
+                        date : data.params.date,
+                        time: data.params.time,
+                        symptoms: data.params.symptoms
                     }
                 }
             }else {
