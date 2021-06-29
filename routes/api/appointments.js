@@ -12,7 +12,7 @@ router.get('/', async (req, res) => {
 
 //create appointments
 router.post('/', async (req, res) => {
-    const result = await appointmentController.create(req);
+    const result = await appointmentController.create(req.params);
     //console.log(result.message);
     return res.status(result.status).json(result)
 });

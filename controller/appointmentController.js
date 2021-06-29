@@ -7,8 +7,8 @@ module.exports ={
     create: async (data) => {
         try {
             //initialize variables
-            const body = data.body;
-            const _id = data.user._id;
+            //const body = data.body;
+            //const _id = data.user._id;
 
             return {
                 message: {
