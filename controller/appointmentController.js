@@ -10,7 +10,7 @@ module.exports ={
             const body = data.body;
             const _id = data.user._id;
 
-            if(_id) {
+            if(body) {
                 return {
                     message: {
                         date : data.params.date,
