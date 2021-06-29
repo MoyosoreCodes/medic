@@ -1,4 +1,5 @@
 const appointmentModel = require('../model/appointmentModel');
+const { user_types } = require('../model/userModel');
 const appointmentService = require('../services/appointmentService');
 
 module.exports ={
@@ -7,22 +8,27 @@ module.exports ={
     create: async (data) => {
         try {
             //initialize variables
-            //const body = data.body;
-            //const _id = data.user._id;
-            console.log(data);
-            return {
-                status: 200,
-                message: {
-                    date : data.body.date,
-                    time: data.body.time,
-                    symptoms: data.body.symptoms
-                }
-            }
-            /*const user_type = data.user.user_type
+            const body = data.body;
+            const _id = data.user._id;
+            const user_type = data.user.user_type
             var availableDoctor
 
             //first check for user type
-            if(user_type.toUpperCase() == 'PATIENT') {
+            if(_id) {
+                return {
+                    message: {
+                        user_id: _id,
+                        message: 'user exist'
+                    }
+                }
+            }
+            else {
+                return {
+                    message: 'no user found'
+                }
+            }
+            /*
+            if(user_type.toUpperCase() == user_types.PATIENT) {
                 //then check for available doctors
                 availableDoctor = await appointmentService.findAvailableDoctor()
                 body.doctor = availableDoctor.data
