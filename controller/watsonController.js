@@ -51,7 +51,6 @@ module.exports = {
             return error
         }
     }, 
-
     updateMessage: (input, response) => {
         try {
             var responseText = null;

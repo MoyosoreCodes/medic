@@ -8,8 +8,22 @@ module.exports ={
         try {
             //initialize variables
             const body = data.body;
-            const _id = data.user._id
-            const user_type = data.user.user_type
+            const _id = data.user._id;
+
+            if(_id) {
+                return {
+                    message: {
+                        date : data.params.date,
+                        time: data.params.time,
+                        symptoms: data.params.symptoms
+                    }
+                }
+            }else {
+                return {
+                    message: 'user does not exist',
+                }
+            }
+            /*const user_type = data.user.user_type
             var availableDoctor
 
             //first check for user type
@@ -60,7 +74,7 @@ module.exports ={
                         data: newAppointment
                     }
                 }
-            }
+            }*/
         } catch (error) {
             console.log('catch error');
             return {
