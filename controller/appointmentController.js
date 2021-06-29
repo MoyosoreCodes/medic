@@ -13,9 +13,9 @@ module.exports ={
             if(body) {
                 return {
                     message: {
-                        date : data.params.date,
-                        time: data.params.time,
-                        symptoms: data.params.symptoms
+                        date : body.date,
+                        time: body.time,
+                        symptoms: body.symptoms
                     }
                 }
             }else {
