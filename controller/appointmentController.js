@@ -10,17 +10,11 @@ module.exports ={
             const body = data.body;
             const _id = data.user._id;
 
-            if(data.params) {
-                return {
-                    message: {
-                        date : data.params.date,
-                        time: data.params.time,
-                        symptoms: data.params.symptoms
-                    }
-                }
-            }else {
-                return {
-                    message: 'user does not exist',
+            return {
+                message: {
+                    date : data.params.date,
+                    time: data.params.time,
+                    symptoms: data.params.symptoms
                 }
             }
             /*const user_type = data.user.user_type
