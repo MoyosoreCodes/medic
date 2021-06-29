@@ -9,12 +9,13 @@ module.exports ={
             //initialize variables
             //const body = data.body;
             //const _id = data.user._id;
-
+            console.log(data);
             return {
+                status: 200,
                 message: {
-                    date : data.params.date,
-                    time: data.params.time,
-                    symptoms: data.params.symptoms
+                    date : data.body.date,
+                    time: data.body.time,
+                    symptoms: data.body.symptoms
                 }
             }
             /*const user_type = data.user.user_type
