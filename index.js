@@ -8,11 +8,17 @@ const passport = require('./config/passport-config');
 //const cookieSession = require('cookie-session');
 const morgan = require('morgan')
 const session = require('express-session')
+const MongodbStore = require('connect-mongodb-session')(session)
 
 dotenv.config();
 
 const port = process.env.PORT || 7000;
-const dbUri = "mongodb+srv://Moyosore:Moyosore12@cluster0.ky9jk.mongodb.net/medic?retryWrites=true&w=majority"
+const dbUri = "mongodb+srv://Moyosore:Moyosore12@cluster0.ky9jk.mongodb.net/medic"
+
+const store = new MongodbStore({
+    uri: dbUri,
+    collection: 'sessions'
+})
 
 mongoose.connect(dbUri, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
         .then(() => {
@@ -34,7 +40,8 @@ app.use(session({
     secret: 'somawndabwdjwb',
     resave: true, 
     saveUninitialized:false,
-    cookie: {maxAge: 3*24*60*60*1000}
+    cookie: {maxAge: 3*24*60*60*1000},
+    store
 }))
 app.use(flash());
 
