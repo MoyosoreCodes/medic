@@ -9,6 +9,7 @@ module.exports ={
     create: async (data) => {
         try {
             return {
+                status: 200,
                 message: {
                     date: data.body.date,
                     time: data.body.time,
