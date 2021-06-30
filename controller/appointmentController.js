@@ -10,7 +10,7 @@ module.exports ={
         try {
             return {
                 status: 200,
-                message: {
+                data: {
                     user: data.session.passport.user,
                     date: data.body.date,
                     time: data.body.time,
