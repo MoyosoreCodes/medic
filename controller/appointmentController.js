@@ -11,6 +11,7 @@ module.exports ={
             return {
                 status: 200,
                 message: {
+                    user: data.session.passport.user,
                     date: data.body.date,
                     time: data.body.time,
                     symptoms: data.body.symptoms
