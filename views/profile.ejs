@@ -6,6 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/Profile.css">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <script>
+        window.watsonAssistantChatOptions = {
+            integrationID: "95abd8e1-6346-4b43-807b-900a49609177", // The ID of this integration.
+            region: "eu-gb", // The region your integration is hosted in.
+            serviceInstanceID: "0678dbbf-f1f8-4d95-9c28-a3b1450df66f", // The ID of your service instance.
+            onLoad: function(instance) { instance.render(); }
+          };
+        setTimeout(function(){
+          const t=document.createElement('script');
+          t.src="https://web-chat.global.assistant.watson.appdomain.cloud/loadWatsonAssistantChat.js";
+          document.head.appendChild(t);
+        });
+    </script>
     <title><%= user.firstname %> || Profile Page</title>
 </head>
 <body>
@@ -142,19 +155,7 @@
             </div>
         </div>
     </div>
-    <script>
-        window.watsonAssistantChatOptions = {
-            integrationID: "95abd8e1-6346-4b43-807b-900a49609177", // The ID of this integration.
-            region: "eu-gb", // The region your integration is hosted in.
-            serviceInstanceID: "0678dbbf-f1f8-4d95-9c28-a3b1450df66f", // The ID of your service instance.
-            onLoad: function(instance) { instance.render(); }
-          };
-        setTimeout(function(){
-          const t=document.createElement('script');
-          t.src="https://web-chat.global.assistant.watson.appdomain.cloud/loadWatsonAssistantChat.js";
-          document.head.appendChild(t);
-        });
-    </script>
+    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </body>
 </html>
