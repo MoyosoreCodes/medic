@@ -1,5 +1,6 @@
 const appointmentModel = require('../model/appointmentModel');
 const { user_types } = require('../model/userModel');
+const userDB = require('../database/userDB');
 const appointmentService = require('../services/appointmentService');
 
 module.exports ={
@@ -9,33 +10,21 @@ module.exports ={
         try {
             //initialize variables
             const body = data.body;
-            const _id = data.user._id;
-            const user_type = data.user.user_type
-            var availableDoctor
+            var availableDoctor, patient
 
-            //first check for user type
-            if(_id) {
-                return {
-                    message: {
-                        user_id: _id,
-                        message: 'user exist'
-                    }
-                }
-            }
-            else {
-                return {
-                    message: 'no user found'
-                }
-            }
-            /*
-            if(user_type.toUpperCase() == user_types.PATIENT) {
+            const user = await userDB.findOne({cardNumber: body.cardNumber});
+            if(user.user_type.toUpperCase() == user_types.PATIENT) {
                 //then check for available doctors
-                availableDoctor = await appointmentService.findAvailableDoctor()
-                body.doctor = availableDoctor.data
+                const doctorToAssign = await appointmentService.findAvailableDoctor();
+                availableDoctor = {'doctor': doctorToAssign.data};
+                Object.assign(body, availableDoctor);
+                //body.doctor = availableDoctor.data
                 //if there is an available doctor 
                 if(body.doctor !== null || body.doctor !== undefined || body.doctor == ''){
                     //then create appointment for patient
-                    body.patient = _id;
+                    patient = {'patient': user._id};
+                    Object.assign(body, patient);
+                    //body.patient = user._id;
                     const newAppointment = await appointmentModel.create(body);
                     if(!newAppointment) {
                         console.log('error is at making new appointment');
@@ -47,14 +36,14 @@ module.exports ={
                     }
                     return {
                         status: 200,
-                        message: 'appointments created by' + user_type,
+                        message: 'appointments created by' + user.user_type,
                         data: newAppointment
                     }
                 }
             }
             //if not patient then either doctor is creating the appointment
             //so there is no need to check for available doctors
-            else {
+            /*else {
                 //const _id = data.user._id
                 //availableDoctor =  await userDB.findById({_id});
                 body.doctor = _id
