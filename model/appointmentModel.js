@@ -13,19 +13,19 @@ const appointmentObject = {
         default: appointment_types.NEW_CASE,
         trim: true
     },
-    patient: [{
+    patient: {
         type: mongoose.Types.ObjectId,
         ref: 'users',
         autopopulate:{select: '-password first_name last_name email phoneNumber'}
-    }],
+    },
     appointmentDate: Date,
     appointmentTime: String,
     complaints: String,
-    doctor:[{
+    doctor:{
         type: mongoose.Types.ObjectId,
         ref: 'users',
         autopopulate:{select: '-password first_name last_name email phoneNumber'}
-    }],
+    },
 };
 
 const appointmentSchema = Schema(appointmentObject, {timestamps: true});

@@ -13,6 +13,13 @@ module.exports ={
             var availableDoctor, patient
 
             const user = await userDB.findOne({cardNumber: body.cardNumber});
+            if(!user) {
+                return {
+                    status: 404,
+                    message: 'User Data not Found, Create an account to Fix this issue',
+                    data: null
+                }
+            }
             if(user.user_type.toUpperCase() == user_types.PATIENT) {
                 //then check for available doctors
                 const doctorToAssign = await appointmentService.findAvailableDoctor();
@@ -30,7 +37,7 @@ module.exports ={
                         console.log('error is at making new appointment');
                         return {
                             status: 500,
-                            message: 'Appointment creation failed',
+                            message: 'There was an error while making your appointment, please proceed to fill out the form',
                             data: null
                         }
                     }
