@@ -10,9 +10,9 @@ module.exports ={
         try {
             return {
                 message: {
-                    date: data.date,
-                    time: data.time,
-                    symptoms: data.symptoms
+                    date: data.body.date,
+                    time: data.body.time,
+                    symptoms: data.body.symptoms
                 }
             }
 
