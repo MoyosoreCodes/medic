@@ -75,10 +75,10 @@ router.post('/register',  async (req, res) => {
 })
 
 router.get('/dashboard', authUser, async (req, res) => {
-    console.log(req.session);
-    console.log(req.session.user);
-    //const userdata = await userDB.User.findOne({_id: req.session.user})
-    return res.json(req.session)
-    //return res.render('profile', {title: userdata.first_name, user:userdata})
+    //console.log(req.session);
+    //console.log(req.session.user);
+    const userdata = await userDB.User.findOne({_id: req.session.passport.user})
+    //return res.json(req.session.passport.user)
+    return res.render('profile', {title: userdata.first_name, user:userdata})
 })
 module.exports = router 
