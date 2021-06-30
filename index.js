@@ -17,7 +17,8 @@ const dbUri = "mongodb+srv://Moyosore:Moyosore12@cluster0.ky9jk.mongodb.net/medi
 
 const store = new MongodbStore({
     uri: dbUri,
-    collection: 'sessions'
+    collection: 'sessions',
+    ttl:3*24*60*60*1000
 })
 
 mongoose.connect(dbUri, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
@@ -40,7 +41,6 @@ app.use(session({
     secret: 'somawndabwdjwb',
     resave: true, 
     saveUninitialized:false,
-    cookie: {maxAge: 3*24*60*60*1000},
     store
 }))
 app.use(flash());
