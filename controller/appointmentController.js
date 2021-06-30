@@ -9,7 +9,11 @@ module.exports ={
     create: async (data) => {
         try {
             return {
-                message: data.query
+                message: {
+                    date: data.date,
+                    time: data.time,
+                    symptoms: data.symptoms
+                }
             }
 
             //initialize variables

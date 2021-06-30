@@ -11,7 +11,7 @@ router.get('/', async (req, res) => {
 });
 
 //create appointments
-router.post('/', async (req, res) => {
+router.post('/:date/:time/:symptoms', async (req, res) => {
     const result = await appointmentController.create(req);
     //console.log(result.message);
     return res.status(result.status).json(result)
