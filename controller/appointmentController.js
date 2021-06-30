@@ -8,8 +8,12 @@ module.exports ={
 //if it's  patients then the creation process should check for available doctors
     create: async (data) => {
         try {
+            return {
+                message: data.query
+            }
+
             //initialize variables
-            const body = data.body;
+            /*const body = data.body;
             var availableDoctor, patient
 
             const user = await userDB.findOne({cardNumber: body.cardNumber});
@@ -47,7 +51,7 @@ module.exports ={
                         data: newAppointment
                     }
                 }
-            }
+            }*
             //if not patient then either doctor is creating the appointment
             //so there is no need to check for available doctors
             /*else {
