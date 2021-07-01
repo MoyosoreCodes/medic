@@ -7,10 +7,12 @@ module.exports ={
 //who can create appointments?? 
 //if it's  patients then the creation process should check for available doctors
     create: async (data) => {
+        console.log(data.body)
         try {
 
             //initialize variables
             const body = data.body;
+            console.log(body)
             var availableDoctor, patient
 
             const user = await userDB.findOne({cardNumber: body.cardNumber});
