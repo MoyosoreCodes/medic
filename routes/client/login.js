@@ -1,11 +1,11 @@
 const express = require('express')
 const router = express.Router();
 const passport = require('../../config/passport-config');
-const {body, validationResult} = require('express-validator');
+//const {body, validationResult} = require('express-validator');
 const userServices = require('../../services/userServices');
 const userDB = require('../../database/userDB')
-const { user_types } = require('../../model/userModel');
-const userController = require('../../controller/userController');
+const userRecords = require('../../model/recordModel');
+//const userController = require('../../controller/userController');
 
 
 const authUser = (req, res, next) => {
@@ -77,8 +77,10 @@ router.post('/register',  async (req, res) => {
 router.get('/dashboard', authUser, async (req, res) => {
     //console.log(req.session);
     //console.log(req.session.user);
-    const userdata = await userDB.User.findOne({_id: req.session.passport.user})
+    const _id =  req.session.passport.user;
+    const user = await userDB.User.findOne({_id})
+    const record = await userRecords.Records.findOne({patientId: _id})
 
-    return res.render('profile', { user:userdata})
+    return res.render('profile', { user, record })
 })
 module.exports = router 

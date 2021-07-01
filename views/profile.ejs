@@ -18,8 +18,8 @@
           t.src="https://web-chat.global.assistant.watson.appdomain.cloud/loadWatsonAssistantChat.js";
           document.head.appendChild(t);
         });
-    </script>
-    <title><%= user.firstname %> || Profile Page</title>
+      </script>      
+    <title><%= user.first_name %> || Profile Page</title>
 </head>
 <body>
     <div class="container">
@@ -48,8 +48,11 @@
             <div class="left-side">
                 <div class="profile-side">
                     <p class="mobile-no">
-                        <i class="fa fa-phone"></i>
+                        <i class="fas fa-hospital"></i>
                         <%=user.cardNumber%>
+                    </p>
+                    <p class="mobile-no">
+                        <i class="fa fa-phone"></i>
                         <%= user.phoneNumber%>
                     </p>
                     <p class="user-mail">
@@ -62,7 +65,7 @@
                         <div class="user-bio">
                             <h3>Records</h3>
                             <p class="bio">
-                                <%= user.records %>
+                                <%= record.temperature %>
                             </p>
                         </div>
                     <% } else { %>
