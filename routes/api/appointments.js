@@ -12,10 +12,10 @@ router.get('/', async (req, res) => {
 
 //create appointments
 router.post('/', async (req, res) => {
-    console.log(req.body)
-    //const result = await appointmentController.create(req);
-    //console.log(result.message);
-    //return res.status(result.status).json(result)
+    //console.log(req.body)
+    const result = await appointmentController.create(req);
+    console.log(result);
+    return res.status(result.status).json(result)
 });
 
 //what happens when i want to create a follow_up appointment

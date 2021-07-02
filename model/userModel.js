@@ -30,11 +30,11 @@ const GenericUserObject = {
     last_login: {type: Date, default: Date.now()},
     //payment_details: GenericPaymentDetails,
     gender:String,
-    appointments: [{
+    /*appointments: [{
         type: mongoose.Types.ObjectId,
         ref: 'appointments',
         autopopulate: true
-    }],
+    }],*/
     records: [{
         type: mongoose.Types.ObjectId,
         ref: 'records',
@@ -42,7 +42,7 @@ const GenericUserObject = {
     }],
     //image: { type: Object, trim: true},
     //for doctors only
-    isAvailable: {type: Boolean}
+    isAvailable: {type: Boolean, default:true}
 };
 
 module.exports={

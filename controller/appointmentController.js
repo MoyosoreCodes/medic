@@ -1,21 +1,22 @@
 const appointmentModel = require('../model/appointmentModel');
 const { user_types } = require('../model/userModel');
-const userDB = require('../database/userDB');
+const userDB = require('../database/userDB').User;
 const appointmentService = require('../services/appointmentService');
 
 module.exports ={
 //who can create appointments?? 
 //if it's  patients then the creation process should check for available doctors
     create: async (data) => {
-        console.log(data.body)
         try {
 
             //initialize variables
             const body = data.body;
             console.log(body)
             var availableDoctor, patient
+            const cardNumber = body.cardNumber.trim()
 
-            const user = await userDB.findOne({cardNumber: body.cardNumber});
+            const user = await userDB.findOne({cardNumber});
+            //console.log(user);
             if(!user) {
                 return {
                     status: 404,
@@ -23,9 +24,11 @@ module.exports ={
                     data: null
                 }
             }
+            //.log(user)
             if(user.user_type.toUpperCase() == user_types.PATIENT) {
                 //then check for available doctors
                 const doctorToAssign = await appointmentService.findAvailableDoctor();
+                console.log(doctorToAssign.data);
                 availableDoctor = {'doctor': doctorToAssign.data};
                 Object.assign(body, availableDoctor);
                 //body.doctor = availableDoctor.data
@@ -35,6 +38,7 @@ module.exports ={
                     patient = {'patient': user._id};
                     Object.assign(body, patient);
                     //body.patient = user._id;
+                    console.log(body)
                     const newAppointment = await appointmentModel.create(body);
                     if(!newAppointment) {
                         console.log('error is at making new appointment');
@@ -46,7 +50,7 @@ module.exports ={
                     }
                     return {
                         status: 200,
-                        message: 'appointments created by' + user.user_type,
+                        message: 'appointments created successfully',
                         data: newAppointment
                     }
                 }

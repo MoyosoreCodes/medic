@@ -4,7 +4,7 @@ const userDB = require('../database/userDB');
 module.exports = {
     addUser: async function(data){
         try {       
-            let user_type = data.user_type
+            //let user_type = data.user_type
             let dbUser = userDB.User
             let email = data.email
 
@@ -20,7 +20,7 @@ module.exports = {
             let newUser = new dbUser(data);
      
              //set health cared number if user is a patient
-            if(user_type.toLowerCase() === userModels.user_types.PATIENT.toLowerCase()){      
+            if(newUser.user_type.toLowerCase() === userModels.user_types.PATIENT.toLowerCase()){      
                  newUser.setHealthCardNumber()
             }
             // set password

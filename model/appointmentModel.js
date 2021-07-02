@@ -16,20 +16,20 @@ const appointmentObject = {
     patient: [{
         type: mongoose.Types.ObjectId,
         ref: 'users',
-        autopopulate:{select: '-password first_name last_name email phoneNumber'}
+        //autopopulate:{select: '-password first_name last_name email phoneNumber'}
     }],
-    appointmentDate: Date,
+    appointmentDate: String,
     appointmentTime: String,
     symptoms: String,
     doctor:[{
         type: mongoose.Types.ObjectId,
         ref: 'users',
-        autopopulate:{select: '-password first_name last_name email phoneNumber'}
+        //autopopulate:{select: '-password first_name last_name email phoneNumber'}
     }],
 };
 
 const appointmentSchema = Schema(appointmentObject, {timestamps: true});
-appointmentSchema.plugin(require('mongoose-autopopulate'));
+//appointmentSchema.plugin(require('mongoose-autopopulate'));
 const Appointment = mongoose.model('Appointment', appointmentSchema);
 
 module.exports = Appointment
