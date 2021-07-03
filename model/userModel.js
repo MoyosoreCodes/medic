@@ -24,7 +24,7 @@ const GenericUserObject = {
     cardNumber:String,
     //doctors only
     qualification: String,
-    specialities: [String],
+    specialties: [String],
     user_type: {type: String,default: user_types.PATIENT},
     address: {full_address:String},
     last_login: {type: Date, default: Date.now()},
@@ -38,7 +38,7 @@ const GenericUserObject = {
     records: [{
         type: mongoose.Types.ObjectId,
         ref: 'records',
-        autopopulate: true
+        //autopopulate: true
     }],
     //image: { type: Object, trim: true},
     //for doctors only

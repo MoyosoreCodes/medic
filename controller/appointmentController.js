@@ -2,6 +2,7 @@ const appointmentModel = require('../model/appointmentModel');
 const { user_types } = require('../model/userModel');
 const userDB = require('../database/userDB').User;
 const appointmentService = require('../services/appointmentService');
+const recordModel = require('../model/recordModel').Records;
 
 module.exports ={
 //who can create appointments?? 
@@ -48,10 +49,15 @@ module.exports ={
                             data: null
                         }
                     }
+                    const newRecord = await recordModel.updateOne({
+                        patientId: user._id
+                    }, {
+                        appointments: newAppointment._id
+                    },{upsert:true})
                     return {
                         status: 200,
-                        message: 'appointments created successfully',
-                        data: newAppointment
+                        message: 'Appointments created successfully',
+                        data: newRecord
                     }
                 }
             }

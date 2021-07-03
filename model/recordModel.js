@@ -10,7 +10,7 @@ const userRecordObject = {
     patientId: [{
         type: mongoose.Types.ObjectId,
         ref: 'users',
-        autopopulate:true
+        //autopopulate:true
     }],
     //find data for records you can use them for medication
     observations: {type: String, default: 'PENDING'},
@@ -22,14 +22,14 @@ const userRecordObject = {
     weight: {type: String, default: 'N/A'},
     medications: medicationObject,
     pulse_rate: {type: String, default: 'N/A'},
-    consultion_date:String,
+    consultion_date:{type: String, default: 'N/A'},
     appointments: [{
         type: mongoose.Types.ObjectId,
         ref: 'appointments',
-        autopopulate:true
+        //autopopulate:true
     }]
 }
 const userRecordSchema = Schema(userRecordObject, {timestamps: true});
-userRecordSchema.plugin(require('mongoose-autopopulate'));
+//userRecordSchema.plugin(require('mongoose-autopopulate'));
 const Records =  mongoose.model('Records', userRecordSchema, 'records');
 module.exports = {userRecordObject, Records}
