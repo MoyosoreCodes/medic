@@ -51,12 +51,12 @@ router.get('/login', function(req, res) {
     return res.render('login', {title, errors});
 });
 
-router.post('/login', passport.authenticate('local', 
+router.post('/login', authUser, passport.authenticate('local', 
         {failureRedirect: '/login', failureFlash: true, successRedirect:'/dashboard'}
     )
 );
 
-router.post('/register',  async (req, res) => {
+router.post('/register', authUser, async (req, res) => {
     try {
         //console.log(req.body);
         //const user_type = { 'user_type' : 'PATIENT'}
