@@ -1,17 +1,17 @@
 const LocalStrategy = require('passport-local').Strategy;
 const passport = require('passport');
 const userDb = require('../database/userDB');
-const jwt = require('jsonwebtoken');
-const RSA = require('node-rsa');
+//const jwt = require('jsonwebtoken');
+//const RSA = require('node-rsa');
 const bcrypt = require('bcrypt');
 
-let PUBLIC_IBM_RSA_KEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAm7zLYIG3tunId4XgJW0lYHfK/llz0KzTMO2zE9OqTneK0/HJDvmDNrJKFZE2SmKsW3UKaJEy19CaKgY8Ldl7z4wRwPn2qLJIyUk4gqPrEFcofTmoHHjOQqmLx5rYYnPytPJRQkdtMLjzeZmMS/4IU2n0yxDFl7c807j47LO9MrAwsTT29IVPJZaoz6/X/sBS9Q1ssFhUZxCj0JKNvjNIfCSWxOPAVOERlRowCfKwnJGCyXXv+sibA0s1zlgBaYyFy9P5C6ls3doS4s9Kj1mWaNA/iR7sWgksznF+Sgel0BaJ0prfRZbDcmUS4OMIZUlIAhgjH++MNxIsfKF+s8yqJQIDAQAB";
+//let PUBLIC_IBM_RSA_KEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAm7zLYIG3tunId4XgJW0lYHfK/llz0KzTMO2zE9OqTneK0/HJDvmDNrJKFZE2SmKsW3UKaJEy19CaKgY8Ldl7z4wRwPn2qLJIyUk4gqPrEFcofTmoHHjOQqmLx5rYYnPytPJRQkdtMLjzeZmMS/4IU2n0yxDFl7c807j47LO9MrAwsTT29IVPJZaoz6/X/sBS9Q1ssFhUZxCj0JKNvjNIfCSWxOPAVOERlRowCfKwnJGCyXXv+sibA0s1zlgBaYyFy9P5C6ls3doS4s9Kj1mWaNA/iR7sWgksznF+Sgel0BaJ0prfRZbDcmUS4OMIZUlIAhgjH++MNxIsfKF+s8yqJQIDAQAB";
 
-const rsa_key = new RSA(PUBLIC_IBM_RSA_KEY);
+//const rsa_key = new RSA(PUBLIC_IBM_RSA_KEY);
 
-const jwtSignIn = () => {
+//const jwtSignIn = () => {
 
-} 
+//} 
 
 passport.use(new LocalStrategy({
             usernameField: 'email',
