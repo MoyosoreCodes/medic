@@ -39,7 +39,7 @@ const validations = [
         .withMessage('invalid email')
 ];
 */
-router.get('/', function(req, res) {
+router.get('/',authUser, function(req, res) {
     const title = "Home"
     res.render('landing', {title});
 });
