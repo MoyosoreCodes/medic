@@ -1,7 +1,7 @@
 const LocalStrategy = require('passport-local').Strategy;
 const passport = require('passport');
 const userDb = require('../database/userDB');
-const jwt = require('jsonwebtokens');
+const jwt = require('jsonwebtoken');
 const RSA = require('node-rsa');
 const bcrypt = require('bcrypt');
 
@@ -10,7 +10,7 @@ let PUBLIC_IBM_RSA_KEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAm7zLYIG3tu
 const rsa_key = new RSA(PUBLIC_IBM_RSA_KEY);
 
 const jwtSignIn = () => {
-    
+
 } 
 
 passport.use(new LocalStrategy({
