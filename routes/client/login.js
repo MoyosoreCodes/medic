@@ -44,7 +44,7 @@ router.get('/', function(req, res) {
     res.render('landing', {title});
 });
 
-router.get('/login', function(req, res) {
+router.get('/login',authUser, function(req, res) {
     const errors = req.flash('error') || [];
     //console.log(errors);
     const title = "Login"
