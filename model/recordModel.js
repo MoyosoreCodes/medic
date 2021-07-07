@@ -20,9 +20,9 @@ const userRecordObject = {
     genotype: {type: String, default: 'N/A'},
     temperature: {type: String, default: 'N/A'},
     weight: {type: String, default: 'N/A'},
-    medications: medicationObject,
+    medications: [medicationObject],
     pulse_rate: {type: String, default: 'N/A'},
-    consultion_date:{type: String, default: 'N/A'},
+    consultation_date:{type: String, default: 'N/A'},
     appointments: [{
         type: mongoose.Types.ObjectId,
         ref: 'appointments',

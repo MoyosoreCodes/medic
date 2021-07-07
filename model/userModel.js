@@ -26,15 +26,10 @@ const GenericUserObject = {
     qualification: String,
     specialties: [String],
     user_type: {type: String,default: user_types.PATIENT},
-    address: {full_address:String},
+    address: String,
     last_login: {type: Date, default: Date.now()},
     //payment_details: GenericPaymentDetails,
     gender:String,
-    /*appointments: [{
-        type: mongoose.Types.ObjectId,
-        ref: 'appointments',
-        autopopulate: true
-    }],*/
     records: [{
         type: mongoose.Types.ObjectId,
         ref: 'records',
@@ -42,7 +37,7 @@ const GenericUserObject = {
     }],
     //image: { type: Object, trim: true},
     //for doctors only
-    isAvailable: {type: Boolean, default:true}
+    isAvailable: {type: Boolean}
 };
 
 module.exports={

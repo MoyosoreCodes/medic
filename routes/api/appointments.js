@@ -5,7 +5,7 @@ const userController = require('../../controller/userController');
 
 //get appointment
 router.get('/', async (req, res) => {
-    const result = await userController.list(req);
+    const result = await appointmentController.view(req);
     //console.log(result.message);
     return res.status(result.status).json(result);
 });

@@ -1,39 +1,32 @@
 const userDB = require('../database/userDB').User;
+const recordModel = require('../model/recordModel').Records;
 
 module.exports = {
-    //need to work on this
-    //to list all appointments for a paticular patient or doctor depending on who logs in
-    list: async (data) => {
-        //to be used by everyone
-        //may need to perform lookup
-        //think this function will produce all user data
+    //view medications
+    viewMedication: async (data) => {
         try {
-            const _id = data.user.toString();
-            const user = await userDB.findOne({_id});
-            
-            //const _id = data.user._id;
-            //const user_type = data.user.user_type;
+            const body = data.body;
+            const foundUser = await userServices.getUserByCardNumber(body.cardNumber);
+            const user = foundUser.data
 
-            const userAppointment = await userDB.aggregate([
-                    {$match: {_id}}, 
-                    {
-                        $lookup: {
-                            from: 'appointments',
-                            localField: 'appointments',
-                            foreignField: `${user.user_type.toLowerCase()}`,
-                            as: 'appointments' 
-                        }
-                    }
-                ]);
-            if(!userAppointment){
-                console.log('error is at getting user data');
+            const records = await recordModel.findOne({patientId: user._id})
+            const medications = records.medications;
+
+            if(!medications || medications == null || medications.isEmpty()){
                 return {
-                    status: 500,
-                    message: 'Appointment retrieval failed',
+                    status: 404,
+                    message: 'You currently have no medications',
                     data: null
                 }
             }
 
+            return {
+                status: 200,
+                message: `You currently have ${medications.length} medications`,
+                data: medications
+            }
+            // create a mapping function to map each medications
+            //sth like this
         } catch (error) {
             return {
                 status: 500,
@@ -44,10 +37,19 @@ module.exports = {
         
     },
 
-    //view medications
-
     //create/update records 
-    createRecord: async () => {
+    createRecord: async (data) => {
+        const body = data.body
 
+        const newRecord = await recordModel.updateOne({
+            patientId: user._id
+        }, {
+            body
+        },{upsert:true})
+        return {
+            status: 200,
+            message: 'Appointments created successfully',
+            data: newRecord
+        }
     }
 }
