@@ -7,6 +7,12 @@ const appointment_types = {
     ROUTINE_CHECK: 'ROUTINE_CHECK'
 };
 
+const appointment_status = {
+    PENDING: 'PENDING',
+    CANCELLED: 'CANCELLED',
+    APPROVED: 'APPROVED'
+}
+
 const appointmentObject = {
     appointment_type: {
         type: String,
@@ -26,10 +32,11 @@ const appointmentObject = {
         ref: 'users',
         //autopopulate:{select: '-password first_name last_name email phoneNumber'}
     }],
+    status: {type: String, default: appointment_status.PENDING}
 };
 
 const appointmentSchema = Schema(appointmentObject, {timestamps: true});
 //appointmentSchema.plugin(require('mongoose-autopopulate'));
 const Appointment = mongoose.model('Appointment', appointmentSchema);
 
-module.exports = Appointment
+module.exports = {Appointment, appointment_types, appointment_status}

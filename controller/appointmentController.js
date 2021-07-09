@@ -1,7 +1,5 @@
-const appointmentModel = require('../model/appointmentModel');
+const {Appointment, appointment_types, appointment_status} = require('../model/appointmentModel');
 const { user_types } = require('../model/userModel');
-const userDB = require('../database/userDB').User;
-const appointmentService = require('../services/appointmentService');
 const recordModel = require('../model/recordModel').Records;
 const userServices = require('../services/userServices');
 
@@ -16,24 +14,40 @@ module.exports ={
             console.log(body)
             var availableDoctor, patient
 
-            const foundUser = await userServices.getUserByCardNumber(body.cardNumber);
-            const user = foundUser.data
+            const foundUser = await userServices.getPatientByCardNumber(body.cardNumber);
+            if (foundUser.status == 404 || foundUser.status == 500)
+            {
+                return {
+                    status: foundUser.status,
+                    message: foundUser.message,
+                }   
+            }
+            const user = foundUser.data;
+
             
             if(user.user_type.toUpperCase() == user_types.PATIENT) {
                 //then check for available doctors
-                const doctorToAssign = await appointmentService.findAvailableDoctor();
-                console.log(doctorToAssign.data);
-                availableDoctor = {'doctor': doctorToAssign.data};
+                const doctorToAssign = await userServices.findAvailableDoctor();
+                //console.log(doctorToAssign.data);
+                if(doctorToAssign.status == 404 || doctorToAssign.status == 500)
+                {
+                    return {
+                        status: doctorToAssign.status,
+                        message: doctorToAssign.message,
+                    }   
+                }
+                availableDoctor = {'doctor': doctorToAssign.data._id};
                 Object.assign(body, availableDoctor);
                 //body.doctor = availableDoctor.data
                 //if there is an available doctor 
+                
                 if(body.doctor !== null || body.doctor !== undefined || body.doctor == ''){
                     //then create appointment for patient
                     patient = {'patient': user._id};
                     Object.assign(body, patient);
                     //body.patient = user._id;
                     console.log(body)
-                    const newAppointment = await appointmentModel.create(body);
+                    const newAppointment = await Appointment.create(body);
                     if(!newAppointment) {
                         console.log('error is at making new appointment');
                         return {
@@ -49,7 +63,7 @@ module.exports ={
                     },{upsert:true})
                     return {
                         status: 200,
-                        message: 'Appointments created successfully',
+                        message: `Appointments created successfully with Dr. ${doctorToAssign.data.first_name}`,
                         data: newRecord
                     }
                 }
@@ -67,15 +81,17 @@ module.exports ={
     view: async (data) => {
         try{
             const body = data.body;
-            const foundUser = await userServices.getUserByCardNumber(body.cardNumber);
+            const foundUser = await userServices.getPatientByCardNumber(body.cardNumber);
             const user = foundUser.data
 
-            const userAppointments =  await appointmentModel.find({
-                patient: user._id
-            })
+            const userAppointments =  await Appointment.find({
+                patient: user._id, 
+                status: `${appointment_status.PENDING}`
+            });
+            const appointmentCount = userAppointments.count();
 
             console.log(userAppointments);
-            if(!userAppointments) {
+            if(!userAppointments || userAppointments == []) {
                 return {
                     status: 404,
                     message: 'You have no pending appointment(s)',
@@ -83,7 +99,6 @@ module.exports ={
                 }
             }
 
-            const appointmentCount = userAppointments.count()
             return {
                 status: 200,
                 message: `You have ${appointmentCount} pending appointment(s)`,
@@ -98,5 +113,31 @@ module.exports ={
                 data: error
             }
         }
-    }
+    },
+
+  /*  viewAppointmentStatus: async (data) => {
+        try {
+            //passing name of doctor too??, not sure
+            const body = data.body;
+            const {cardNumber, doctor} = body;
+
+            const foundUser = await userServices.getPatientByCardNumber(cardNumber);
+            if (foundUser.status == 404 || foundUser.status == 500)
+            {
+                return {
+                    status: foundUser.status,
+                    message: foundUser.message,
+                }   
+            }
+            const user = foundUser.data._id;
+
+            //const foundDoctor = await userServices.findAvailableDoctor()
+            return{
+                status:200,
+                message: `your `
+            }
+        } catch (error) {
+            
+        }
+    }*/
 }

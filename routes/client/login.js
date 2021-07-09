@@ -79,8 +79,8 @@ router.get('/dashboard', authUser, async (req, res) => {
     //console.log(req.session.user);
     const _id =  req.session.passport.user;
     const user = await userDB.User.findOne({_id})
-    const record = await userRecords.Records.findOne({patientId: _id})
+    const records = await userRecords.Records.findOne({patientId: _id})
 
-    return res.render('profile', { user, record })
+    return res.render('profile', { user, records })
 })
 module.exports = router 

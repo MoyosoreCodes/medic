@@ -41,7 +41,7 @@
                     </p>
                     <p class="mobile-no">
                         <i class="fa fa-phone"></i>
-                        <%= user.phoneNumber%>
+                        <%= user.phoneNumber ? user.phoneNumber : 'N/A'%>
                     </p>
                     <p class="user-mail">
                         <i class="fa fa-envelope"></i>
@@ -53,6 +53,15 @@
                         <div class="user-bio">
                             <h3>Records</h3>
                             <p class="bio">
+                            <%   if (records) { %>
+                                <% records.forEach(record => { %>
+                                    <% record.blood_type %>
+                                <% }) %>
+                            <% } else {%>
+                                <p class="bio"> 
+                                    no records yet
+                                </p>
+                            <% } %>
                             </p>
                         </div>
                     <% } else { %>
@@ -72,7 +81,7 @@
                         </button>
                         <button class="createbtn">
                             <i class="fa fa-plus"></i>
-                            <a href="/appointments">Make an Appointment</a>
+                            <a href="/appointments/create">Make an Appointment</a>
                         </button>
                     </div>
                     <!--

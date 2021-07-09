@@ -49,7 +49,6 @@ module.exports = {
             return error
         }
     },
-
     getUserById: async function (data, cb) {   
         try {
             const email = data.email;
@@ -73,8 +72,7 @@ module.exports = {
             return error
         } 
     },
-
-    getUserByCardNumber: async (cardNumber) => {
+    getPatientByCardNumber: async (cardNumber) => {
 
         try{
             let dbUser = userDB.User;
@@ -104,6 +102,35 @@ module.exports = {
         }
 
     },
+    findAvailableDoctor: async () => {
+        try {
+            let query = {
+                'isAvailable' : true, 
+                'user_type': 'DOCTOR'
+            }
+            const dbUser = userDB.User;
+            const availableDoctor = await dbUser.findOne(query) 
+            if(!availableDoctor) {
+                return {
+                    status: 404,
+                    message: 'no available doctors',
+                    data: null
+                }
+            }
+            return {
+                status: 201,
+                message: 'available doctor found',
+                data: availableDoctor
+            }
+        } catch (error) {
+            return {
+                status: 500,
+                message: 'Error finding doctor',
+                data: error
+            }
+        }
+        
+    },
     deleteUser: async (_id) => {
         let dbUser = userDB.User;
         await dbUser.deleteOne({_id},function (err) {
@@ -111,7 +138,6 @@ module.exports = {
         });
         return true
     },
-    
     updateUser: async (data) => {
         try {
             let user = userDB.User;
