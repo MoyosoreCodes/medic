@@ -7,11 +7,18 @@ const appointment_status = {
     APPROVED: 'APPROVED'
 }
 
+const vist_types = {
+    ACADEMIC:'ACADEMIC'
+}
 const appointmentObject = {
     patient: {
         type: mongoose.Types.ObjectId,
         ref: 'users',
         //autopopulate:{select: '-password first_name last_name email phoneNumber'}
+    },
+    type: {
+        type: String,
+        default: vist_types.ACADEMIC
     },
     appointmentDate: String,
     appointmentTime: String,
