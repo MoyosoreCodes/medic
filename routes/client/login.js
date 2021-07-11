@@ -82,5 +82,9 @@ router.get('/dashboard', authUser, async (req, res) => {
     const records = await userRecords.Records.findOne({patientId: _id})
 
     return res.render('profile', { user, records })
+});
+
+router.get('/logout', (req, res) => {
+    
 })
 module.exports = router 

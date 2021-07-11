@@ -23,7 +23,7 @@ module.exports = {
             return {
                 status: 201,
                 message: 'available doctor found',
-                data: availableDoctor._id
+                data: availableDoctor
             }
         } catch (error) {
             return {
