@@ -1,5 +1,6 @@
 const userModels = require('../model/userModel');
 const userDB = require('../database/userDB');
+const user_type = require('../model/userModel').user_types
 
 module.exports = {
     addUser: async function(data){
@@ -18,13 +19,8 @@ module.exports = {
                 }
             }
             let newUser = new dbUser(data);
-     
-             //set health cared number if user is a patient
-            if(newUser.user_type.toUpperCase() === userModels.user_types.PATIENT){      
-                 newUser.setHealthCardNumber()
-            }
-            //set availability status if user is a doctor
-            if(newUser.user_type.toUpperCase() === userModels.user_types.DOCTOR){      
+            
+            if(newUser.user_type.toUpperCase() === userModels.user_types.COUNSELLOR){      
                 newUser.isAvailable = true
             }    
             // set password
@@ -72,13 +68,13 @@ module.exports = {
             return error
         } 
     },
-    getPatientByCardNumber: async (cardNumber) => {
+    getPatientId: async (patientId) => {
 
         try{
             let dbUser = userDB.User;
-            cardNumber.trim();
+            patientId.trim();
 
-            const user = await dbUser.findOne({cardNumber});
+            const user = await dbUser.findOne({patientId});
             //console.log(user);
             if(!user) {
                 return {
@@ -102,11 +98,11 @@ module.exports = {
         }
 
     },
-    findAvailableDoctor: async () => {
+    findAvailableCounsellor: async () => {
         try {
             let query = {
                 'isAvailable' : true, 
-                'user_type': 'DOCTOR'
+                'user_type': `${user_type.COUNSELLOR}`
             }
             const dbUser = userDB.User;
             const availableDoctor = await dbUser.findOne(query) 

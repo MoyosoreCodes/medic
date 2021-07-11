@@ -37,7 +37,6 @@ router.post('/message', async (req ,res) => {
     }
 })
 
-
 //get appointment
 router.post('/appointment/view', async (req, res) => {
     const result = await appointmentController.view(req);

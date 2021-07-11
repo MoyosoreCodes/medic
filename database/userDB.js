@@ -1,21 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const GenericUserObject = require('../model/userModel').GenericUserObject;
+const {GenericUserObject} = require('../model/userModel');
 const bcrypt = require('bcrypt');
-const user_types = require('../model/userModel').user_types;
-
-//function for setting user health card number
-var setHealthCardNumber = function() {
-    var length = 3;
-    var result           = 'CUHC';
-    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    var charactersLength = characters.length;
-    for ( var i = 0; i < length; i++ ) {
-        result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    }
-    this.cardNumber = result;
-    return true
-};
 
 //function for setting password
 var setPassword = async function(password){
@@ -50,10 +36,9 @@ var validatePassword = async function(password){
 
 const userObject = GenericUserObject;
 const userSchema = new Schema(userObject, {timestamps: true});
-userSchema.methods.setHealthCardNumber = setHealthCardNumber;
 userSchema.methods.setPassword = setPassword;
 userSchema.methods.validatePassword = validatePassword;
-//userSchema.plugin(require('mongoose-autopopulate'));
+
 const User = mongoose.model('User', userSchema, 'users');
 
 module.exports ={

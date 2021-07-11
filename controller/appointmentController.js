@@ -1,20 +1,19 @@
 const {Appointment, appointment_types, appointment_status} = require('../model/appointmentModel');
 const { user_types } = require('../model/userModel');
-const recordModel = require('../model/recordModel').Records;
 const userServices = require('../services/userServices');
+const userDb = require('../database/userDB').User
 
 module.exports ={
 //who can create appointments?? 
 //if it's  patients then the creation process should check for available doctors
     create: async (data) => {
         try {
-
             //initialize variables
             const body = data.body;
             console.log(body)
             var availableDoctor, patient
 
-            const foundUser = await userServices.getPatientByCardNumber(body.cardNumber);
+            const foundUser = await userServices.getPatientId(body.patientId);
             if (foundUser.status == 404 || foundUser.status == 500)
             {
                 return {
@@ -27,7 +26,7 @@ module.exports ={
             
             if(user.user_type.toUpperCase() == user_types.PATIENT) {
                 //then check for available doctors
-                const doctorToAssign = await userServices.findAvailableDoctor();
+                const doctorToAssign = await userServices.findAvailableCounsellor();
                 //console.log(doctorToAssign.data);
                 if(doctorToAssign.status == 404 || doctorToAssign.status == 500)
                 {
@@ -36,10 +35,9 @@ module.exports ={
                         message: doctorToAssign.message,
                     }   
                 }
-                availableDoctor = {'doctor': doctorToAssign.data._id};
+                availableDoctor = {'counsellor': doctorToAssign.data._id};
                 Object.assign(body, availableDoctor);
-                //body.doctor = availableDoctor.data
-                //if there is an available doctor 
+                //if there is an available counsellor 
                 
                 if(body.doctor !== null || body.doctor !== undefined || body.doctor == ''){
                     //then create appointment for patient
@@ -56,11 +54,12 @@ module.exports ={
                             data: null
                         }
                     }
-                    const newRecord = await recordModel.updateOne({
-                        patientId: user._id
-                    }, {
-                        appointments: newAppointment._id
-                    },{upsert:true})
+                    const appointment = await Appointment.findOne({_id: newAppointment._id})
+                    const newRecord = await userDb.updateOne({
+                        _id: user._id
+                    },{
+                        appointments: appointment._id
+                    })
                     return {
                         status: 200,
                         message: `Appointments created successfully with Dr. ${doctorToAssign.data.first_name}`,
@@ -80,8 +79,8 @@ module.exports ={
 
     view: async (data) => {
         try{
-            const {cardNumber, appointmentDate} = data.body;
-            const foundUser = await userServices.getPatientByCardNumber(cardNumber);
+            const {patientId, appointmentDate} = data.body;
+            const foundUser = await userServices.getPatientId(patientId);
             const user = foundUser.data
 
             const userAppointments =  await Appointment.find({
@@ -102,7 +101,7 @@ module.exports ={
 
             return {
                 status: 200,
-                message: `You have ${appointmentCount} pending appointment(s)`,
+                message: `You have ${appointmentCount} pending appointment(s) for ${appointmentDate}`,
                 url:'https://ehrsys-api.herokuapp.com/dashboard/appointments',
                 data: null
             }
@@ -115,30 +114,4 @@ module.exports ={
             }
         }
     },
-
-  /*  viewAppointmentStatus: async (data) => {
-        try {
-            //passing name of doctor too??, not sure
-            const body = data.body;
-            const {cardNumber, doctor} = body;
-
-            const foundUser = await userServices.getPatientByCardNumber(cardNumber);
-            if (foundUser.status == 404 || foundUser.status == 500)
-            {
-                return {
-                    status: foundUser.status,
-                    message: foundUser.message,
-                }   
-            }
-            const user = foundUser.data._id;
-
-            //const foundDoctor = await userServices.findAvailableDoctor()
-            return{
-                status:200,
-                message: `your `
-            }
-        } catch (error) {
-            
-        }
-    }*/
 }

@@ -1,55 +1,34 @@
-const userDB = require('../database/userDB').User;
-const recordModel = require('../model/recordModel').Records;
+const {User} = require('../database/userDB');
+const {Session} = require('../model/sessionModel');
+const userServices = require('../services/userServices');
 
 module.exports = {
-    //view medications
-    viewMedication: async (data) => {
-        try {
-            const body = data.body;
-            const foundUser = await userServices.getUserByCardNumber(body.cardNumber);
-            const user = foundUser.data
-
-            const records = await recordModel.findOne({patientId: user._id})
-            const medications = records.medications;
-
-            if(!medications || medications == null || medications.isEmpty()){
-                return {
-                    status: 404,
-                    message: 'You currently have no medications',
-                    data: null
-                }
-            }
-
-            return {
-                status: 200,
-                message: `You currently have ${medications.length} medications`,
-                data: medications
-            }
-            // create a mapping function to map each medications
-            //sth like this
-        } catch (error) {
-            return {
-                status: 500,
-                message: 'Error getting appointment',
-                data: error
-            }
-        }
-        
-    },
-
     //create/update records 
-    createRecord: async (data) => {
+    createUserSession: async (data) => {
         const body = data.body
+        const foundUser = await userServices.getPatientId(body.patientId);
+        const user = foundUser.data
+        const newRecord = await Session.create({
+            patientId: user._id,
+            //find data for records you can use them for medication
+            observations: body.observations,
+            treatment: body.treatment,
+            intervention: body.intervention,
+            topics_discussed: body.topics_discussed,  
+            themes_discussed: body.themes_discussed,
+            responses: body.responses,
+        });
 
-        const newRecord = await recordModel.updateOne({
-            patientId: user._id
-        }, {
-            body
-        },{upsert:true})
+        const session = await Session.findOne({_id: newRecord._id})
+
+        const updatedUser = await User.updateOne({
+            _id: user._id,
+        }, {sessions: session._id});
+
         return {
             status: 200,
-            message: 'Appointments created successfully',
-            data: newRecord
+            message: 'session created successfully',
+            data: updatedUser
         }
     }
 }
