@@ -58,4 +58,4 @@ app.use(express.static(path.join(__dirname, 'public')));
 //rendering views
 app.use('/', require('./routes/client/login'));
 app.use('/watson', require('./routes/api/watson'));
-app.use('/appointments', require('./routes/api/appointments'));
+//app.use('/appointments', require('./routes/client/appointments'));

@@ -7,7 +7,7 @@ const user_types = require('../model/userModel').user_types;
 //function for setting user health card number
 var setHealthCardNumber = function() {
     var length = 3;
-    var result           = 'CU-HC';
+    var result           = 'CUHC';
     var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     var charactersLength = characters.length;
     for ( var i = 0; i < length; i++ ) {

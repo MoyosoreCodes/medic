@@ -80,13 +80,14 @@ module.exports ={
 
     view: async (data) => {
         try{
-            const body = data.body;
-            const foundUser = await userServices.getPatientByCardNumber(body.cardNumber);
+            const {cardNumber, appointmentDate} = data.body;
+            const foundUser = await userServices.getPatientByCardNumber(cardNumber);
             const user = foundUser.data
 
             const userAppointments =  await Appointment.find({
                 patient: user._id, 
-                status: `${appointment_status.PENDING}`
+                status: `${appointment_status.PENDING}`,
+                appointmentDate
             });
             const appointmentCount = userAppointments.count();
 
@@ -94,7 +95,7 @@ module.exports ={
             if(!userAppointments || userAppointments == []) {
                 return {
                     status: 404,
-                    message: 'You have no pending appointment(s)',
+                    message: `You have no pending appointments for ${appointmentDate}`,
                     data: null
                 }
             }
