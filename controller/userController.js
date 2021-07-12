@@ -12,7 +12,7 @@ module.exports = {
             const records = await recordModel.findOne({patientId: user._id}).populate("appointments", "doctor appointmentDate appointmentTime symptoms")
             const medications = records.medications;
 
-            if(!medications || medications == null || medications.isEmpty()){
+            if(!medications || medications == null || medications.isEmpty() || medication.length < 0){
                 return {
                     status: 404,
                     message: 'You currently have no medications',
@@ -88,7 +88,7 @@ module.exports = {
                     message: 'Record not found',
                 }   
             }
-            
+
             return {
                 status: 200,
                 message: 'medications added',
