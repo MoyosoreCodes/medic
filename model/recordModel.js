@@ -4,15 +4,15 @@ const Schema = mongoose.Schema
 const medicationObject = {
     type:{type: String, default: 'N/A'},
     description:{type: String, default: 'N/A'},
-    name:{type: String, default: 'N/A'}
+    name:{type: String, default: 'N/A'},
+    dosage: {type: String, default: 'N/A'}
 }
 const userRecordObject = {
-    patientId: [{
+    patientId: {
         type: mongoose.Types.ObjectId,
         ref: 'users',
         //autopopulate:true
-    }],
-    //find data for records you can use them for medication
+    },
     observations: {type: String, default: 'PENDING'},
     blood_type: {type: String, default: 'N/A'},
     blood_pressure: {type: String, default: 'N/A'},

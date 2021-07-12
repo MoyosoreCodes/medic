@@ -19,19 +19,19 @@ const appointmentObject = {
         default: appointment_types.NEW_CASE,
         trim: true
     },
-    patient: [{
+    patient: {
         type: mongoose.Types.ObjectId,
         ref: 'users',
         //autopopulate:{select: '-password first_name last_name email phoneNumber'}
-    }],
+    },
     appointmentDate: String,
     appointmentTime: String,
     symptoms: String,
-    doctor:[{
+    doctor:{
         type: mongoose.Types.ObjectId,
         ref: 'users',
         //autopopulate:{select: '-password first_name last_name email phoneNumber'}
-    }],
+    },
     status: {type: String, default: appointment_status.PENDING}
 };
 

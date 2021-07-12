@@ -39,24 +39,24 @@ const validations = [
         .withMessage('invalid email')
 ];
 */
-router.get('/',authUser, function(req, res) {
+router.get('/', function(req, res) {
     const title = "Home"
     res.render('landing', {title});
 });
 
-router.get('/login',authUser, function(req, res) {
+router.get('/login', function(req, res) {
     const errors = req.flash('error') || [];
     //console.log(errors);
     const title = "Login"
     return res.render('login', {title, errors});
 });
 
-router.post('/login', authUser, passport.authenticate('local', 
+router.post('/login', passport.authenticate('local', 
         {failureRedirect: '/login', failureFlash: true, successRedirect:'/dashboard'}
     )
 );
 
-router.post('/register', authUser, async (req, res) => {
+router.post('/register', async (req, res) => {
     try {
         //console.log(req.body);
         //const user_type = { 'user_type' : 'PATIENT'}

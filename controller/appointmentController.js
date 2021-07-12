@@ -56,15 +56,24 @@ module.exports ={
                             data: null
                         }
                     }
-                    const newRecord = await recordModel.updateOne({
-                        patientId: user._id
-                    }, {
-                        appointments: newAppointment._id
-                    },{upsert:true})
+                    const newRecord = await recordModel.updateOne(
+                        {patientId: user._id},
+                        {"$push": {"appointments": newAppointment._id} },
+                        {upsert:true}
+                    )
+
+                    const foundRecord = await recordModel.findById({_id: newRecord._id})
+                    if(!foundRecord) {
+                        return {
+                            status: 404,
+                            message: 'Record not found',
+                        }   
+                    }
+                    
                     return {
                         status: 200,
                         message: `Appointments created successfully with Dr. ${doctorToAssign.data.first_name}`,
-                        data: newRecord
+                        data: foundRecord
                     }
                 }
             }
@@ -116,29 +125,4 @@ module.exports ={
         }
     },
 
-  /*  viewAppointmentStatus: async (data) => {
-        try {
-            //passing name of doctor too??, not sure
-            const body = data.body;
-            const {cardNumber, doctor} = body;
-
-            const foundUser = await userServices.getPatientByCardNumber(cardNumber);
-            if (foundUser.status == 404 || foundUser.status == 500)
-            {
-                return {
-                    status: foundUser.status,
-                    message: foundUser.message,
-                }   
-            }
-            const user = foundUser.data._id;
-
-            //const foundDoctor = await userServices.findAvailableDoctor()
-            return{
-                status:200,
-                message: `your `
-            }
-        } catch (error) {
-            
-        }
-    }*/
 }
