@@ -49,7 +49,7 @@ module.exports = {
             return error
         }
     },
-    getUserById: async function (data, cb) {   
+    getUserById: async function (data) {   
         try {
             const email = data.email;
             const _id = data._id;
@@ -109,7 +109,8 @@ module.exports = {
                 'user_type': 'DOCTOR'
             }
             const dbUser = userDB.User;
-            const availableDoctor = await dbUser.findOne(query) 
+            const availableDoctors = await dbUser.find(query) 
+            //random doctor from all doctors
             if(!availableDoctor) {
                 return {
                     status: 404,
@@ -117,11 +118,15 @@ module.exports = {
                     data: null
                 }
             }
+            
+            const randDoctor = availableDoctors[Math.floor(Math.random() * availableDoctors.length)];
+
             return {
                 status: 201,
                 message: 'available doctor found',
-                data: availableDoctor
+                data: randDoctor
             }
+
         } catch (error) {
             return {
                 status: 500,

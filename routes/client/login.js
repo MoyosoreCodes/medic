@@ -1,21 +1,8 @@
 const express = require('express')
 const router = express.Router();
 const passport = require('../../config/passport-config');
-//const {body, validationResult} = require('express-validator');
 const userServices = require('../../services/userServices');
-const userDB = require('../../database/userDB')
-const userRecords = require('../../model/recordModel');
-//const userController = require('../../controller/userController');
 
-
-const authUser = (req, res, next) => {
-    if(req.isAuthenticated()){
-        next()
-    }
-    else {
-        return res.status(401).redirect('/login')
-    }
-}
 //middleware
 /*
 const validations = [       
@@ -73,16 +60,6 @@ router.post('/register', async (req, res) => {
     }
         
 })
-
-router.get('/dashboard', authUser, async (req, res) => {
-    //console.log(req.session);
-    //console.log(req.session.user);
-    const _id =  req.session.passport.user;
-    const user = await userDB.User.findOne({_id})
-    const records = await userRecords.Records.findOne({patientId: _id})
-
-    return res.render('profile', { user, records })
-});
 
 router.get('/logout', (req, res) => {
     

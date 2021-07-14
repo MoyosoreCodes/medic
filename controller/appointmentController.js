@@ -1,5 +1,6 @@
 const {Appointment, appointment_types, appointment_status} = require('../model/appointmentModel');
 const { user_types } = require('../model/userModel');
+const {User} = require('../database/userDB');
 const recordModel = require('../model/recordModel').Records;
 const userServices = require('../services/userServices');
 
@@ -69,7 +70,7 @@ module.exports ={
                             message: 'Record not found',
                         }   
                     }
-                    
+
                     return {
                         status: 200,
                         message: `Appointments created successfully with Dr. ${doctorToAssign.data.first_name}`,
@@ -92,19 +93,45 @@ module.exports ={
             const {cardNumber, appointmentDate} = data.body;
             const foundUser = await userServices.getPatientByCardNumber(cardNumber);
             const user = foundUser.data
+            let query
 
-            const userAppointments =  await Appointment.find({
-                patient: user._id, 
-                status: `${appointment_status.PENDING}`,
-                appointmentDate
-            });
+            if(appointmentDate || !(appointmentDate.isEmpty())) {
+                query = {
+                    "patient": user._id, 
+                    "status": `${appointment_status.PENDING}`,
+                    appointmentDate
+                }
+            }else {
+                query = {
+                    "patient": user._id, 
+                    "status": `${appointment_status.PENDING}`
+                }
+            }
+
+            
+            const userAppointments =  await Appointment.find(query);
             const appointmentCount = userAppointments.count();
-
+            
             console.log(userAppointments);
+            
+            //if no appointments
             if(!userAppointments || userAppointments == []) {
                 return {
                     status: 404,
-                    message: `You have no pending appointments for ${appointmentDate}`,
+                    message: `You have no pending appointment`,
+                    data: null
+                }
+            }
+            //if user has only one appointment
+            if(appointmentCount == 1) {
+                const _id = userAppointments[0].doctor;
+                const date = userAppointments[0].appointmentDate
+                const user = User.findById({_id});
+
+                return {
+                    status: 200,
+                    message: `You have an appointment(s) with Dr ${user.first_name} on ${date}`,
+                    url:'https://ehrsys-api.herokuapp.com/dashboard/appointments',
                     data: null
                 }
             }
@@ -125,4 +152,5 @@ module.exports ={
         }
     },
 
+    
 }
