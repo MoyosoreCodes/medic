@@ -35,7 +35,6 @@ router.post('/appointments/create', authUser, async (req, res) => {
         const body = req.body
         const _id =  req.session.passport.user;
         const user = await userDB.User.findOne({_id});
-        const availableDoctor, patient
     
         if(user.user_type.toUpperCase() == user_types.PATIENT) {
             //then check for available doctors
@@ -48,13 +47,13 @@ router.post('/appointments/create', authUser, async (req, res) => {
                     message: doctorToAssign.message,
                 }   
             }
-            availableDoctor = {'doctor': doctorToAssign.data._id};
+            const availableDoctor = {'doctor': doctorToAssign.data._id};
             Object.assign(body, availableDoctor);
             
             //if there is an available doctor 
             if(body.doctor !== null || body.doctor !== undefined || body.doctor == ''){
                 //then create appointment for patient
-                patient = {'patient': user._id};
+                const patient = {'patient': user._id};
                 Object.assign(body, patient);
     
                 const newAppointment = await Appointment.create(body);
