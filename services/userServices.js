@@ -111,7 +111,7 @@ module.exports = {
             const dbUser = userDB.User;
             const availableDoctors = await dbUser.find(query) 
             //random doctor from all doctors
-            if(!availableDoctor) {
+            if(!availableDoctors) {
                 return {
                     status: 404,
                     message: 'no available doctors',
@@ -132,7 +132,7 @@ module.exports = {
         } catch (error) {
             return {
                 status: 500,
-                message: 'Error finding doctor',
+                message: 'I could not find a doctor',
                 data: error
             }
         }
