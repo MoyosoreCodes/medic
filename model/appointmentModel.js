@@ -8,7 +8,8 @@ const appointment_status = {
 }
 
 const vist_types = {
-    ACADEMIC:'ACADEMIC'
+    ACADEMIC: 'ACADEMIC',
+    SPIRITUAL: 'SPIRITUAL',
 }
 const appointmentObject = {
     patient: {
@@ -16,13 +17,12 @@ const appointmentObject = {
         ref: 'users',
         //autopopulate:{select: '-password first_name last_name email phoneNumber'}
     },
-    type: {
+    couselling_type: {
         type: String,
         default: vist_types.ACADEMIC
     },
     appointmentDate: String,
     appointmentTime: String,
-    symptoms: String,
     counsellor:{
         type: mongoose.Types.ObjectId,
         ref: 'users',

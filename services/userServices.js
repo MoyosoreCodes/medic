@@ -21,7 +21,7 @@ module.exports = {
             let newUser = new dbUser(data);
             
             if(newUser.user_type.toUpperCase() === userModels.user_types.COUNSELLOR){      
-                newUser.isAvailable = true
+                newUser.isAvailable = true;
             }    
             // set password
             const hashedpassword = await newUser.setPassword(data.password)
@@ -44,29 +44,6 @@ module.exports = {
         } catch (error) {
             return error
         }
-    },
-    getUserById: async function (data, cb) {   
-        try {
-            const email = data.email;
-            const _id = data._id;
-        
-        
-            let dbUser = userDB.User;
-            let query;
-            if (email) {
-                query = {email};
-            } else {
-                query = {_id};
-            }
-
-            const user = await dbUser.findOne(query);
-            if(!user) {
-                console.log('user does not exist');
-            }
-        } catch (error) {
-            console.log(error);
-            return error
-        } 
     },
     getPatientId: async (patientId) => {
 
@@ -105,8 +82,8 @@ module.exports = {
                 'user_type': `${user_type.COUNSELLOR}`
             }
             const dbUser = userDB.User;
-            const availableDoctor = await dbUser.findOne(query) 
-            if(!availableDoctor) {
+            const availableCounsellor = await dbUser.findOne(query) 
+            if(!availableCounsellor) {
                 return {
                     status: 404,
                     message: 'no available doctors',
@@ -114,9 +91,9 @@ module.exports = {
                 }
             }
             return {
-                status: 201,
+                status: 200,
                 message: 'available doctor found',
-                data: availableDoctor
+                data: availableCounsellor
             }
         } catch (error) {
             return {

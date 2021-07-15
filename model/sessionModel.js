@@ -14,6 +14,7 @@ const sessionObject = {
     topics_discussed:[{type:String}],
     themes_discussed: [{type: String, default: 'N/A'}],
     responses: [{type: String, default: 'N/A'}],
+    
 }
 const sessionSchema = Schema(sessionObject, {timestamps: true});
 //userRecordSchema.plugin(require('mongoose-autopopulate'));

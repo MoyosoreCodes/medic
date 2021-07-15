@@ -14,7 +14,7 @@ module.exports ={
             var availableDoctor, patient
 
             const foundUser = await userServices.getPatientId(body.patientId);
-            if (foundUser.status == 404 || foundUser.status == 500)
+            if (foundUser.status !== 200)
             {
                 return {
                     status: foundUser.status,
@@ -26,16 +26,15 @@ module.exports ={
             
             if(user.user_type.toUpperCase() == user_types.PATIENT) {
                 //then check for available doctors
-                const doctorToAssign = await userServices.findAvailableCounsellor();
-                //console.log(doctorToAssign.data);
-                if(doctorToAssign.status == 404 || doctorToAssign.status == 500)
+                const counsellor = await userServices.findAvailableCounsellor();
+                if(counsellor.status !== 200)
                 {
                     return {
-                        status: doctorToAssign.status,
-                        message: doctorToAssign.message,
+                        status: counsellor.status,
+                        message: counsellor.message,
                     }   
                 }
-                availableDoctor = {'counsellor': doctorToAssign.data._id};
+                availableDoctor = {'counsellor': counsellor.data._id};
                 Object.assign(body, availableDoctor);
                 //if there is an available counsellor 
                 
@@ -43,7 +42,6 @@ module.exports ={
                     //then create appointment for patient
                     patient = {'patient': user._id};
                     Object.assign(body, patient);
-                    //body.patient = user._id;
                     console.log(body)
                     const newAppointment = await Appointment.create(body);
                     if(!newAppointment) {
@@ -55,15 +53,13 @@ module.exports ={
                         }
                     }
                     const appointment = await Appointment.findOne({_id: newAppointment._id})
-                    const newRecord = await userDb.updateOne({
-                        _id: user._id
-                    },{
-                        appointments: appointment._id
-                    })
+                    const updatedUser = await userDb.updateOne({
+                        _id: user._id,
+                    }, {$push:{appointments: appointment._id}});
                     return {
                         status: 200,
-                        message: `Appointments created successfully with Dr. ${doctorToAssign.data.first_name}`,
-                        data: newRecord
+                        message: `Appointments created successfully with Dr. ${counsellor.data.first_name}`,
+                        data: updatedUser
                     }
                 }
             }

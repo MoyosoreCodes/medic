@@ -1,21 +1,8 @@
 const express = require('express')
 const router = express.Router();
 const passport = require('../../config/passport-config');
-//const {body, validationResult} = require('express-validator');
 const userServices = require('../../services/userServices');
-const userDB = require('../../database/userDB')
-const userRecords = require('../../model/recordModel');
-//const userController = require('../../controller/userController');
 
-
-const authUser = (req, res, next) => {
-    if(req.isAuthenticated()){
-        next()
-    }
-    else {
-        return res.status(401).redirect('/login')
-    }
-}
 //middleware
 /*
 const validations = [       
@@ -39,24 +26,24 @@ const validations = [
         .withMessage('invalid email')
 ];
 */
-router.get('/',authUser, function(req, res) {
+router.get('/', function(req, res) {
     const title = "Home"
     res.render('landing', {title});
 });
 
-router.get('/login',authUser, function(req, res) {
+router.get('/login', function(req, res) {
     const errors = req.flash('error') || [];
     //console.log(errors);
     const title = "Login"
     return res.render('login', {title, errors});
 });
 
-router.post('/login', authUser, passport.authenticate('local', 
+router.post('/login', passport.authenticate('local', 
         {failureRedirect: '/login', failureFlash: true, successRedirect:'/dashboard'}
     )
 );
 
-router.post('/register', authUser, async (req, res) => {
+router.post('/register', async (req, res) => {
     try {
         //console.log(req.body);
         //const user_type = { 'user_type' : 'PATIENT'}
@@ -73,16 +60,6 @@ router.post('/register', authUser, async (req, res) => {
     }
         
 })
-
-router.get('/dashboard', authUser, async (req, res) => {
-    //console.log(req.session);
-    //console.log(req.session.user);
-    const _id =  req.session.passport.user;
-    const user = await userDB.User.findOne({_id})
-    const records = await userRecords.Records.findOne({patientId: _id})
-
-    return res.render('profile', { user, records })
-});
 
 router.get('/logout', (req, res) => {
     
