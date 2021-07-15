@@ -3,6 +3,7 @@ const { user_types } = require('../model/userModel');
 const {User} = require('../database/userDB');
 const recordModel = require('../model/recordModel').Records;
 const userServices = require('../services/userServices');
+var mongoose = require('mongoose');
 
 module.exports ={
 //who can create appointments?? 
@@ -60,7 +61,7 @@ module.exports ={
                     const appointment = await Appointment.findById({_id: newAppointment._id})
                     console.log('found appointments: ', appointment);
                     const newRecord = await recordModel.updateOne(
-                        {patientId: user._id},
+                        {patientId: mongoose.Types.ObjectId(user._id)},
                         {$push: {appointments: appointment._id} },
                         {upsert:true}
                     )
