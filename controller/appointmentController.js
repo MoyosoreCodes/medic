@@ -55,7 +55,7 @@ module.exports ={
                     const appointment = await Appointment.findOne({_id: newAppointment._id})
                     const updatedUser = await userDb.updateOne({
                         _id: user._id,
-                    }, {$push:{appointments: appointment._id}});
+                    }, {$push:{'appointments': appointment._id}});
                     return {
                         status: 200,
                         message: `Appointments created successfully with Dr. ${counsellor.data.first_name}`,
@@ -73,41 +73,41 @@ module.exports ={
         }   
     },
 
-    view: async (data) => {
-        try{
-            const {patientId, appointmentDate} = data.body;
-            const foundUser = await userServices.getPatientId(patientId);
-            const user = foundUser.data
+    // view: async (data) => {
+    //     try{
+    //         const {patientId, appointmentDate} = data.body;
+    //         const foundUser = await userServices.getPatientId(patientId);
+    //         const user = foundUser.data
 
-            const userAppointments =  await Appointment.find({
-                patient: user._id, 
-                status: `${appointment_status.PENDING}`,
-                appointmentDate
-            });
-            const appointmentCount = userAppointments.count();
+    //         const userAppointments =  await Appointment.find({
+    //             patient: user._id, 
+    //             status: `${appointment_status.PENDING}`,
+    //             appointmentDate
+    //         });
+    //         const appointmentCount = userAppointments.count();
 
-            console.log(userAppointments);
-            if(!userAppointments || userAppointments == []) {
-                return {
-                    status: 404,
-                    message: `You have no pending appointments for ${appointmentDate}`,
-                    data: null
-                }
-            }
+    //         console.log(userAppointments);
+    //         if(!userAppointments || userAppointments == []) {
+    //             return {
+    //                 status: 404,
+    //                 message: `You have no pending appointments for ${appointmentDate}`,
+    //                 data: null
+    //             }
+    //         }
 
-            return {
-                status: 200,
-                message: `You have ${appointmentCount} pending appointment(s) for ${appointmentDate}`,
-                url:'https://ehrsys-api.herokuapp.com/dashboard/appointments',
-                data: null
-            }
-        }catch (err) {
-            console.log('catch error');
-            return {
-                status: 500,
-                message: "Sorry I'm having technical difficulties retrieving your appointments",
-                data: error
-            }
-        }
-    },
+    //         return {
+    //             status: 200,
+    //             message: `You have ${appointmentCount} pending appointment(s) for ${appointmentDate}`,
+    //             url:'https://ehrsys-api.herokuapp.com/dashboard/appointments',
+    //             data: null
+    //         }
+    //     }catch (err) {
+    //         console.log('catch error');
+    //         return {
+    //             status: 500,
+    //             message: "Sorry I'm having technical difficulties retrieving your appointments",
+    //             data: error
+    //         }
+    //     }
+    // },
 }

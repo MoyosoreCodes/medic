@@ -22,7 +22,7 @@ module.exports = {
 
             const updatedUser = await User.updateOne({
                 patientId: foundUser.data._id,
-            }, {$push:{sessions: session._id}});
+            }, {$push:{'sessions': session._id}});
 
             return {
                 status: 200,
@@ -56,7 +56,7 @@ module.exports = {
 
             const updatedUser = await userDb.updateOne({
                 patientId: foundUser.data._id,
-            }, {$push:{appointments: appointment._id}});
+            }, {$push:{'appointments': appointment._id}});
 
             return {
                 status: 200,
