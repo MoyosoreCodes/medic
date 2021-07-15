@@ -147,7 +147,7 @@ module.exports ={
             return {
                 status: 500,
                 message: "Sorry I'm having technical difficulties retrieving your appointments",
-                data: error
+                data: err
             }
         }
     },
