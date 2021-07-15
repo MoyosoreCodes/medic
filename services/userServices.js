@@ -118,6 +118,7 @@ module.exports = {
                     data: null
                 }
             }
+            console.log(availableDoctors.length);
             const ran = Math.floor(Math.random() * availableDoctors.length)
             console.log(ran);
             const randDoctor = availableDoctors[ran];
