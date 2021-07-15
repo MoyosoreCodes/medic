@@ -73,7 +73,7 @@ module.exports = {
             }
             const newMedication = await recordModel.updateOne(
                 {patientId},
-                {"$push" : {'medications' : medicationObject}},
+                {$push : {medications : medicationObject}},
                 {upsert:true}
             );
 
