@@ -112,15 +112,6 @@ module.exports ={
             const appointmentCount = userAppointments.length;
             
             console.log(userAppointments);
-            
-            //if no appointments
-            if(!userAppointments || userAppointments == []) {
-                return {
-                    status: 404,
-                    message: `You have no pending appointment`,
-                    data: null
-                }
-            }
             //if user has only one appointment
             if(appointmentCount == 1) {
                 const _id = userAppointments[0].doctor;
