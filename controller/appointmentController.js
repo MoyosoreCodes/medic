@@ -93,7 +93,7 @@ module.exports ={
             const body = data.body;
             console.log(body);
             const foundUser = await userServices.getPatientByCardNumber(body.cardNumber);
-            console.log(foundUser);
+            //console.log(foundUser);
             if(foundUser.status !== 200)
                 {
                     return {
@@ -106,20 +106,10 @@ module.exports ={
                 "patient": user._id, 
                 "status": `${appointment_status.PENDING}`
             }
-            // if(body.appointmentDate) {
-            //     query = {
-            //         "patient": user._id, 
-            //         "status": `${appointment_status.PENDING}`,
-            //         appointmentDate
-            //     }
-            // }else {
-            //     query = {
-            //         "patient": user._id, 
-            //         "status": `${appointment_status.PENDING}`
-            //     }
-            // }            
+            console.log(query);    
             const userAppointments =  await Appointment.find(query);
-            const appointmentCount = userAppointments.count();
+            console.log(userAppointments);
+            const appointmentCount = userAppointments.length;
             
             console.log(userAppointments);
             
