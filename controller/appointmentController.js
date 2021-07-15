@@ -64,16 +64,9 @@ module.exports ={
                         {$push: {appointments: appointment._id} },
                         {upsert:true}
                     )
-                    console.log('record created: ',newRecord);
-
+                    
                     const foundRecord = await recordModel.findById({_id: newRecord._id})
-                    if(!foundRecord) {
-                        return {
-                            status: 404,
-                            message: 'Record not found',
-                        }   
-                    }
-
+                    console.log('record created: ',foundRecord);
                     return {
                         status: 200,
                         message: `Appointments created successfully with Dr. ${doctorToAssign.data.first_name}`,
@@ -82,7 +75,7 @@ module.exports ={
                 }
             }
         } catch (error) {
-            console.log('catch error');
+            console.log(error);
             return {
                 status: 500,
                 message: "We're currently experienceing issues from our server. Cannot make appointment for you at this time ",
