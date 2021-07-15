@@ -57,6 +57,8 @@ module.exports ={
                             data: null
                         }
                     }
+                    console.log(newAppointment);
+                    const appointment = await Appointment.findById({_id: newAppointment._id})
                     const newRecord = await recordModel.updateOne(
                         {patientId: user._id},
                         {"$push": {"appointments": newAppointment._id} },
