@@ -21,7 +21,7 @@ module.exports = {
             const session = await Session.findOne({_id: newSession._id})
 
             const updatedUser = await User.updateOne({
-                _id: user._id,
+                patientId: foundUser.data._id,
             }, {$push:{sessions: session._id}});
 
             return {
@@ -55,7 +55,7 @@ module.exports = {
             const appointment = await Appointment.findOne({_id: newAppointment._id})
 
             const updatedUser = await userDb.updateOne({
-                _id: user._id,
+                patientId: foundUser.data._id,
             }, {$push:{appointments: appointment._id}});
 
             return {
