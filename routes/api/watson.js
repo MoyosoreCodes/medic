@@ -40,7 +40,14 @@ router.post('/message', async (req ,res) => {
 
 //get appointment
 router.post('/appointment/view', async (req, res) => {
-    const result = await appointmentController.view(req);
+    const result = await appointmentController.viewAppointments(req);
+    //console.log(result.message);
+    return res.status(result.status).json(result);
+});
+
+//get medications
+router.post('/medications/view', async (req, res) => {
+    const result = await appointmentController.viewMedication(req);
     //console.log(result.message);
     return res.status(result.status).json(result);
 });
@@ -48,7 +55,7 @@ router.post('/appointment/view', async (req, res) => {
 //create appointments
 router.post('/appointment/create', async (req, res) => {
     //console.log(req.body)
-    const result = await appointmentController.create(req);
+    const result = await appointmentController.createAppointments(req);
     return res.status(result.status).json(result)
 });
 

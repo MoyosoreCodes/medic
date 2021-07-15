@@ -7,7 +7,7 @@ const userServices = require('../services/userServices');
 module.exports ={
 //who can create appointments?? 
 //if it's  patients then the creation process should check for available doctors
-    create: async (data) => {
+    createAppointments: async (data) => {
         try {
 
             //initialize variables
@@ -88,7 +88,7 @@ module.exports ={
         }   
     },
 
-    view: async (data) => {
+    viewAppointments: async (data) => {
         try{
             const body = data.body;
             console.log(body);
@@ -140,6 +140,31 @@ module.exports ={
                 data: err
             }
         }
+    },
+
+    viewMedication: async (data) => {
+        try {
+            const body = data.body;
+            const foundUser = await userServices.getUserByCardNumber(body.cardNumber);
+            const user = foundUser.data
+
+            const records = await recordModel.findOne({patientId: user._id})
+            const medications = records.medications;
+            return {
+                status: 200,
+                message: `You currently have ${medications.length} medications`,
+                data: medications
+            }
+            // create a mapping function to map each medications
+            //sth like this
+        } catch (error) {
+            return {
+                status: 500,
+                message: 'Error getting appointment',
+                data: error
+            }
+        }
+        
     },
 
     
