@@ -57,14 +57,14 @@ module.exports ={
                             data: null
                         }
                     }
-                    console.log(newAppointment);
                     const appointment = await Appointment.findById({_id: newAppointment._id})
+                    console.log('found appointments: ', appointment);
                     const newRecord = await recordModel.updateOne(
                         {patientId: user._id},
                         {$push: {appointments: appointment._id} },
                         {upsert:true}
                     )
-                    console.log(newRecord);
+                    console.log('record created: ',newRecord);
 
                     const foundRecord = await recordModel.findById({_id: newRecord._id})
                     if(!foundRecord) {
