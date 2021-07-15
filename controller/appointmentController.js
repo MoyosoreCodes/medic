@@ -91,7 +91,16 @@ module.exports ={
     view: async (data) => {
         try{
             const body = data.body;
+            console.log(body);
             const foundUser = await userServices.getPatientByCardNumber(body.cardNumber);
+            console.log(foundUser);
+            if(foundUser.status !== 200)
+                {
+                    return {
+                        status: foundUser.status,
+                        message: foundUser.message,
+                    }   
+                }
             const user = foundUser.data
             let query = {
                 "patient": user._id, 
