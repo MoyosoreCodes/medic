@@ -93,22 +93,22 @@ module.exports ={
             const body = data.body;
             const foundUser = await userServices.getPatientByCardNumber(body.cardNumber);
             const user = foundUser.data
-            let query
-
-            if(body.appointmentDate) {
-                query = {
-                    "patient": user._id, 
-                    "status": `${appointment_status.PENDING}`,
-                    appointmentDate
-                }
-            }else {
-                query = {
-                    "patient": user._id, 
-                    "status": `${appointment_status.PENDING}`
-                }
+            let query = {
+                "patient": user._id, 
+                "status": `${appointment_status.PENDING}`
             }
-
-            
+            // if(body.appointmentDate) {
+            //     query = {
+            //         "patient": user._id, 
+            //         "status": `${appointment_status.PENDING}`,
+            //         appointmentDate
+            //     }
+            // }else {
+            //     query = {
+            //         "patient": user._id, 
+            //         "status": `${appointment_status.PENDING}`
+            //     }
+            // }            
             const userAppointments =  await Appointment.find(query);
             const appointmentCount = userAppointments.count();
             
