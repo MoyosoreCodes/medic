@@ -59,15 +59,15 @@ module.exports ={
                         }
                     }
                     const appointment = await Appointment.findById({_id: newAppointment._id})
-                    console.log('found appointments: ', appointment);
+                    console.log('1');
                     const newRecord = await recordModel.updateOne(
-                        {patientId: mongoose.Types.ObjectId(`${user._id}`)},
+                        {patientId: user._id},
                         {$push: {appointments: appointment._id} },
                         {upsert:true}
                     )
                     
-                    const foundRecord = await recordModel.findById({_id: newRecord._id})
-                    console.log('record created: ',foundRecord);
+                    const foundRecord = await recordModel.findOne({patientId: user._id})
+                    console.log('2');
                     return {
                         status: 200,
                         message: `Appointments created successfully with Dr. ${doctorToAssign.data.first_name}`,
