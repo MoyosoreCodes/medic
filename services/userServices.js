@@ -122,7 +122,7 @@ module.exports = {
             const randDoctor = availableDoctors[Math.floor(Math.random() * availableDoctors.length)];
 
             return {
-                status: 201,
+                status: 200,
                 message: 'available doctor found',
                 data: randDoctor
             }

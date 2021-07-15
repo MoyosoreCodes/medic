@@ -16,7 +16,7 @@ module.exports ={
             var availableDoctor, patient
 
             const foundUser = await userServices.getPatientByCardNumber(body.cardNumber);
-            if (foundUser.status == 404 || foundUser.status == 500)
+            if (foundUser.status !== 200)
             {
                 return {
                     status: foundUser.status,
@@ -30,7 +30,7 @@ module.exports ={
                 //then check for available doctors
                 const doctorToAssign = await userServices.findAvailableDoctor();
                 //console.log(doctorToAssign.data);
-                if(doctorToAssign.status == 404 || doctorToAssign.status == 500)
+                if(doctorToAssign.status !== 200)
                 {
                     return {
                         status: doctorToAssign.status,
@@ -90,12 +90,12 @@ module.exports ={
 
     view: async (data) => {
         try{
-            const {cardNumber, appointmentDate} = data.body;
-            const foundUser = await userServices.getPatientByCardNumber(cardNumber);
+            const body = data.body;
+            const foundUser = await userServices.getPatientByCardNumber(body.cardNumber);
             const user = foundUser.data
             let query
 
-            if(appointmentDate || !(appointmentDate.isEmpty())) {
+            if(body.appointmentDate) {
                 query = {
                     "patient": user._id, 
                     "status": `${appointment_status.PENDING}`,
@@ -126,11 +126,11 @@ module.exports ={
             if(appointmentCount == 1) {
                 const _id = userAppointments[0].doctor;
                 const date = userAppointments[0].appointmentDate
-                const user = User.findById({_id});
+                const doctor = User.findById({_id});
 
                 return {
                     status: 200,
-                    message: `You have an appointment(s) with Dr ${user.first_name} on ${date}`,
+                    message: `You have an appointment(s) with Dr ${doctor.first_name} on ${date}`,
                     url:'https://ehrsys-api.herokuapp.com/dashboard/appointments',
                     data: null
                 }

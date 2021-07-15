@@ -12,7 +12,7 @@ module.exports = {
             const records = await recordModel.findOne({patientId: user._id}).populate("appointments", "doctor appointmentDate appointmentTime symptoms")
             const medications = records.medications;
 
-            if(!medications || medications == null || medications.isEmpty() || medication.length < 0){
+            if(!medications || medications == null || medication.length < 0){
                 return {
                     status: 404,
                     message: 'You currently have no medications',
@@ -41,9 +41,9 @@ module.exports = {
     createRecord: async (data) => {
         try {
             const body = data.body
-            const _id = body._id
+            const patientId = body.patientId
             const newRecord = await recordModel.updateOne(
-                {patientId: _id},
+                {patientId},
                 {body},
                 {upsert:true}
             );
@@ -73,11 +73,16 @@ module.exports = {
     //create/update medication
     createMedication: async (data) => {
         try {
-            const {medicationObject, _id} = data.body
-    
+            const {type, description, name, dosage, patientId} = data.body
+            const medicationObject = {
+                type,
+                description,
+                name,
+                dosage
+            }
             const newMedication = await recordModel.updateOne(
-                {patientId: _id},
-                {"push" : {medications : medicationObject}},
+                {patientId},
+                {"$push" : {'medications' : medicationObject}},
                 {upsert:true}
             );
 
