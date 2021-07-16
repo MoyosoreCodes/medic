@@ -18,13 +18,21 @@ const authUser = (req, res, next) => {
 
 // *get routes*
 router.get('/', authUser, async (req, res) => {
-    const _id =  req.session.passport.user;
-    const user = await userDB.User.findOne({_id})
-    const records = await userRecords.findOne({patientId:_id}).populate('appointments', 'appointment_type appointmentDate appointmentTime doctor status');
-    const appointments = records.appointments
-    const medications = records.medications
+    try {
+        const _id =  req.session.passport.user;
+        const user = await userDB.User.findOne({_id})
+        if(user.user_type.toUpperCase() == user_types.PATIENT){
+            const records = await userRecords.findOne({patientId:_id}).populate('appointments', 'appointment_type appointmentDate appointmentTime doctor status');
+            const appointments = records.appointments
+            const medications = records.medications
+        
+            return res.render('profile', { user, records, appointments, medications })
+        }
+        
+    } catch (error) {
+        
+    }
 
-    return res.render('profile', { user, records, appointments, medications })
 });
 
 // *post routes*
@@ -66,13 +74,13 @@ router.post('/appointments/create', authUser, async (req, res) => {
                     }
                 }
     
-                const newRecord = await userRecords.updateOne(
+                await userRecords.updateOne(
                     {patientId: user._id},
-                    {"$push": {"appointments": newAppointment._id} },
+                    {$push: {appointments: appointment._id} },
                     {upsert:true}
-                );
-    
-                const foundRecord = await userRecords.findById({_id: newRecord._id})
+                )
+                
+                const foundRecord = await userRecords.findOne({patientId: user._id})
                 if(!foundRecord) {
                     return {
                         status: 404,
@@ -80,11 +88,7 @@ router.post('/appointments/create', authUser, async (req, res) => {
                     }   
                 }
     
-                return {
-                    status: 200,
-                    message: `Appointments created successfully with Dr. ${doctorToAssign.data.first_name}`,
-                    data: foundRecord
-                }
+                return res.redirect('/')
             }
         }
         
@@ -96,5 +100,9 @@ router.post('/appointments/create', authUser, async (req, res) => {
         }
     }
 });
+
+router.post('/profile/update', authUser, async (req, res) => {
+    
+})
 
 module.exports = router 
