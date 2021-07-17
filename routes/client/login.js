@@ -45,10 +45,6 @@ router.post('/login', passport.authenticate('local',
 
 router.post('/register', async (req, res) => {
     try {
-        //console.log(req.body);
-        //const user_type = { 'user_type' : 'PATIENT'}
-        //Object.assign(req.body, user_type)
-        //console.log(req.body);
         const newUser = await userServices.addUser(req.body)
         if(!newUser){
             return res.json({'error': " errror creating user", })
@@ -62,6 +58,7 @@ router.post('/register', async (req, res) => {
 })
 
 router.get('/logout', (req, res) => {
-    
+    req.logout();
+    res.redirect('/');
 })
 module.exports = router 

@@ -16,8 +16,6 @@ module.exports = {
                 message: `You currently have ${medications.length} medications`,
                 data: medications
             }
-            // create a mapping function to map each medications
-            //sth like this
         } catch (error) {
             return {
                 status: 500,
