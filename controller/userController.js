@@ -44,7 +44,7 @@ module.exports = {
         
                     await recordModel.updateOne(
                         {patientId: user._id},
-                        {$push: {appointments: appointment._id} },
+                        {$push: {appointments: newAppointment._id} },
                         {upsert:true}
                     )
                     
