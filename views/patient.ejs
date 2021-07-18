@@ -114,13 +114,11 @@
                                                         <td><%= appointment.status %></td>
                                                         <td>Dr <%= appointment.doctor.last_name %></td>
                                                     </tr>
+                                                </tbody>
                                                 <% } %>
                                                 <% } else { %>
-                                                    <tr style="height: 60px;">
-                                                       <td>You currently have no appointments</td>
-                                                    </tr>
+                                                       <p>You currently have no appointments</p>
                                                 <% } %>
-                                                </tbody>
                                             </table>
                                         </div>
                                     </div>
@@ -149,12 +147,12 @@
                                                                 <td><%= medication.dosage %></td>
                                                             </tr>
                                                             <tr style="height: 48px;text-align: center;">
-                                                        <% } %>
-                                                        <% } else { %>
-                                                            <td> You currently have no medications </td>
-                                                        <% } %>
                                                             </tr> -->
                                                         </tbody>
+                                                        <% } %>
+                                                        <% } else { %>
+                                                            <p> You currently have no medications </p>
+                                                        <% } %>
                                                     </table>
                                                     
                                                 </div>

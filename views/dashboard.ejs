@@ -195,51 +195,39 @@
                                 <thead>
                                     <tr>
                                         <th>Name</th>
+                                        <th>Card Number&nbsp;</th>
+                                        <th>Address</th>
                                         <th>Last logged in</th>
-                                        <th>Card Number</th>
+                                        <th>E-mail</th>
                                     </tr>
                                 </thead>
-                                <% if(patients) { %>
-                                <% for(var patient of patients) { %>
                                 <tbody>
+                                    <% if(patients) { %>
+                                    <% for(var patient of patients) { %>
                                     <tr>
                                         <td><img class="rounded-circle me-2" width="30" height="30" src="/assets/img/avatars/avatar1.jpeg"><%=patient.first_name%> <%=patient.last_name%></td>
-                                        <td><%=patient.last_login%></td>
                                         <td><%=patient.cardNumber%></td>
+                                        <td> <%=patient.address%></td>
+                                        <td><%=patient.last_login%></td>
+                                        <td><%=patient.email%></td>
+                                    </tr>   
+                                <% } %>
+                                        <tr> 
+                                <% } else { %>
+                                            <td>No registered Users </td>
+                                <% } %>
                                     </tr>
-                                    <!-- <tr>
-                                        <td><img class="rounded-circle me-2" width="30" height="30" src="/assets/img/avatars/avatar3.jpeg">Ashton Cox</td>
-                                        <td>2009/01/12<br></td>
-                                        <td>300</td>
-                                    </tr>
-                                    <tr>
-                                        <td><img class="rounded-circle me-2" width="30" height="30" src="/assets/img/avatars/avatar4.jpeg">Bradley Greer</td>
-                                        <td>2012/10/13<br></td>
-                                        <td>Senior Lecturer</td>
-                                    </tr>
-                                    <tr>
-                                        <td><img class="rounded-circle me-2" width="30" height="30" src="/assets/img/avatars/avatar5.jpeg">Brenden Wagner</td>
-                                        <td>2011/06/07<br></td>
-                                        <td>Lecturer IX</td>
-                                    </tr>
-                                    <tr>
-                                        <td><img class="rounded-circle me-2" width="30" height="30" src="/assets/img/avatars/avatar1.jpeg">Brielle Williamson</td>
-                                        <td>2012/12/02<br></td>
-                                        <td>Assistant Lec</td>
-                                    </tr> -->
                                 </tbody>
                                 <tfoot>
                                     <tr>
                                         <td><strong>Name</strong></td>
-                                        <td><strong>Last Logged In</strong></td>
                                         <td><strong>Card Number</strong></td>
+                                        <td><strong>Address</strong></td>
+                                        <td><strong>Last Logged In</strong></td>
+                                        <td><strong>E-mail</strong></td>
                                     </tr>
                                 </tfoot>
                             </table>
-                            <% } %>
-                            <% } else { %>
-                                <p> No registered Users </p>
-                            <% } %>
                         </div>
                         <div class="row">
                             <div class="col-md-6 align-self-center"><a href="/dashboard/patient-list" style="color: rgb(64,101,208);font-size: 18px;border-color: rgb(0,0,0);">See more...</a></div>

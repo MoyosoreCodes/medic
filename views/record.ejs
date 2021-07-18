@@ -154,7 +154,6 @@
                                 </div>
                             </div>
                             <div class="table-responsive table mt-2" id="dataTable-2" role="grid" aria-describedby="dataTable_info">
-                                <% if(records) { %>
                                 <table class="table table-hover my-0" id="dataTable">
                                     <thead>
                                         <tr>
@@ -165,8 +164,9 @@
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
-                                    <% for(var record of records) { %>
                                     <tbody>
+                                        <% if(records) { %>
+                                        <% for(var record of records) { %>
                                         <tr>
                                             <td><img class="rounded-circle me-2" width="30" height="30" src="/assets/img/avatars/avatar3.jpeg"><%=record.patientId.first_name%> <%=record.patientId.last_name%></td>
                                             <td><%=record.observations%></td>
