@@ -41,11 +41,11 @@ router.get('/patient', authUser, async (req, res) => {
         const _id =  req.session.passport.user;
         const user = await userDB.User.findOne({_id})
         if(user.user_type.toUpperCase() == user_types.PATIENT){
-            const records = await userRecords.findOne({patientId:user._id}).poppulate('medications', 'name type dosage')
+            const records = await userRecords.findOne({patientId:user._id}).populate('medications', 'name type dosage')
             //console.log(records);
             const appointments = await Appointment.find({patient: _id}).populate('doctor', 'first_name last_name')
             // const medications = await Medication.find({medications: records.medications})
-            return res.render('index', { user, records, appointments, medications })
+            return res.render('index', { user, records, appointments })
         }
         return res.redirect('/landing');
     } catch (error) {
