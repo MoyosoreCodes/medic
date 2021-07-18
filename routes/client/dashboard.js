@@ -41,6 +41,7 @@ router.get('/patient', authUser, async (req, res) => {
         const user = await userDB.User.findOne({_id})
         if(user.user_type.toUpperCase() == user_types.PATIENT){
             const records = await userRecords.findOne({patientId:user._id})
+            console.log(records);
             const appointments = await Appointment.find({patient: _id}).populate('doctor', 'first_name last_name')
             const medications = records.medications
             return res.render('index', { user, records, appointments, medications })
