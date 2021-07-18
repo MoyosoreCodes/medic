@@ -1,5 +1,6 @@
 const userModels = require('../model/userModel');
 const userDB = require('../database/userDB');
+const {Records} = require('../model/recordModel')
 
 module.exports = {
     addUser: async function(data){
@@ -22,6 +23,7 @@ module.exports = {
              //set health cared number if user is a patient
             if(newUser.user_type.toUpperCase() === userModels.user_types.PATIENT){      
                  newUser.setHealthCardNumber()
+                 await Records.create({patientId: newUser._id})
             }
             //set availability status if user is a doctor
             if(newUser.user_type.toUpperCase() === userModels.user_types.DOCTOR){      
@@ -34,6 +36,8 @@ module.exports = {
                 console.log('password hashed successfully');
             }
             else{ console.log('could not hash password');}
+
+
 
             return await newUser.save().then(function (result,err) {
                 if (result) {
