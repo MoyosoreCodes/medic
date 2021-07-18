@@ -36,4 +36,4 @@ const userRecordObject = {
 const userRecordSchema = Schema(userRecordObject, {timestamps: true});
 //userRecordSchema.plugin(require('mongoose-autopopulate'));
 const Records =  mongoose.model('Records', userRecordSchema, 'records');
-module.exports = {userRecordObject, Records, Medication}
+module.exports = {userRecordObject, Records}

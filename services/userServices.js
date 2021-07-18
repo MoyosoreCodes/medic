@@ -1,6 +1,6 @@
 const userModels = require('../model/userModel');
 const userDB = require('../database/userDB');
-const {Records, Medication} = require('../model/recordModel')
+const {Records} = require('../model/recordModel')
 
 module.exports = {
     addUser: async function(data){
