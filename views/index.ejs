@@ -158,7 +158,8 @@
                                             </div>
                                             <div class="card-body" style="height: 360px;padding-bottom: 4px;min-height: none;">
                                                 <div class="table-responsive" style="height: 182px;">
-                                                    <% if(medications) { %>
+                                                    <!-- %> -->
+                                                    <% if(records.medications) { %>
                                                     <table class="table">
                                                         <thead style="height: 60px;text-align: center;">
                                                             <tr>
@@ -167,7 +168,7 @@
                                                                 <th>Dosage</th>
                                                             </tr>
                                                         </thead>
-                                                        <% for(var medication of medications) { %>
+                                                        <% for(var medication of records.medications) { %>
                                                         <tbody style="height: 96px;">
                                                             <tr style="height: 48px;text-align: center;">
                                                                 <td><%= medication.name %></td>

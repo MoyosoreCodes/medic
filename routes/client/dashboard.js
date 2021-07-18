@@ -3,6 +3,7 @@ const router = express.Router();
 const userDB = require('../../database/userDB');
 const { Appointment, appointment_status, appointment_types } = require('../../model/appointmentModel');
 const userRecords = require('../../model/recordModel').Records;
+const {Medication} = require('../../model/recordModel')
 const { user_types } = require('../../model/userModel');
 const userController = require('../../controller/userController');
 
@@ -40,10 +41,10 @@ router.get('/patient', authUser, async (req, res) => {
         const _id =  req.session.passport.user;
         const user = await userDB.User.findOne({_id})
         if(user.user_type.toUpperCase() == user_types.PATIENT){
-            const records = await userRecords.findOne({patientId:user._id})
+            const records = await userRecords.findOne({patientId:user._id}).poppulate('medications', 'name type dosage')
             //console.log(records);
             const appointments = await Appointment.find({patient: _id}).populate('doctor', 'first_name last_name')
-            const medications = records.medications == null ? [] : records.medications
+            // const medications = await Medication.find({medications: records.medications})
             return res.render('index', { user, records, appointments, medications })
         }
         return res.redirect('/landing');

@@ -7,6 +7,10 @@ const medicationObject = {
     name:{type: String, default: 'N/A'},
     dosage: {type: String, default: 'N/A'}
 }
+const medicationSchema = Schema(medicationObject, {timestamps: true});
+//userRecordSchema.plugin(require('mongoose-autopopulate'));
+const Medication =  mongoose.model('Medication', medicationSchema, 'medications');
+
 const userRecordObject = {
     patientId: {
         type: mongoose.Types.ObjectId,
@@ -20,7 +24,10 @@ const userRecordObject = {
     genotype: {type: String, default: 'N/A'},
     temperature: {type: String, default: 'N/A'},
     weight: {type: String, default: 'N/A'},
-    medications: [medicationObject],
+    medications: [{
+        type: mongoose.Types.ObjectId,
+        ref: 'medications',
+    }],
     pulse_rate: {type: String, default: 'N/A'},
     consultation_date:{type: String, default: 'N/A'},
     appointments: [{
@@ -32,4 +39,4 @@ const userRecordObject = {
 const userRecordSchema = Schema(userRecordObject, {timestamps: true});
 //userRecordSchema.plugin(require('mongoose-autopopulate'));
 const Records =  mongoose.model('Records', userRecordSchema, 'records');
-module.exports = {userRecordObject, Records}
+module.exports = {userRecordObject, Records, Medication}
