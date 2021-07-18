@@ -91,32 +91,19 @@
                             <li class="nav-item dropdown no-arrow mx-1">
                                 <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><span class="badge bg-danger badge-counter"><%= appointments.length %></span><i class="fas fa-bell fa-fw"></i></a>
                                     <div class="dropdown-menu dropdown-menu-end dropdown-list animated--grow-in">    
-                                            <h6 class="dropdown-header">Notification</h6>
-                                            <% if(appointments) { %>
-                                                <% for(var appointment of appointments) { %>
-                                                    <a class="dropdown-item d-flex align-items-center" href="#">
-                                                        <div class="me-3">
-                                                            <div class="bg-primary icon-circle"><i class="fas fa-file-alt text-white"></i></div>
-                                                        </div>
-                                                        <div><span class="small text-gray-500"><%= appointment.appointmentDate %></span>
-                                                            <p>You have a <%= appointment.status.toLowerCase() %> appointment with <%= appointment.doctor.first_name %> </p>
-                                                        </div>
-                                                    </a> <!--<a class="dropdown-item d-flex align-items-center" href="#">
-                                                        <div class="me-3">
-                                                            <div class="bg-success icon-circle"><i class="fas fa-donate text-white"></i></div>
-                                                        </div>
-                                                        <div><span class="small text-gray-500">December 7, 2019</span>
-                                                            <p>$290.29 has been deposited into your account!</p>
-                                                        </div>
-                                                    </a><a class="dropdown-item d-flex align-items-center" href="#">
-                                                        <div class="me-3">
-                                                            <div class="bg-warning icon-circle"><i class="fas fa-exclamation-triangle text-white"></i></div>
-                                                        </div>
-                                                        <div><span class="small text-gray-500">December 2, 2019</span>
-                                                            <p>Spending Alert: We've noticed unusually high spending for your account.</p>
-                                                        </div> -->
-                                                    </a><a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-                                                <% } %>
+                                        <h6 class="dropdown-header">Notification</h6>
+                                        <% if(appointments) { %>
+                                            <% for(var appointment of appointments) { %>
+                                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                                    <div class="me-3">
+                                                        <div class="bg-primary icon-circle"><i class="fas fa-file-alt text-white"></i></div>
+                                                    </div>
+                                                    <div><span class="small text-gray-500"><%= appointment.appointmentDate %></span>
+                                                        <p>You have a <%= appointment.status.toLowerCase() %> appointment with <%= appointment.patient.first_name %> </p>
+                                                    </div>
+                                                </a> 
+                                                </a><a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+                                            <% } %>
                                         <% } else { %>
                                             <a class="dropdown-item d-flex align-items-center" href="#">
                                                 <div class="me-3">
@@ -128,6 +115,7 @@
                                                 </div>
                                             </a>
                                         <% } %>
+                                    </div> 
                                 </div>
                             </li>
                             <div class="d-none d-sm-block topbar-divider"></div>
@@ -166,7 +154,6 @@
                                 </div>
                             </div>
                             <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
-                                <% if(patients) { %>
                                 <table class="table table-hover table-borderless my-0" id="dataTable">
                                     <thead>
                                         <tr>
@@ -177,78 +164,22 @@
                                             <th>E-mail</th>
                                         </tr>
                                     </thead>
-                                    <% for(var patient of patients) { %>
                                     <tbody>
+                                        <% if(patients) { %>
+                                        <% for(var patient of patients) { %>
                                         <tr>
                                             <td><img class="rounded-circle me-2" width="30" height="30" src="/assets/img/avatars/avatar1.jpeg"><%=patient.first_name%> <%=patient.last_name%></td>
                                             <td><%=patient.cardNumber%></td>
                                             <td> <%=patient.address%></td>
                                             <td><%=patient.last_login%></td>
                                             <td><%=patient.email%></td>
+                                        </tr>   
+                                    <% } %>
+                                         <tr> 
+                                    <% } else { %>
+                                                <td>No registered Users </td>
+                                    <% } %>
                                         </tr>
-                                        <!-- <tr>
-                                            <td><img class="rounded-circle me-2" width="30" height="30" src="/assets/img/avatars/avatar2.jpeg">Angelica Ramos</td>
-                                            <td>PSI</td>
-                                            <td>20</td>
-                                            <td>2019/10/09<br></td>
-                                            <td>angelica.ramos@stu.edu.ng</td>
-                                        </tr>
-                                        <tr>
-                                            <td><img class="rounded-circle me-2" width="30" height="30" src="/assets/img/avatars/avatar3.jpeg">Ashton Cox</td>
-                                            <td>Industrial Mathematics</td>
-                                            <td>18</td>
-                                            <td>2021/01/12<br></td>
-                                            <td>ashton.cox@stu.cu.edu.ng</td>
-                                        </tr>
-                                        <tr>
-                                            <td><img class="rounded-circle me-2" width="30" height="30" src="/assets/img/avatars/avatar4.jpeg">Bradley Greer</td>
-                                            <td>Biological sciences&nbsp;</td>
-                                            <td>53</td>
-                                            <td>2020/10/13<br></td>
-                                            <td>bradley.greer@covenantuniversity.edu.ng&nbsp;</td>
-                                        </tr>
-                                        <tr>
-                                            <td><img class="rounded-circle me-2" width="30" height="30" src="/assets/img/avatars/avatar5.jpeg">Brenden Wagner</td>
-                                            <td>Accounting</td>
-                                            <td>48</td>
-                                            <td>2020/06/07<br></td>
-                                            <td>brenden.wagner@covenantuniversity.edu.ng&nbsp;</td>
-                                        </tr>
-                                        <tr>
-                                            <td><img class="rounded-circle me-2" width="30" height="30" src="/assets/img/avatars/avatar1.jpeg">Brielle Williamson</td>
-                                            <td>Marketing&nbsp;</td>
-                                            <td>33</td>
-                                            <td>2020/12/02<br></td>
-                                            <td>brielle.williamson@covenantuniversity.edu.ng&nbsp;</td>
-                                        </tr>
-                                        <tr>
-                                            <td><img class="rounded-circle me-2" width="30" height="30" src="/assets/img/avatars/avatar2.jpeg">Bruno Nash<br></td>
-                                            <td>Civil Engineering&nbsp;</td>
-                                            <td>16</td>
-                                            <td>2021/05/03<br></td>
-                                            <td>bruno.nash@stu.cu.edu.ng</td>
-                                        </tr>
-                                        <tr>
-                                            <td><img class="rounded-circle me-2" width="30" height="30" src="/assets/img/avatars/avatar3.jpeg">Caesar Vance</td>
-                                            <td>Building Technology</td>
-                                            <td>17</td>
-                                            <td>2018/12/12<br></td>
-                                            <td>ceasar.vance@stu.cu.edu.ng</td>
-                                        </tr>
-                                        <tr>
-                                            <td><img class="rounded-circle me-2" width="30" height="30" src="/assets/img/avatars/avatar4.jpeg">Cara Stevens</td>
-                                            <td>Estate Management</td>
-                                            <td>22</td>
-                                            <td>2019/12/06<br></td>
-                                            <td>cara.stevens@stu.cu.edu.ng</td>
-                                        </tr>
-                                        <tr>
-                                            <td><img class="rounded-circle me-2" width="30" height="30" src="/assets/img/avatars/avatar5.jpeg">Cedric Kelly</td>
-                                            <td>Architecture</td>
-                                            <td>20</td>
-                                            <td>2021/03/29<br></td>
-                                            <td>cedric.kelly@stu.cu.edu.ng</td>
-                                        </tr> -->
                                     </tbody>
                                     <tfoot>
                                         <tr>
@@ -260,10 +191,6 @@
                                         </tr>
                                     </tfoot>
                                 </table>
-                                    <% } %>
-                                <% } else { %>
-                                    <p> No registered Users </p>
-                                <% } %>
                             </div>
                             <div class="row">
                                 <div class="col-md-6 align-self-center">

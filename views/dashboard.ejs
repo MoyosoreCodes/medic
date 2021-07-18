@@ -99,23 +99,9 @@
                                                             <div class="bg-primary icon-circle"><i class="fas fa-file-alt text-white"></i></div>
                                                         </div>
                                                         <div><span class="small text-gray-500"><%= appointment.appointmentDate %></span>
-                                                            <p>You have a <%= appointment.status.toLowerCase() %> appointment with <%= appointment.doctor.first_name %> </p>
+                                                            <p>You have a <%= appointment.status.toLowerCase() %> appointment with <%= appointment.patient.first_name %> </p>
                                                         </div>
-                                                    </a> <!--<a class="dropdown-item d-flex align-items-center" href="#">
-                                                        <div class="me-3">
-                                                            <div class="bg-success icon-circle"><i class="fas fa-donate text-white"></i></div>
-                                                        </div>
-                                                        <div><span class="small text-gray-500">December 7, 2019</span>
-                                                            <p>$290.29 has been deposited into your account!</p>
-                                                        </div>
-                                                    </a><a class="dropdown-item d-flex align-items-center" href="#">
-                                                        <div class="me-3">
-                                                            <div class="bg-warning icon-circle"><i class="fas fa-exclamation-triangle text-white"></i></div>
-                                                        </div>
-                                                        <div><span class="small text-gray-500">December 2, 2019</span>
-                                                            <p>Spending Alert: We've noticed unusually high spending for your account.</p>
-                                                        </div> -->
-                                                    </a><a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+                                                    </a> 
                                                 <% } %>
                                         <% } else { %>
                                             <a class="dropdown-item d-flex align-items-center" href="#">
@@ -128,6 +114,7 @@
                                                 </div>
                                             </a>
                                         <% } %>
+                                    </div>
                                 </div>
                             </li>
                             <div class="d-none d-sm-block topbar-divider"></div>
@@ -204,7 +191,6 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive table mt-2" id="dataTable-1" role="grid" aria-describedby="dataTable_info">
-                            <% if(patients) { %>
                             <table class="table table-hover table-borderless my-0" id="dataTable">
                                 <thead>
                                     <tr>
@@ -213,6 +199,7 @@
                                         <th>Card Number</th>
                                     </tr>
                                 </thead>
+                                <% if(patients) { %>
                                 <% for(var patient of patients) { %>
                                 <tbody>
                                     <tr>

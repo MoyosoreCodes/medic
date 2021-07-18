@@ -58,6 +58,7 @@ router.post('/register', async (req, res) => {
 })
 
 router.get('/logout', (req, res) => {
+    req.session.destroy();
     req.logout();
     res.redirect('/');
 })

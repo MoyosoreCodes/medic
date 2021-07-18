@@ -5,12 +5,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title><%=user.first_name%> || Patient Dashboard</title>
-    <link rel="stylesheet" href="/patient/assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/patient/assets/fonts/fontawesome-all.min.css">
-    <link rel="stylesheet" href="/patient/assets/css/Footer-Dark.css">
-    <link rel="stylesheet" href="/patient/assets/css/styles.css">
-    <link rel="stylesheet" href="/patient/assets/css/trelyco-login-vertical-horizontal-1.css">
-    <link rel="stylesheet" href="/patient/assets/css/trelyco-login-vertical-horizontal.css">
+    <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/fonts/fontawesome-all.min.css">
+    <link rel="stylesheet" href="/assets/css/Footer-Dark.css">
+    <link rel="stylesheet" href="/assets/css/styles.css">
+    <link rel="stylesheet" href="/assets/css/trelyco-login-vertical-horizontal-1.css">
+    <link rel="stylesheet" href="/assets/css/trelyco-login-vertical-horizontal.css">
 </head>
 
 <body style="padding-top: 8px;padding-left: 0px;margin-right: 13px;background: #e40046;margin-left: 7px;">
@@ -32,32 +32,19 @@
                 <li class="nav-item dropdown no-arrow mx-1">
                     <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><span class="badge bg-danger badge-counter"><%= appointments.length %></span><i class="fas fa-bell fa-fw"></i></a>
                         <div class="dropdown-menu dropdown-menu-end dropdown-list animated--grow-in">    
-                                <h6 class="dropdown-header">Notification</h6>
-                                <% if(appointments) { %>
-                                    <% for(var appointment of appointments) { %>
-                                        <a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="me-3">
-                                                <div class="bg-primary icon-circle"><i class="fas fa-file-alt text-white"></i></div>
-                                            </div>
-                                            <div><span class="small text-gray-500"><%= appointment.appointmentDate %></span>
-                                                <p>You have a <%= appointment.status.toLowerCase() %> appointment with <%= appointment.doctor.first_name %> </p>
-                                            </div>
-                                        </a> <!--<a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="me-3">
-                                                <div class="bg-success icon-circle"><i class="fas fa-donate text-white"></i></div>
-                                            </div>
-                                            <div><span class="small text-gray-500">December 7, 2019</span>
-                                                <p>$290.29 has been deposited into your account!</p>
-                                            </div>
-                                        </a><a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="me-3">
-                                                <div class="bg-warning icon-circle"><i class="fas fa-exclamation-triangle text-white"></i></div>
-                                            </div>
-                                            <div><span class="small text-gray-500">December 2, 2019</span>
-                                                <p>Spending Alert: We've noticed unusually high spending for your account.</p>
-                                            </div> -->
-                                        </a><a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-                                    <% } %>
+                            <h6 class="dropdown-header">Notification</h6>
+                            <% if(appointments) { %>
+                                <% for(var appointment of appointments) { %>
+                                    <a class="dropdown-item d-flex align-items-center" href="#">
+                                        <div class="me-3">
+                                            <div class="bg-primary icon-circle"><i class="fas fa-file-alt text-white"></i></div>
+                                        </div>
+                                        <div><span class="small text-gray-500"><%= appointment.appointmentDate %></span>
+                                            <p>You have a <%= appointment.status.toLowerCase() %> appointment with <%= appointment.doctor.first_name %> </p>
+                                        </div>
+                                    </a> 
+                                    </a><a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+                                <% } %>
                             <% } else { %>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="me-3">
@@ -69,11 +56,12 @@
                                     </div>
                                 </a>
                             <% } %>
+                        </div>                                           
                     </div>
                 </li>
                 <div class="d-none d-sm-block topbar-divider"></div>
                 <li class="nav-item dropdown no-arrow">
-                    <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><span class="d-none d-lg-inline me-2 text-gray-600 small"><%=user.email%></span><img class="border rounded-circle img-profile" src="/patient/assets/img/download.png" style="width: 46px;"></a>
+                    <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><span class="d-none d-lg-inline me-2 text-gray-600 small"><%=user.email%></span><img class="border rounded-circle img-profile" src="/assets/img/download.png" style="width: 46px;"></a>
                         <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in">
                             <a class="dropdown-item" href="/dashboard/patient"><i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Profile</a>
                             <a class="dropdown-item" href="/dashboard/patient"><i class="fas fa-cogs fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Settings</a>
@@ -91,7 +79,7 @@
                 <div class="container">
                     <div class="row" style="width: 1040px;margin-right: 0px;">
                         <div class="col-md-3" style="width: 240px;">
-                            <div style="width: 25px;"><img src="/patient/assets/img/download.png" style="width: 155px;"></div>
+                            <div style="width: 25px;"><img src="/assets/img/download.png" style="width: 155px;"></div>
                         </div>
                         <div class="col-md-7" style="padding-bottom: 25px;height: 100px;width: 716px;margin-top: 34px;padding-left: 108px;margin-left: 40px;">
                             <div></div>
@@ -108,7 +96,6 @@
                                 <div class="tab-content">
                                     <div class="tab-pane" role="tabpanel" id="tab-1">
                                         <div class="table-responsive shadow" style="padding-top: 30px;width: 653px;height: 275px;padding-left: 18px;padding-right: 0px;">
-                                            <% if(appointments) { %>
                                             <table class="table table-hover table-borderless">
                                                 <thead>
                                                     <tr style="height: 60px;padding-left: 20px;">
@@ -118,6 +105,7 @@
                                                         <th>Doctor</th>
                                                     </tr>
                                                 </thead>
+                                                <% if(appointments) { %>
                                                 <% for(var appointment of appointments) { %>
                                                 <tbody>
                                                     <tr style="height: 60px;">
@@ -126,30 +114,14 @@
                                                         <td><%= appointment.status %></td>
                                                         <td>Dr <%= appointment.doctor.last_name %></td>
                                                     </tr>
-                                                    <!-- <tr style="height: 60px;">
-                                                        <td>Cell 3</td>
-                                                        <td>Cell 4</td>
-                                                        <td>Cell 3</td>
-                                                        <td>Cell 4</td>
-                                                    </tr>
+                                                <% } %>
+                                                <% } else { %>
                                                     <tr style="height: 60px;">
-                                                        <td>Cell 1</td>
-                                                        <td>Cell 2</td>
-                                                        <td>Cell 3</td>
-                                                        <td>Cell 4</td>
+                                                       <td>You currently have no appointments</td>
                                                     </tr>
-                                                    <tr style="height: 60px;">
-                                                        <td>Cell 1</td>
-                                                        <td>Cell 2</td>
-                                                        <td>Cell 3</td>
-                                                        <td>Cell 4</td>
-                                                    </tr> -->
+                                                <% } %>
                                                 </tbody>
                                             </table>
-                                            <% } %>
-                                            <% } else { %>
-                                                <p> You currently have no appointments </p>
-                                            <% } %>
                                         </div>
                                     </div>
                                     <div class="tab-pane" role="tabpanel" id="tab-2" style="padding-top: 0px;">
@@ -160,7 +132,6 @@
                                             <div class="card-body" style="height: 360px;padding-bottom: 4px;min-height: none;">
                                                 <div class="table-responsive" style="height: 182px;">
                                                     <!-- %> -->
-                                                    <% if(medications !== null || medications.length > 0) { %>
                                                     <table class="table">
                                                         <thead style="height: 60px;text-align: center;">
                                                             <tr>
@@ -169,6 +140,7 @@
                                                                 <th>Dosage</th>
                                                             </tr>
                                                         </thead>
+                                                        <% if(medications !== null || medications.length > 0) { %>
                                                         <% for(var medication of medications) { %>
                                                         <tbody style="height: 96px;">
                                                             <tr style="height: 48px;text-align: center;">
@@ -176,17 +148,15 @@
                                                                 <td><%= medication.type %></td>
                                                                 <td><%= medication.dosage %></td>
                                                             </tr>
-                                                            <!-- <tr style="height: 48px;text-align: center;">
-                                                                <td>Cell 3</td>
-                                                                <td>Cell 4</td>
-                                                                <td>Cell 3</td>
+                                                            <tr style="height: 48px;text-align: center;">
+                                                        <% } %>
+                                                        <% } else { %>
+                                                            <td> You currently have no medications </td>
+                                                        <% } %>
                                                             </tr> -->
                                                         </tbody>
                                                     </table>
-                                                    <% } %>
-                                                <% } else { %>
-                                                    <p> You currently have no medications </p>
-                                                <% } %>
+                                                    
                                                 </div>
                                             </div>
                                         </div>
@@ -349,7 +319,7 @@
             <p class="copyright">Moyo © 2021</p>
         </div>
     </footer>
-    <script src="/patient/assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
 </body>
 
 </html>
