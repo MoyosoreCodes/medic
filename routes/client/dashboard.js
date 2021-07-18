@@ -21,9 +21,9 @@ router.get('/', authUser, async (req, res) => {
         const _id =  req.session.passport.user;
         const user = await userDB.User.findOne({_id})
         if(user.user_type.toUpperCase() == user_types.PATIENT){
-            return res.redirect('/dashboard/patient', 201)
+            return res.redirect('/dashboard/patient')
         }
-        return res.redirect('/dashboard/doctor', 201)
+        return res.redirect('/dashboard/doctor')
     } catch (error) {
         console.log(error); 
         return {
@@ -45,7 +45,7 @@ router.get('/patient', authUser, async (req, res) => {
             const medications = records.medications
             return res.render('index', { user, records, appointments, medications })
         }
-        return res.redirect('/landing', 401);
+        return res.redirect('/landing');
     } catch (error) {
         console.log(error); 
         return {
@@ -66,7 +66,7 @@ router.get('/doctor', authUser, async (req, res) => {
             const pendingAppointments = await Appointment.find({doctor: _id, status: appointment_status.PENDING})
             return res.render('dashboard', { user, patients, appointments, pendingAppointments})
         }
-        return res.redirect('/landing', 401);
+        return res.redirect('/landing');
     } catch (error) {
         console.log(error); 
         return {
@@ -86,7 +86,7 @@ router.get('/patient-list', authUser, async (req, res) => {
             const patients = await userDB.User.find({user_type: user_types.PATIENT})
             return res.render('patientsList', { user, patients, appointments})
         }
-        return res.redirect('/landing', 401);
+        return res.redirect('/landing');
     } catch (error) {
         console.log(error); 
         return {
@@ -107,7 +107,7 @@ router.get('/records', authUser, async (req, res) => {
             const records = await userRecords.find().populate('patientId', 'first_name last_name')
             return res.render('editRecord', { user, appointments, records})
         }
-        return res.redirect('/landing', 401);
+        return res.redirect('/landing');
     } catch (error) {
         console.log(error); 
         return {
@@ -128,7 +128,7 @@ router.get('/record/:id', authUser, async (req, res) => {
             const records = await userRecords.findOne({patientId: req.params.id}).populate('patient', 'first_name last_name')
             return res.render('editRecord', { user, patient, records, appointments})
         }
-        return res.redirect('/landing', 401);
+        return res.redirect('/landing');
     } catch (error) {
         console.log(error); 
         return {
@@ -148,7 +148,7 @@ router.get('/appointments', authUser, async (req, res) => {
             const appointments = await Appointment.find({doctor: _id}).populate('patient', 'first_name last_name cardNumber');
             return res.render('appointmentList', { user, appointments})
         }
-        return res.redirect('/landing', 401);
+        return res.redirect('/landing');
     } catch (error) {
         console.log(error); 
         return {
@@ -172,7 +172,7 @@ router.get('/appointments/accept/:id', authUser, async (req, res) => {
             // const appointments = await Appointment.find({doctor: _id}).populate('patient', 'first_name last_name cardNumber');
             return res.redirect('/dashboard/appointments')
         }
-        return res.redirect('/landing', 401);
+        return res.redirect('/landing');
     } catch (error) {
         console.log(error); 
         return {
@@ -196,7 +196,7 @@ router.get('/appointments/decline/:id', authUser, async (req, res) => {
             // const appointments = await Appointment.find({doctor: _id}).populate('patient', 'first_name last_name cardNumber');
             return res.redirect('/dashboard/appointments')
         }
-        return res.redirect('/landing', 401);
+        return res.redirect('/landing');
     } catch (error) {
         console.log(error); 
         return {
@@ -223,7 +223,7 @@ router.post('/appointments/create', authUser, async (req, res) => {
             }
             return res.redirect('/dashboard/patient', result.status)
         }
-        return res.redirect('/landing', 401)
+        return res.redirect('/landing')
     } catch (error) {
         console.log(error); 
         return {
