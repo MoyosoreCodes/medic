@@ -221,7 +221,7 @@ router.get('/appointments/decline/:id', authUser, async (req, res) => {
 router.post('/appointments/', authUser, async (req, res) => {
     try {
         const _id =  req.session.passport.user;
-        const user = await userDB.findOne({_id});
+        const user = await userDB.User.findOne({_id});
         console.log(`${user.first_name} is making appointments`);
         if(user.user_type.toUpperCase() == user_types.PATIENT){
             const result = await userController.createAppointment(req);
