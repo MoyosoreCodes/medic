@@ -23,8 +23,8 @@ module.exports = {
              //set health cared number if user is a patient
             if(newUser.user_type.toUpperCase() === userModels.user_types.PATIENT){      
                  newUser.setHealthCardNumber()
-                 await Records.create({patientId: newUser._id})
-                 await Medication.create({patientId: newUser._id})
+                //  const medications = await Medication.create({patientId: newUser._id})
+                 await Records.create({patientId:newUser._id})
             }
             //set availability status if user is a doctor
             if(newUser.user_type.toUpperCase() === userModels.user_types.DOCTOR){      
