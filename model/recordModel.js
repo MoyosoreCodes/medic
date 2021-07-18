@@ -2,6 +2,11 @@ const mongoose = require("mongoose")
 const Schema = mongoose.Schema
 
 const medicationObject = {
+    patientId: {
+        type: mongoose.Types.ObjectId,
+        ref: 'users',
+        //autopopulate:true
+    },
     type:{type: String, default: 'N/A'},
     description:{type: String, default: 'N/A'},
     name:{type: String, default: 'N/A'},
