@@ -1,7 +1,78 @@
 const userDB = require('../database/userDB').User;
 const recordModel = require('../model/recordModel').Records;
+const userServices = require('../services/userServices')
+const {Appointment, appointment_status, appointment_types} = require('../model/appointmentModel')
 
 module.exports = {
+    // create user appointment
+    createAppointment: async (data) => {
+        try {
+            const body = data.body
+            const _id =  data.session.passport.user;
+            const user = await userDB.findOne({_id});
+        
+            if(user.user_type.toUpperCase() == user_types.PATIENT) {
+                //then check for available doctors
+                const doctorToAssign = await userServices.findAvailableDoctor();
+                
+                if(doctorToAssign.status !== 200)
+                {
+                    return {
+                        status: doctorToAssign.status,
+                        message: doctorToAssign.message,
+                    }   
+                }
+                const availableDoctor = {'doctor': doctorToAssign.data._id};
+                Object.assign(body, availableDoctor);
+                
+                //if there is an available doctor 
+                if(body.doctor !== null || body.doctor !== undefined || body.doctor == ''){
+                    //then create appointment for patient
+                    const patient = {'patient': user._id};
+                    Object.assign(body, patient);
+        
+                    const newAppointment = await Appointment.create(body);
+                    if(!newAppointment) {
+                        console.log('error is at making new appointment');
+                        return {
+                            status: 500,
+                            message: 'There was an error while making your appointment',
+                            data: null
+                        }
+                    }
+        
+                    await recordModel.updateOne(
+                        {patientId: user._id},
+                        {$push: {appointments: appointment._id} },
+                        {upsert:true}
+                    )
+                    
+                    const foundRecord = await recordModel.findOne({patientId: user._id})
+                    if(!foundRecord) {
+                        return {
+                            status: 404,
+                            message: 'Record not found',
+                        }   
+                    }
+                    
+                    return {
+                        status: 200,
+                        message: `Appointments created successfully with Dr. ${doctorToAssign.data.first_name}`,
+                        data: foundRecord
+                    }
+                    // return res.redirect('/dashboard/patient', 201)
+                }
+            }
+        } catch (error) {
+            console.log(error);
+            return {
+                status: 500,
+                message: "Error making appointment",
+                data: error
+            }
+            
+        }
+    },
     //view medications
     viewMedication: async (data) => {
         try {
