@@ -87,7 +87,7 @@ router.get('/patient-list', authUser, async (req, res) => {
         if(user.user_type.toUpperCase() == user_types.DOCTOR){
             const appointments = await Appointment.find({doctor: _id}).populate('patient', 'first_name last_name')
             const patients = await userDB.User.find({user_type: user_types.PATIENT})
-            return res.render('patientsList', { user, patients, appointments})
+            return res.render('patientList', { user, patients, appointments})
         }
         return res.redirect('/landing');
     } catch (error) {
@@ -222,12 +222,13 @@ router.post('/appointments/create', authUser, async (req, res) => {
     try {
         const _id =  data.session.passport.user;
         const user = await userDB.findOne({_id});
-        if(user.user_type.toUpperCase() == user_types.DOCTOR){
+        console.log(`${user.first_name} is making appointments`);
+        if(user.user_type.toUpperCase() == user_types.PATIENT){
             const result = await userController.createAppointment(req);
             if(result.status !== 200){
-                return res.redirect('/dashboard/patient', result.status)
+                return res.redirect('/dashboard/patient')
             }
-            return res.redirect('/dashboard/patient', result.status)
+            return res.redirect('/dashboard/patient')
         }
         return res.redirect('/landing')
     } catch (error) {
@@ -249,6 +250,7 @@ router.post('/dashboard/record', authUser, async (req, res) => {
         const body = req.body
         const _id =  req.session.passport.user;
         const user = await userDB.User.findOne({_id}); 
+        console.log(`${user.first_name} is creating record`);
         
         if(user.user_type.toUpperCase() == user_types.DOCTOR) {
             
