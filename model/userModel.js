@@ -16,7 +16,7 @@ const GenericUserObject = {
     specialties: [String],
     user_type: {type: String,default: user_types.PATIENT},
     address: String,
-    last_login: {type: String, default: Date.now()},
+    last_login: {type: String, default: Date.now().replace(/T/, ' ').replace(/\..+/, '') },
     //payment_details: GenericPaymentDetails,
     gender:String,
     records: [{
