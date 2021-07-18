@@ -168,10 +168,10 @@
                                         <% if(records) { %>
                                         <% for(var record of records) { %>
                                         <tr>
-                                            <td><img class="rounded-circle me-2" width="30" height="30" src="/assets/img/avatars/avatar3.jpeg"><%=record.patientId.first_name%> <%=record.patientId.last_name%></td>
-                                            <td><%=record.observations%></td>
-                                            <td><%=record.consultation_date%><br></td>
-                                            <td><%=record.allergies%></td>
+                                            <td><img class="rounded-circle me-2" width="30" height="30" src="/assets/img/avatars/avatar3.jpeg"><%=record.first_name%> <%=record.last_name%></td>
+                                            <td><%=record.records.observations%></td>
+                                            <td><%=record.records.consultation_date%><br></td>
+                                            <td><%=record.records.allergies%></td>
                                             <td><a class="btn btn-success" role="button" style="width: 75.5px;color: rgb(255,253,253);" href="/dashboard/record/<%=record._id%>">View</a><a class="btn btn-secondary" role="button" style="margin: 2px;margin-left: 20px;" href="/dashboard/record/<%=record._id%>">Update</a></td>
                                         </tr>
                                     <% } %>
