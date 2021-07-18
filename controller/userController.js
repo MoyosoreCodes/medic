@@ -2,6 +2,7 @@ const userDB = require('../database/userDB').User;
 const recordModel = require('../model/recordModel').Records;
 const userServices = require('../services/userServices')
 const {Appointment, appointment_status, appointment_types} = require('../model/appointmentModel')
+const {user_types} = require('../model/userModel')
 
 module.exports = {
     // create user appointment
