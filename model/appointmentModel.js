@@ -21,7 +21,7 @@ const appointmentObject = {
     },
     patient: {
         type: mongoose.Types.ObjectId,
-        ref: 'users',
+        ref: 'User',
         //autopopulate:{select: '-password first_name last_name email phoneNumber'}
     },
     appointmentDate: String,
@@ -29,7 +29,7 @@ const appointmentObject = {
     symptoms: String,
     doctor:{
         type: mongoose.Types.ObjectId,
-        ref: 'users',
+        ref: 'User',
         //autopopulate:{select: '-password first_name last_name email phoneNumber'}
     },
     status: {type: String, default: appointment_status.PENDING}

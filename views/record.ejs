@@ -174,69 +174,12 @@
                                             <td><%=record.createdAt%></td>
                                             <td><a class="btn btn-success" role="button" style="width: 75.5px;color: rgb(255,253,253);" href="/dashboard/<%=record._id%>">View</a><a class="btn btn-secondary" role="button" style="margin: 2px;margin-left: 20px;" href="/dashboard/<%=record._id%>">Update</a></td>
                                         </tr>
-                                        <!-- <tr>
-                                            <td><img class="rounded-circle me-2" width="30" height="30" src="/assets/img/avatars/avatar1.jpeg">Airi Satou</td>
-                                            <td>Aching muscles, increase in body temperature<br></td>
-                                            <td>2008/11/28</td>
-                                            <td>14 : 00 pm</td>
-                                            <td style="width: 219px;"><button class="btn btn-success" type="button" style="width: 75.5px;color: rgb(255,253,253);">View</button><button class="btn btn-secondary" type="button" style="margin: 2px;margin-left: 20px;">Update</button></td>
-                                        </tr>
+                                    <% } %>
+                                    <% } else { %>
                                         <tr>
-                                            <td><img class="rounded-circle me-2" width="30" height="30" src="/assets/img/avatars/avatar2.jpeg">Angelica Ramos</td>
-                                            <td>Severe cold, feeling weak</td>
-                                            <td>2009/10/09<br></td>
-                                            <td>11 : 00 am</td>
-                                            <td><button class="btn btn-success" type="button" style="width: 75.5px;color: rgb(255,253,253);">View<br></button><button class="btn btn-secondary" type="button" style="margin: 2px;margin-left: 20px;">Update</button></td>
+                                            <td>No Records found </td>
                                         </tr>
-                                        <tr>
-                                            <td><img class="rounded-circle me-2" width="30" height="30" src="/assets/img/avatars/avatar4.jpeg">Bradley Greer</td>
-                                            <td>Unable to see well, headache</td>
-                                            <td>2012/10/13<br></td>
-                                            <td>13 : 00 pm</td>
-                                            <td><button class="btn btn-success" type="button" style="width: 75.5px;color: rgb(255,253,253);">View</button><button class="btn btn-secondary" type="button" style="margin: 2px;margin-left: 20px;">Update</button></td>
-                                        </tr>
-                                        <tr>
-                                            <td><img class="rounded-circle me-2" width="30" height="30" src="/assets/img/avatars/avatar5.jpeg">Brenden Wagner</td>
-                                            <td>Back pain and pains in the muscle</td>
-                                            <td>2011/06/07<br></td>
-                                            <td>12 : 00 pm</td>
-                                            <td><button class="btn btn-success" type="button" style="width: 75.5px;color: rgb(255,253,253);">View</button><button class="btn btn-secondary" type="button" style="margin: 2px;margin-left: 20px;">Update</button></td>
-                                        </tr>
-                                        <tr>
-                                            <td><img class="rounded-circle me-2" width="30" height="30" src="/assets/img/avatars/avatar1.jpeg">Brielle Williamson</td>
-                                            <td>Chest pains, unable to breathe properly</td>
-                                            <td>2012/12/02<br></td>
-                                            <td>15 : 00 pm</td>
-                                            <td><button class="btn btn-success" type="button" style="width: 75.5px;color: rgb(255,253,253);">View</button><button class="btn btn-secondary" type="button" style="margin: 2px;margin-left: 20px;">Update</button></td>
-                                        </tr>
-                                        <tr>
-                                            <td><img class="rounded-circle me-2" width="30" height="30" src="/assets/img/avatars/avatar2.jpeg">Bruno Nash<br></td>
-                                            <td>cold, weakness, feverish, aching muscles</td>
-                                            <td>2011/05/03<br></td>
-                                            <td>10 : 00 am</td>
-                                            <td><button class="btn btn-success" type="button" style="width: 75.5px;color: rgb(255,253,253);">View</button><button class="btn btn-secondary" type="button" style="margin: 2px;margin-left: 20px;">Update</button></td>
-                                        </tr>
-                                        <tr>
-                                            <td><img class="rounded-circle me-2" width="30" height="30" src="/assets/img/avatars/avatar3.jpeg">Caesar Vance</td>
-                                            <td>frequent increase in heart rate, chest pain</td>
-                                            <td>2011/12/12<br></td>
-                                            <td>16 : 00 pm</td>
-                                            <td><button class="btn btn-success" type="button" style="width: 75.5px;color: rgb(255,253,253);">View</button><button class="btn btn-secondary" type="button" style="margin: 2px;margin-left: 20px;">Update</button></td>
-                                        </tr>
-                                        <tr>
-                                            <td><img class="rounded-circle me-2" width="30" height="30" src="/assets/img/avatars/avatar4.jpeg">Cara Stevens</td>
-                                            <td>lower back pain</td>
-                                            <td>2011/12/06<br></td>
-                                            <td>14 : 00 pm</td>
-                                            <td><button class="btn btn-success" type="button" style="width: 75.5px;color: rgb(255,253,253);">View</button><button class="btn btn-secondary" type="button" style="margin: 2px;margin-left: 20px;">Update</button></td>
-                                        </tr>
-                                        <tr>
-                                            <td><img class="rounded-circle me-2" width="30" height="30" src="/assets/img/avatars/avatar5.jpeg">Cedric Kelly</td>
-                                            <td>abdominal pain</td>
-                                            <td>2012/03/29<br></td>
-                                            <td>15 : 00pm</td>
-                                            <td><button class="btn btn-success" type="button" style="width: 75.5px;color: rgb(255,253,253);">View</button><button class="btn btn-secondary" type="button" style="margin: 2px;margin-left: 20px;">Update</button></td>
-                                        </tr> -->
+                                    <% } %> 
                                     </tbody>
                                     <tfoot>
                                         <tr>
@@ -248,10 +191,6 @@
                                         </tr>
                                     </tfoot>
                                 </table>
-                                <% } %>
-                                <% } else { %>
-                                    <p> No Records found </p>
-                                <% } %>
                             </div>
                             <div class="row">
                                 <div class="col-md-6 align-self-center">
