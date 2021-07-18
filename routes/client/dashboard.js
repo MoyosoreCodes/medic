@@ -46,7 +46,7 @@ router.get('/patient', authUser, async (req, res) => {
             const medications = records.medications
             const appointments = await Appointment.find({patient: _id}).populate('doctor', 'first_name last_name')
             // const medications = await Medication.find({medications: records.medications})
-            return res.render('index', { user, records, appointments, medications })
+            return res.render('patient', { user, records, appointments, medications })
         }
         return res.redirect('/landing');
     } catch (error) {
@@ -108,7 +108,7 @@ router.get('/records', authUser, async (req, res) => {
             // const patient = await userDB.User.findOne({cardNumber: req.params.id});
             // const appointments = await Appointment.find({doctor: _id}).populate('patient', 'first_name last_name')
             const records = await userRecords.find().populate('patientId', 'first_name last_name')
-            return res.render('editRecord', { user, appointments, records})
+            return res.render('record', { user, appointments, records})
         }
         return res.redirect('/landing');
     } catch (error) {
@@ -161,6 +161,9 @@ router.get('/appointments', authUser, async (req, res) => {
         }     
     }
 });
+router.get('/profile', authUser, async (req, res) => {
+    
+})
 
 router.get('/appointments/accept/:id', authUser, async (req, res) => {
     try {
