@@ -91,10 +91,10 @@
                             <li class="nav-item dropdown no-arrow mx-1">
                                 <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><span class="badge bg-danger badge-counter"><%=appointments.length%></span><i class="fas fa-bell fa-fw"></i></a>
                                     <div class="dropdown-menu dropdown-menu-end dropdown-list animated--grow-in">
-                                        <% if(appointments) { %>
                                             <h6 class="dropdown-header">alerts center</h6>
+                                            <% if(appointments) { %>
                                             <% for(var appointment of appointments) { %>
-                                                    <a class="dropdown-item d-flex align-items-center" href="#">
+                                                <a class="dropdown-item d-flex align-items-center" href="#">
                                                     <div class="me-3">
                                                         <div class="bg-primary icon-circle"><i class="fas fa-file-alt text-white"></i></div>
                                                     </div>
@@ -168,7 +168,6 @@
                                 </div>
                             </div>
                             <div class="table-responsive table mt-2" id="dataTable-2" role="grid" aria-describedby="dataTable_info">
-                                <% if(appointments) { %>
                                 <table class="table table-hover my-0" id="dataTable">
                                     <thead>
                                         <tr>
@@ -180,6 +179,7 @@
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
+                                    <% if(appointments) { %>
                                     <% for(var appointment of appointments) { %>
                                     <tbody>
                                         <tr>
@@ -302,13 +302,14 @@
                     </div>
                 </div>
             </div>
-            <footer class="bg-white sticky-footer">
-                <div class="container my-auto">
-                    <div class="text-center my-auto copyright"><span>Copyright © Moyo2021</span></div>
-                </div>
-            </footer>
+            
         </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
     </div>
+    <footer class="bg-white sticky-footer">
+        <div class="container my-auto">
+            <div class="text-center my-auto copyright"><span>Copyright © Moyo2021</span></div>
+        </div>
+    </footer>
     <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="/assets/js/bs-init.js"></script>
     <script src="/assets/js/theme.js"></script>
