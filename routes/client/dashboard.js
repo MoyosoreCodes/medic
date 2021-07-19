@@ -267,6 +267,7 @@ router.post('/profile/update', authUser, async (req, res) => {
 router.post('/records', authUser, async (req, res) => {
     try {
         const body = req.body
+        console.log(body);        
         const _id =  req.session.passport.user;
         const user = await userDB.User.findOne({_id}); 
         console.log(`${user.first_name} is creating record`);
