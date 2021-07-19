@@ -108,7 +108,7 @@ router.get('/records', authUser, async (req, res) => {
         if(user.user_type.toUpperCase() == user_types.DOCTOR){
             //const patient = await userDB.User.find();
             const appointments = await Appointment.find({doctor: _id}).populate('patient', 'first_name last_name')
-            const records = await userDB.User.find({user_type: user_types.PATIENT}).populate('records', 'allergies observations')
+            const records = await userDB.User.find({user_type: user_types.PATIENT})//.populate('records', 'allergies observations')
             console.log(records);
             return res.render('record', { user,appointments, records})
         }
