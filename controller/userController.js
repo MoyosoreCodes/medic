@@ -78,10 +78,10 @@ module.exports = {
     viewMedication: async (data) => {
         try {
             const body = data.body;
-            const foundUser = await userServices.getUserByCardNumber(body.cardNumber);
+            const foundUser = await userServices.getPatientByCardNumber(body.cardNumber);
             const user = foundUser.data
 
-            const records = await recordModel.findOne({patientId: user._id}).populate("appointments", "doctor appointmentDate appointmentTime symptoms")
+            const records = await recordModel.findOne({patientId: user._id})//.populate("appointments", "doctor appointmentDate appointmentTime symptoms")
             const medications = records.medications;
             return {
                 status: 200,
@@ -102,9 +102,9 @@ module.exports = {
     createRecord: async (data) => {
         try {
             const body = data.body
-            const patientId = body.patientId
+            const patientId = await userServices.getPatientByCardNumber(body.cardNumber);
             const newRecord = await recordModel.updateOne(
-                {patientId},
+                {patientId: patientId.data._id},
                 {body},
                 {upsert:true}
             );

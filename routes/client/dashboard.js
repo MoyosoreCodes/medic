@@ -108,7 +108,7 @@ router.get('/records', authUser, async (req, res) => {
         if(user.user_type.toUpperCase() == user_types.DOCTOR){
             //const patient = await userDB.User.find();
             const appointments = await Appointment.find({doctor: _id}).populate('patient', 'first_name last_name')
-            const records = await userDB.User.find().populate('records', 'allergies observations')
+            const records = await userDB.User.find({user_type: user_types.PATIENT}).populate('records', 'allergies observations')
             console.log(records);
             return res.render('record', { user,appointments, records})
         }
@@ -164,7 +164,23 @@ router.get('/appointments', authUser, async (req, res) => {
     }
 });
 router.get('/profile', authUser, async (req, res) => {
-    
+    try {
+        const _id =  req.session.passport.user;
+        const user = await userDB.User.findOne({_id})
+        if(user.user_type.toUpperCase() == user_types.DOCTOR){
+            // const patient = await userDB.User.findOne({cardNumber: req.params.cardNumber});
+            const appointments = await Appointment.find({doctor: _id}).populate('patient', 'first_name last_name cardNumber');
+            return res.render('profile', { user, appointments})
+        }
+        return res.redirect('/landing');
+    } catch (error) {
+        console.log(error); 
+        return {
+            status: 500,
+            message: 'catch error at route',
+            data: error 
+        }     
+    }
 })
 
 router.get('/appointments/accept/:id', authUser, async (req, res) => {
@@ -246,7 +262,7 @@ router.post('/profile/update', authUser, async (req, res) => {
     
 })
 
-router.post('/dashboard/record', authUser, async (req, res) => {
+router.post('/records', authUser, async (req, res) => {
     try {
         const body = req.body
         const _id =  req.session.passport.user;

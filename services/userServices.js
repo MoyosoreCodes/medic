@@ -30,6 +30,7 @@ module.exports = {
             //set availability status if user is a doctor
             if(newUser.user_type.toUpperCase() === userModels.user_types.DOCTOR){      
                 newUser.isAvailable = true
+                //await newUser.updateOne({}, {$unset: {records: ""}})
             }    
             // set password
             const hashedpassword = await newUser.setPassword(data.password)
