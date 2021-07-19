@@ -19,11 +19,11 @@ const GenericUserObject = {
     last_login: {type: String, default: new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '') },
     //payment_details: GenericPaymentDetails,
     gender:String,
-    records: [{
+    records: {
         type: mongoose.Types.ObjectId,
         ref: 'records',
         //autopopulate: true
-    }],
+    },
     //image: { type: Object, trim: true},
     //for doctors only
     isAvailable: {type: Boolean}
