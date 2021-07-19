@@ -140,7 +140,7 @@ module.exports ={
     viewMedication: async (data) => {
         try {
             const body = data.body;
-            const foundUser = await userServices.getUserByCardNumber(body.cardNumber);
+            const foundUser = await userServices.getPatientByCardNumber(body.cardNumber);
             if(foundUser.status !== 200)
             {
                 return {
