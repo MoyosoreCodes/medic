@@ -270,9 +270,13 @@ router.post('/records', authUser, async (req, res) => {
         const _id =  req.session.passport.user;
         const user = await userDB.User.findOne({_id}); 
         console.log(`${user.first_name} is creating record`);
-        
         if(user.user_type.toUpperCase() == user_types.DOCTOR) {
-            
+            await userController.createRecord(req);
+            const {name, type, description, dosage} = body
+            if (name || type || description || dosage){
+                await userController.createMedication(req)
+            }
+            return res.redirect('/dashboard/records')
         }
         
     } catch (error) {

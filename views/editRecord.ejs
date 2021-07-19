@@ -209,34 +209,34 @@
                                         <div class="col-md-6" style="width: 400.5px;">
                                             <div class="row">
                                                 <div class="col"><label class="form-label" for="email"><strong>Card Number </strong></label>
-                                                    <div class="mb-3"><input class="form-control" type="text" style="width: 200.5px;" name="<%=patient.cardNumber%>" readonly></div>
+                                                    <div class="mb-3"><input class="form-control" type="text" style="width: 200.5px;" placeholder="<%=patient.cardNumber%>"  name="cardNumber" readonly></div>
                                                 </div>
                                             </div>
                                             <div class="mb-3" style="width: 200.5px;">
-                                                <label class="form-label" for="signature"><strong>Blood type</strong><br></label><input class="form-control" type="text" style="width: 200.5px;" name="blood_type">
+                                                <label class="form-label" for="signature"><strong>Blood type</strong><br></label><input class="form-control" type="text" placeholder="<%=records.blood_type%>" style="width: 200.5px;" name="blood_type">
                                             </div>
                                             <div class="mb-3" style="width: 200.5px;">
-                                                <label class="form-label" for="signature"><strong>Blood pressure</strong><br></label><input class="form-control" type="text" style="width: 200.5px;" name="blood_pressure">
+                                                <label class="form-label" for="signature"><strong>Blood pressure</strong><br></label><input class="form-control" type="text" placeholder="<%=records.blood_pressure%>" style="width: 200.5px;" name="blood_pressure">
                                             </div>
                                             <div class="mb-3" style="width: 200.5px;">
-                                                <label class="form-label" for="signature"><strong>Weight</strong><br></label><input class="form-control" type="text" style="width: 200.5px;" name="weight">
+                                                <label class="form-label" for="signature"><strong>Weight</strong><br></label><input class="form-control" type="text" placeholder="<%=records.weight%>" style="width: 200.5px;" name="weight">
                                             </div>
                                             <div class="mb-3" style="width: 200.5px;">
-                                                <label class="form-label" for="signature"><strong>Pulse rate</strong><br></label><input class="form-control" type="text" style="width: 200.5px;" name="pulse_rate">
+                                                <label class="form-label" for="signature"><strong>Pulse rate</strong><br></label><input class="form-control" type="text" placeholder="<%=records.pulse_rate%>" style="width: 200.5px;" name="pulse_rate">
                                             </div>
                                             <div class="mb-3" style="width: 292.5px;">
-                                                <label class="form-label" for="signature"><strong>Observations</strong><br></label><textarea class="form-control" id="signature" rows="4" name="observations" style="width: 292.5px;"></textarea>
+                                                <label class="form-label" for="signature"><strong>Observations</strong><br></label><textarea class="form-control" id="signature" placeholder="<%=records.observations%>" rows="4" name="observations" style="width: 292.5px;"></textarea>
                                             </div>
                                         </div>
                                         <div class="col-md-6" style="width: 509.5px;">
                                             <div class="mb-3" style="width: 200.5px;">
-                                                <label class="form-label" for="signature"><strong>Genotype</strong><br></label><input class="form-control" type="text" style="width: 200.5px;" name="genotype">
+                                                <label class="form-label" for="signature"><strong>Genotype</strong><br></label><input class="form-control" type="text" placeholder="<%=records.genotype%>" style="width: 200.5px;" name="genotype">
                                             </div>
                                             <div class="mb-3" style="width: 200.5px;">
-                                                <label class="form-label" for="signature"><strong>Temperature</strong><br></label><input class="form-control" type="text" style="width: 200.5px;" name="temperature">
+                                                <label class="form-label" for="signature"><strong>Temperature</strong><br></label><input class="form-control" type="text" placeholder="<%=records.temperature%>" style="width: 200.5px;" name="temperature">
                                             </div>
                                             <div class="mb-3" style="width: 500.5px;">
-                                                <label class="form-label" for="signature"><strong>Allergies</strong><br></label><textarea class="form-control" id="signature-1" rows="4" name="allergies"></textarea>
+                                                <label class="form-label" for="signature"><strong>Allergies</strong><br></label><textarea class="form-control" id="signature-1" placeholder="<%=records.allergies%>" rows="4" name="allergies"></textarea>
                                             </div>
                                         </div>
                                     </div>
