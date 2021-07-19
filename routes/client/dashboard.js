@@ -132,6 +132,7 @@ router.get('/record/:id', authUser, async (req, res) => {
             const appointments = await Appointment.find({doctor: _id}).populate('patient', 'first_name last_name')
             const records = await userRecords.findOne({patientId: req.params.id}).populate('patient', 'first_name last_name')
             console.log(patient);
+            console.log(records);
             return res.render('editRecord', { user, patient, records, appointments})
         }
         return res.redirect('/landing');
