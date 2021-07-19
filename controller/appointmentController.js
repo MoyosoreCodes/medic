@@ -90,12 +90,12 @@ module.exports ={
             const foundUser = await userServices.getPatientByCardNumber(body.cardNumber);
             //console.log(foundUser);
             if(foundUser.status !== 200)
-                {
-                    return {
-                        status: foundUser.status,
-                        message: foundUser.message,
-                    }   
-                }
+            {
+                return {
+                    status: foundUser.status,
+                    message: foundUser.message,
+                }   
+            }
             const user = foundUser.data
             let query = {
                 "patient": user._id, 
@@ -141,10 +141,18 @@ module.exports ={
         try {
             const body = data.body;
             const foundUser = await userServices.getUserByCardNumber(body.cardNumber);
+            if(foundUser.status !== 200)
+            {
+                return {
+                    status: foundUser.status,
+                    message: foundUser.message,
+                }   
+            }
             const user = foundUser.data
 
             const records = await recordModel.findOne({patientId: user._id})
             const medications = records.medications;
+            
             return {
                 status: 200,
                 message: `You currently have ${medications.length} medications`,
@@ -153,6 +161,7 @@ module.exports ={
             // create a mapping function to map each medications
             //sth like this
         } catch (error) {
+            console.log(error);
             return {
                 status: 500,
                 message: 'Error getting appointment',
