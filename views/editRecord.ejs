@@ -198,7 +198,7 @@
                             </div> -->
                         </div>
                     </div>
-                    <form action="/dashboard/records" method="POST">
+                    <form action="/dashboard/records/<%=patient._id%>" method="POST">
                         <div class="col" style="margin-top: 43px;">
                             <div class="card shadow mb-5">
                                 <div class="card-header py-3">
@@ -207,11 +207,6 @@
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-md-6" style="width: 400.5px;">
-                                            <div class="row">
-                                                <div class="col"><label class="form-label" for="email"><strong>Card Number </strong></label>
-                                                    <div class="mb-3"><input class="form-control" type="text" style="width: 200.5px;" placeholder="<%=patient.cardNumber%>"  name="cardNumber" readonly></div>
-                                                </div>
-                                            </div>
                                             <div class="mb-3" style="width: 200.5px;">
                                                 <label class="form-label" for="signature"><strong>Blood type</strong><br></label><input class="form-control" type="text" placeholder="<%=records.blood_type%>" style="width: 200.5px;" name="blood_type">
                                             </div>

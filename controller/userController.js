@@ -99,15 +99,34 @@ module.exports = {
     },
 
     //create/update records 
-    createRecord: async (data) => {
+    createRecord: async (data, body) => {
         try {
-            const {cardNumber, blood_type, blood_pressure, weight, pulse_rate, observations, genotype, temperature, allergies} = data.body
-            const patientId = await userServices.getPatientByCardNumber(cardNumber);
+            // const {blood_type, blood_pressure, weight, pulse_rate, observations, genotype, temperature, allergies} = body
+            //const patientId = await userServices.getPatientByCardNumber(cardNumber);
+            const recordObject = {
+                blood_type: body.blood_type,
+                blood_pressure: body.blood_pressure,
+                weight: body.weight,
+                pulse_rate: body.pulse_rate,
+                observations: body.observations,
+                genotype: body.genotype,
+                temperature: body.temperature,
+                allergies: body.allergies
+            }
+            const medicationObject = {
+                name: body.name,
+                type: body.type, 
+                description: body.description,
+                dosage: body.dosage
+            }
+            await recordModel.updateOne(
+                {patientId: data},
+                {recordObject},
+                {upsert:true}
+            );
             const newRecord = await recordModel.updateOne(
-                {patientId: patientId.data._id},
-                {
-
-                },
+                {patientId: data},
+                {$push:{medications: medicationObject}},
                 {upsert:true}
             );
 
