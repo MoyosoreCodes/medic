@@ -188,6 +188,26 @@ router.get('/profile', authUser, async (req, res) => {
     }
 })
 
+router.get('/newRecord', authUser, async (req, res) => {
+    try {
+        const _id =  req.session.passport.user;
+        const user = await userDB.User.findOne({_id})
+        if(user.user_type.toUpperCase() == user_types.DOCTOR){
+            // const patient = await userDB.User.findOne({cardNumber: req.params.cardNumber});
+            const appointments = await Appointment.find({doctor: _id}).populate('patient', 'first_name last_name cardNumber');
+            return res.render('newRecord', { user, appointments})
+        }
+        return res.redirect('/');
+    } catch (error) {
+        console.log(error); 
+        return {
+            status: 500,
+            message: 'catch error at route',
+            data: error 
+        }     
+    }
+})
+
 router.get('/appointments/accept/:id', authUser, async (req, res) => {
     try {
         const _id =  req.session.passport.user;
