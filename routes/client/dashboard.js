@@ -304,4 +304,21 @@ router.post('/record/:id', authUser, async (req, res) => {
     }
 })
 
+router.post('/record, authUser, async (req, res) => {
+    try {
+        const body = req.body
+        console.log(body);        
+        const _id =  req.session.passport.user;
+        const user = await userDB.User.findOne({_id}); 
+        console.log(`${user.first_name} is creating record`);
+        if(user.user_type.toUpperCase() == user_types.DOCTOR) {
+            await userController.createRecord(req.params.id, body);
+            return res.redirect('/dashboard/records')
+        }
+        return res.redirect('/')
+    } catch (error) {
+        
+    }
+})
+
 module.exports = router 
