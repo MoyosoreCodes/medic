@@ -99,7 +99,7 @@
                                                         <div class="bg-primary icon-circle"><i class="fas fa-file-alt text-white"></i></div>
                                                     </div>
                                                     <div><span class="small text-gray-500"><%= appointment.appointmentDate %></span>
-                                                        <p>You have a <%= appointment.status.toLowerCase() %> appointment with <%= appointment.patient.first_name %> </p>
+                                                        <p><%= appointment.status.toLowerCase() %> appointment with <%= appointment.patient.first_name %> </p>
                                                     </div>
                                                 </a> 
                                             <% } %>
