@@ -154,40 +154,43 @@
                                 </div>
                             </div>
                             <div class="table-responsive table mt-2" id="dataTable-2" role="grid" aria-describedby="dataTable_info">
-                                <table class="table table-hover my-0" id="dataTable">
+                                <table class="table table-hover table-borderless my-0" id="dataTable">
                                     <thead>
                                         <tr>
                                             <th>Name</th>
-                                            <th>Observations</th>
-                                            <th>Consultation date</th>
-                                            <th>Allergies</th>
-                                            <th>Actions</th>
+                                            <th>Card Number&nbsp;</th>
+                                            <th>Address</th>
+                                            <th>Last logged in</th>
+                                            <th>E-mail</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <% if(records) { %>
-                                        <% for(var record of records) { %>
+                                        <% if(patients) { %>
+                                        <% for(var patient of patients) { %>
                                         <tr>
-                                            <td><img class="rounded-circle me-2" width="30" height="30" src="/assets/img/avatars/avatar3.jpeg"><%=record.first_name%> <%=record.last_name%></td>
-                                            <td><%=record.records.observations%></td>
-                                            <td><%=record.records.consultation_date%><br></td>
-                                            <td><%=record.records.allergies%></td>
-                                            <td><a class="btn btn-success" role="button" style="width: 75.5px;color: rgb(255,253,253);" href="/dashboard/record/<%=record._id%>">View</a><a class="btn btn-secondary" role="button" style="margin: 2px;margin-left: 20px;" href="/dashboard/record/<%=record._id%>">Update</a></td>
-                                        </tr>
+                                            <td><img class="rounded-circle me-2" width="30" height="30" src="/assets/img/avatars/avatar1.jpeg"><%=patient.first_name%> <%=patient.last_name%></td>
+                                            <td><%=patient.cardNumber%></td>
+                                            <td> <%=patient.address%></td>
+                                            <td><%=patient.last_login%></td>
+                                            <td><%=patient.email%></td>
+                                            <td><a class="btn btn-success" role="button" style="width: 75.5px;color: rgb(255,253,253);" href="/dashboard/record/<%=patient._id%>">View</a><a class="btn btn-secondary" role="button" style="margin: 2px;margin-left: 20px;" href="/dashboard/record/<%=patient._id%>">Update</a></td>
+                                        </tr>   
                                     <% } %>
+                                         <tr> 
                                     <% } else { %>
-                                        <tr>
-                                            <td>No Records found </td>
+                                                <td>No registered Users </td>
+                                    <% } %>
                                         </tr>
-                                    <% } %> 
                                     </tbody>
                                     <tfoot>
                                         <tr>
                                             <td><strong>Name</strong></td>
-                                            <td><strong>Observations</strong></td>
-                                            <td><strong>Consultation Date</strong></td>
-                                            <td><strong>Time</strong></td>
-                                            <td style="text-align: center;">Actions</td>
+                                            <td><strong>Card Number</strong></td>
+                                            <td><strong>Address</strong></td>
+                                            <td><strong>Last Logged In</strong></td>
+                                            <td><strong>E-mail</strong></td>
+                                            <td>Action</td>
                                         </tr>
                                     </tfoot>
                                 </table>
