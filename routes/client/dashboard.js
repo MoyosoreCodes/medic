@@ -267,7 +267,7 @@ router.post('/profile/update', authUser, async (req, res) => {
     
 })
 
-router.post('/records/:id', authUser, async (req, res) => {
+router.post('/record/:id', authUser, async (req, res) => {
     try {
         const body = req.body
         console.log(body);        
